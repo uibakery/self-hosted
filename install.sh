@@ -156,8 +156,8 @@ echo "Dounload setup files ----------------------------------"
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
 cd ui-bakery-on-premise
 
-curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/feat/start-using-acr/setup.sh
-curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/feat/start-using-acr/docker-compose.yml
+curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
+curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
 echo "Configuring application settings....."
 sudo bash ./setup.sh
