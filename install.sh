@@ -160,7 +160,7 @@ curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/fe
 curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/feat/start-using-acr/docker-compose.yml
 
 echo "Configuring application settings....."
-./setup.sh
+sudo bash ./setup.sh
 echo -e "\033[m ---------------------------------------------"
 
 echo "----------------------------------------------------"
