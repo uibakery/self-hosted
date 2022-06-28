@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-bakery-backend
+  namespace: ui-bakery
+spec:
+  selector:
+    matchLabels:
+      app: ui-bakery-backend
+  template:
+    metadata:
+      labels:
+        app: ui-bakery-backend
+    spec:
+      containers:
+      - name: ui-bakery-backend
+        image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
+        envFrom:
+          - configMapRef:
+              name: ui-bakery-configmap
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "900m"
+        ports:
+          - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bakery-back
+  namespace: ui-bakery
+spec:
+  type: ClusterIP
+  selector:
+    app: ui-bakery-backend
+  ports:
+  - port: 8080
+    targetPort: 8080
