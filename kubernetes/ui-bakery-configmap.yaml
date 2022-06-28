@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
-  UI_BAKERY_APP_SERVER_NAME: ""
-  UI_BAKERY_WORKBENCH_PATH: ""
-  UI_BAKERY_LICENSE_KEY: ""
+  UI_BAKERY_APP_SERVER_NAME: {{ enter bakery server name and port for example http://123.123.123.123:3030 }}
+  UI_BAKERY_WORKBENCH_PATH: {{ enter workbench server name and port for example http://123.123.123.123:3040 }}
+  UI_BAKERY_LICENSE_KEY: {{ enter your licence key here}}
   SEND_IN_BLUE_API_KEY: ""
   SENDGRID_API_KEY: ""
   SENDGRID_EMAIL_FROM: admin@uibakery.io

@@ -19,6 +19,24 @@ On-premise version grants you:
 
 :warning: If you have already installed UI Bakery on-premise version, follow [this guide](#updating-on-premise-version) to update your version.
 
+## Table of contents
+- [Installation](#installation)
+  - [Requirements](#requirements)
+  - [Installation steps](#installation-steps)
+- [Manual installation](#manual-installation)
+- [Kubernetes](#kubernetes)
+- [Running a standalone database instance](#running-a-standalone-database-instance)
+- [Running on a remote instance](#running-on-a-remote-instance)
+- [Google oauth setup](#google-oauth-setup)
+- [SAML authentication setup](#saml-authentication-setup)
+  - [Authentication settings](#other-authentication-setting)
+  - [Limitations](#limitations)
+- [Google Sheets connection setup](#google-sheets-connection-setup)
+- [Emails configuration](#configuring-email-provider)
+  - [Sendgrid](#configure-sendgrid)
+  - [Email templates](#change-email-templates)
+- [Staying up to date](#updating-on-premise-version)
+
 ## Installation
 
 This document describes how to deploy ui-bakery on-prem via `install.sh` script.
@@ -67,6 +85,19 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 - Wait until all containers are up and running
 
 - Open ports `3030` and `3040` or `UI_BAKERY_PORT` and `UI_BAKERY_WORKBENCH_PORT` (if they were modified in `.env` file or entered in `./setup.sh`) to access UI Bakery instance, then you can create a new account.
+
+## Kubernetes
+
+In case when a k8s installation is required:
+
+1. Navigate into the `kubernetes` directory
+2. Edit the `ui-bakery-configmap.yaml` and inside the `{{ ... }}` insert required variables:
+  - `UI_BAKERY_APP_SERVER_NAME` - ought to be your {server ip address}:3030 - for example `http://123.123.123.123:3030`
+  - `UI_BAKERY_WORKBENCH_PATH` - ought to be your {server ip address}:3040 - for example `http://123.123.123.123:3040`
+  - `UI_BAKERY_LICENSE_KEY` - get it from UI Bakery team
+3. Run `kubectl apply -f ../kubernetes`
+
+The application will be exposed on a public ip address on port 3030, DNS and SSL has to be handled by the user.
 
 ## Running a standalone database instance
 
