@@ -4,50 +4,49 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 
-echo "Enter license key: "
+printf "Enter license key:\n"
 while read license; do
   test "$license" != "" && break
-  echo -e "${RED}License key is required!${NC}"
-  echo "Enter license key: "
+  printf "${RED}License key is required!${NC}\n"
+  printf "Enter license key:"
 done
-echo -e "License key: ${license}\n"
+printf "License key: ${license}\n\n"
 
 
-echo -e "Enter PORT[3030]: "
+printf "Enter PORT[3030]:\n"
 while read port; do
   test "$port" == "" && break
   if (( $port > 1 )) && (( $port < 65536 ))
-  then 
+  then
     break
   else
-    echo -e "${RED}PORT isn't valid!${NC}"
+    printf "${RED}PORT isn't valid!${NC}\n"
   fi
-  echo -e "Enter PORT[3030]: "
+  printf "Enter PORT[3030]:"
 done
 port=${port:-3030}
-echo -e "PORT: ${port}\n"
+printf "PORT: ${port}\n\n"
 
 
-echo -e "Enter server URL[http://localhost]: "
+printf "Enter server URL[http://localhost]:\n"
 while read url; do
   test "$url" == "" && break
   regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
   if [[ $url =~ $regex ]]
-  then 
+  then
     break
   else
-    echo -e "${RED}URL isn't valid!${NC}"
+    printf "${RED}URL isn't valid!${NC}\n"
   fi
-  echo -e "Enter server URL[http://localhost]: "
+  printf "Enter server URL[http://localhost]:"
 done
 url=${url:-http://localhost}
-echo -e "URL: ${url}\n"
+printf "URL: ${url}\n\n"
 
 echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
 echo "UI_BAKERY_WORKBENCH_PATH=${url}:3040" >> .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 
-echo -e "${GREEN}UI Bakery setup is done!${NC}"
-echo -e "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!"
-
+printf "${GREEN}UI Bakery setup is done!${NC}\n"
+printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!"
