@@ -35,7 +35,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 1. Run this command preferably from `/home` Linux directory to download, install and launch UI Bakery:
 
    ```bash
-   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/onpremise/main/install.sh && bash ./install.sh
+   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
 1. In the process, upon request, enter the previously received license code, hosting URL and port.

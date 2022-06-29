@@ -2,7 +2,6 @@
 
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
-CUR_VERSION_UI_BAKERY="latest" 
 
 function check_version {
 
@@ -152,23 +151,16 @@ if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
    yes | sudo apt install docker-compose
 fi
 
-echo "----------------------------------------------------"
-if [[ "$CUR_VERSION_UI_BAKERY" == "latest" ]]; then
-  file_name="ui-bakery-on-premise-vlatest.tar.gz"
-else
-  file_name="ui-bakery-on-premise_v${CUR_VERSION_UI_BAKERY}.tar.gz"
-fi  
-curl -k -L -o ${file_name} https://storageaccountrguib99d2.blob.core.windows.net/ui-bakery-cloud-on-premise/${file_name}
+echo "Dounload setup files ----------------------------------"
 
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
+cd ui-bakery-on-premise
 
-echo "----------------------------------------------------"
-echo "Unpacking the archive....."
-tar -xf ${file_name} -C ui-bakery-on-premise > /dev/null
+curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
+curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
 echo "Configuring application settings....."
-cd ui-bakery-on-premise
-./setup.sh
+sudo bash ./setup.sh
 echo -e "\033[m ---------------------------------------------"
 
 echo "----------------------------------------------------"
