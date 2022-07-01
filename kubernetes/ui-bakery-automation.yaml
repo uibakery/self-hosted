@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-bakery-automation
+  namespace: ui-bakery
+spec:
+  selector:
+    matchLabels:
+      app: ui-bakery-automation
+  template:
+    metadata:
+      labels:
+        app: ui-bakery-automation
+    spec:
+      containers:
+      - name: ui-bakery-automation
+        image: cruibakeryonprem.azurecr.io/cloud/automation:latest
+        envFrom:
+          - configMapRef:
+              name: ui-bakery-configmap
+        ports:
+          - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: automation
+  namespace: ui-bakery
+spec:
+  type: ClusterIP
+  selector:
+    app: ui-bakery-automation
+  ports:
+  - port: 4000
+    targetPort: 4000

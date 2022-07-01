@@ -27,7 +27,6 @@ spec:
             cpu: "900m"
         ports:
           - containerPort: 3030
-          - containerPort: 3040
 ---
 apiVersion: v1
 kind: Service
@@ -42,6 +41,3 @@ spec:
   - name: "3030"
     port: 3030
     targetPort: 3030
-  - name: "3040"
-    port: 3040
-    targetPort: 3040
