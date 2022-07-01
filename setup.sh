@@ -45,7 +45,6 @@ printf "URL: ${url}\n\n"
 
 echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
-echo "UI_BAKERY_WORKBENCH_PATH=${url}:3040" >> .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
