@@ -88,14 +88,15 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 ## Kubernetes
 
-1. Navigate into the `kubernetes` directory
-2. Edit the `ui-bakery-configmap.yaml` and inside the `{{ ... }}` insert required variables:
-  - `UI_BAKERY_APP_SERVER_NAME` - ought to be your {server ip address}:3030 - for example `http://123.123.123.123:3030`
+1. Clone the repository `git clone git@github.com:uibakery/self-hosted.git`
+2. Open the `kubernetes` directory
+3. Edit the `ui-bakery-configmap.yaml`, and set the required variables inside the `{{ ... }}`, where:
+  - `UI_BAKERY_APP_SERVER_NAME` - your {server ip address}:3030, for example `http://123.123.123.123:3030`
   - `UI_BAKERY_LICENSE_KEY` - get it from UI Bakery team
-  - You either have to run a [standalone database instance](#running-a-standalone-database-instance) or make sure standard `PersistentVolumeClaim` exist in your cluster.
-3. Run `kubectl apply -f .`
+  - You either have to run a [standalone database instance](#running-a-standalone-database-instance) or make sure standard `PersistentVolumeClaim` exists in your cluster.
+4. Run `kubectl apply -f .`
 
-The application will be exposed on a public ip address on port 3030, DNS and SSL has to be handled by the user.
+Please note that the application will be exposed on a public ip address on port 3030, so DNS and SSL have to be handled by the user.
 
 ## Running a standalone database instance
 
