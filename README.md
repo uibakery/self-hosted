@@ -19,6 +19,24 @@ On-premise version grants you:
 
 :warning: If you have already installed UI Bakery on-premise version, follow [this guide](#updating-on-premise-version) to update your version.
 
+## Table of contents
+- [Installation](#installation)
+  - [Requirements](#requirements)
+  - [Installation steps](#installation-steps)
+- [Manual installation](#manual-installation)
+- [Kubernetes](#kubernetes)
+- [Running a standalone database instance](#running-a-standalone-database-instance)
+- [Running on a remote instance](#running-on-a-remote-instance)
+- [Google oauth setup](#google-oauth-setup)
+- [SAML authentication setup](#saml-authentication-setup)
+  - [Authentication settings](#other-authentication-setting)
+  - [Limitations](#limitations)
+- [Google Sheets connection setup](#google-sheets-connection-setup)
+- [Emails configuration](#configuring-email-provider)
+  - [Sendgrid](#configure-sendgrid)
+  - [Email templates](#change-email-templates)
+- [Staying up to date](#updating-on-premise-version)
+
 ## Installation
 
 This document describes how to deploy ui-bakery on-prem via `install.sh` script.
@@ -66,7 +84,18 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 - Wait until all containers are up and running
 
-- Open ports `3030` and `3040` or `UI_BAKERY_PORT` and `UI_BAKERY_WORKBENCH_PORT` (if they were modified in `.env` file or entered in `./setup.sh`) to access UI Bakery instance, then you can create a new account.
+- Open port `3030` or `UI_BAKERY_PORT` (if it was modified in `.env` file or entered in `./setup.sh`) to access UI Bakery instance, then you can create a new account.
+
+## Kubernetes
+
+1. Navigate into the `kubernetes` directory
+2. Edit the `ui-bakery-configmap.yaml` and inside the `{{ ... }}` insert required variables:
+  - `UI_BAKERY_APP_SERVER_NAME` - ought to be your {server ip address}:3030 - for example `http://123.123.123.123:3030`
+  - `UI_BAKERY_LICENSE_KEY` - get it from UI Bakery team
+  - You either have to run a [standalone database instance](#running-a-standalone-database-instance) or make sure standard `PersistentVolumeClaim` exist in your cluster.
+3. Run `kubectl apply -f .`
+
+The application will be exposed on a public ip address on port 3030, DNS and SSL has to be handled by the user.
 
 ## Running a standalone database instance
 
@@ -90,24 +119,19 @@ If you would like to run UI Bakery not on localhost, but on a server, you need t
 
   ```bash
   UI_BAKERY_APP_SERVER_NAME=http://YOUR_DOMAIN_OR_IP:3030
-  UI_BAKERY_WORKBENCH_PATH=http://YOUR_DOMAIN_OR_IP:30400
   UI_BAKERY_PORT=3030
-  UI_BAKERY_WORKBENCH_PORT=3040
   ```
 
-:warning: UI_BAKERY_PORT and UI_BAKERY_WORKBENCH_PORT variables must match ports in UI_BAKERY_APP_SERVER_NAME, UI_BAKERY_WORKBENCH_PATH variables
+:warning: UI_BAKERY_PORT variable must match port in UI_BAKERY_APP_SERVER_NAME variable
 
-To run UI Bakery under HTTPS, you need to set up an additional subdomain for workbench (part of UI Bakery, where user apps can be securely rendered). In your DNS provider, configure the following records:
+In your DNS provider, configure the following records:
 
 - A or CNAME record with UI Bakery instance host
-
-- CNAME record for the workbench subdomain with the same host.
 
 Then modify your environment variable with the following values:
 
   ```bash
   UI_BAKERY_APP_SERVER_NAME=https://YOUR_DOMAIN
-  UI_BAKERY_WORKBENCH_PATH=https://workbench.YOUR_DOMAIN
   UI_BAKERY_PORT=80
   ```
 

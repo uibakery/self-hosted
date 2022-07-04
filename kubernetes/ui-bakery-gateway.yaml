@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-bakery-gateway
+  namespace: ui-bakery
+spec:
+  selector:
+    matchLabels:
+      app: ui-bakery-gateway
+  template:
+    metadata:
+      labels:
+        app: ui-bakery-gateway
+    spec:
+      containers:
+      - name: ui-bakery-gateway
+        image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
+        envFrom:
+          - configMapRef:
+              name: ui-bakery-configmap
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "900m"
+        ports:
+          - containerPort: 3030
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bakery-gateway
+  namespace: ui-bakery
+spec:
+  type: LoadBalancer
+  selector:
+    app: ui-bakery-gateway
+  ports:
+  - name: "3030"
+    port: 3030
+    targetPort: 3030

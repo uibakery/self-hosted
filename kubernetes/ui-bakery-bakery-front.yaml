@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-bakery-front
+  namespace: ui-bakery
+spec:
+  selector:
+    matchLabels:
+      app: ui-bakery-front
+  template:
+    metadata:
+      labels:
+        app: ui-bakery-front
+    spec:
+      containers:
+      - name: ui-bakery-front
+        image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
+        envFrom:
+          - configMapRef:
+              name: ui-bakery-configmap
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bakery-front
+  namespace: ui-bakery
+spec:
+  type: ClusterIP
+  selector:
+    app: ui-bakery-front
+  ports:
+  - port: 80
+    targetPort: 80
