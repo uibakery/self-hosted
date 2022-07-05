@@ -67,10 +67,10 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 - Install [docker](https://docs.docker.com/engine/install/) 20.10.11 version or higher and [docker-compose](https://docs.docker.com/compose/install/) 1.29.2 version or higher
 - Start docker daemon
-- Get on-premise package:
+- Get on-premise сonfiguration files:
 
   ```bash
-  curl -k -L -o ui-bakery-on-premise-vlatest.tar.gz https://storageaccountrguib99d2.blob.core.windows.net/ui-bakery-cloud-on-premise/ui-bakery-on-premise-vlatest.tar.gz && mkdir ui-bakery-on-premise && tar -xvf ui-bakery-on-premise-vlatest.tar.gz -C ui-bakery-on-premise && cd ui-bakery-on-premise
+  mkdir ui-bakery-on-premise && cd ui-bakery-on-premise && curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml && curl -k -L -o docker-compose-external-db.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose-external-db.yml && curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
   ```  
 
 - Get the license key [from UI Backery Team](https://uibakery.io/on-premise-ui-bakery). You'll get a key like of the following format: `eyJhbaj8es9fj9aesI6IkpXVCJ9.eyJsjioOHGEFOJeo0JSe98fJEJSEJFImVtYWlsIjoibmlrLnBvbHRvcmF0c2t5QGdtYWlsLmNvbSJ9.2n9q1LmjnBn62KyAM3FlYZ8PzQcxmIK0_mptNv38ufM`
