@@ -164,5 +164,5 @@ sudo bash ./setup.sh
 echo -e "\033[m ---------------------------------------------"
 
 echo "----------------------------------------------------"
-echo "Building containers and running the application....."
+echo "Running the application....."
 sudo docker-compose up -d
