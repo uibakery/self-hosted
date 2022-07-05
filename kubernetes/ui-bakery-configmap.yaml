@@ -12,6 +12,8 @@ data:
   SENDGRID_API_KEY: ""
   SENDGRID_EMAIL_FROM: admin@uibakery.io
   SENDGRID_NAME_FROM: Admin
+  SENDGRID_SYSTEM_EMAIL_FROM: admin@uibakery.io
+  SENDGRID_SYSTEM_NAME_FROM: Admin
   SENTRY_DSN: ""
   UI_BAKERY_AMPLITUDE_KEY: ""
   UI_BAKERY_ANALYTICS_LOGS_ENABLED: "false"
@@ -62,8 +64,7 @@ data:
   UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE: Hello userName,<br> Here's your <a href="resetPasswordUrl">password
     reset link</a>.
   UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT: You are invited to UI Bakery workspace
-  UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE: Hello userName,<br> Here's a <a href="organizationUrl">link
-    to access the organizationName workspace</a>.
+  UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE: Hello,<br> userName invited you to <a href="organizationUrl">organizationName workspace</a>.
   UI_BAKERY_MAILING_TEMPLATES_MODE: custom
   UI_BAKERY_MAILING_WELCOME_SUBJECT: Welcome to UI Bakery workspace
   UI_BAKERY_MAILING_WELCOME_TEMPLATE: Hello userName,<br> Welcome to UI Bakery workspace.
