@@ -6,13 +6,13 @@ services:
       - "bakery-front"
       - "workbench-front"
       - "bakery-back"
-    image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
+    image: cruibakeryonprem.azurecr.io/cloud/gateway:v.2.27.0-rc
     ports:
       - "${UI_BAKERY_PORT:-3030}:3030"
 
   bakery-front:
     container_name: bakery-front
-    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
+    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:v.2.27.0-rc
     environment:
       - UI_BAKERY_ENV_NAME=${UI_BAKERY_ENV_NAME:-selfhosted}
       - UI_BAKERY_APP_PRODUCTION=${UI_BAKERY_APP_PRODUCTION:-true}
@@ -64,7 +64,7 @@ services:
 
   workbench-front:
     container_name: workbench-front
-    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:latest
+    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:v.2.27.0-rc
     environment:
       - UI_BAKERY_APP_PRODUCTION=${UI_BAKERY_APP_PRODUCTION:-true}
       - SENTRY_DSN=${SENTRY_DSN:-SENTRY_DSN}
@@ -73,7 +73,7 @@ services:
 
   datasource:
     container_name: datasource
-    image: cruibakeryonprem.azurecr.io/cloud/datasource:latest
+    image: cruibakeryonprem.azurecr.io/cloud/datasource:v.2.27.0-rc
     environment:
       - UI_BAKERY_SSH_TUNNEL_USER=${UI_BAKERY_SSH_TUNNEL_USER:-}
       - UI_BAKERY_SSH_TUNNEL_PASSWORD=${UI_BAKERY_SSH_TUNNEL_PASSWORD:-}
@@ -86,7 +86,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
+    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:v.2.27.0-rc
     environment:
       - UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-db}
       - UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
@@ -186,7 +186,7 @@ services:
 
   automation:
     container_name: automation
-    image: cruibakeryonprem.azurecr.io/cloud/automation:latest
+    image: cruibakeryonprem.azurecr.io/cloud/automation:v.2.27.0-rc
     environment:
       - UI_BAKERY_APP_SERVER_NAME=${UI_BAKERY_APP_SERVER_NAME:-http://bakery-gateway:3030}
       - UI_BAKERY_AUTOMATION_CODE_EXECUTION_TIMEOUT=${UI_BAKERY_AUTOMATION_CODE_EXECUTION_TIMEOUT:-30000}

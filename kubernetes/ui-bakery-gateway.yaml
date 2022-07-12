@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ui-bakery-gateway
-        image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
+        image: cruibakeryonprem.azurecr.io/cloud/gateway:v.2.27.0-rc
         envFrom:
           - configMapRef:
               name: ui-bakery-configmap

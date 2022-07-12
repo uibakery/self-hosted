@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ui-bakery-backend
-        image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
+        image: cruibakeryonprem.azurecr.io/cloud/bakery-back:v.2.27.0-rc
         envFrom:
           - configMapRef:
               name: ui-bakery-configmap
