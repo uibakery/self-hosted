@@ -43,9 +43,18 @@ done
 url=${url:-http://localhost}
 printf "URL: ${url}\n\n"
 
+jwt_secret=$(tr -cd "[:alnum:]" < /dev/urandom | head -c 42 | xargs -0)
+jwt_service_account_secret=$(tr -cd "[:alnum:]" < /dev/urandom | head -c 55 | xargs -0)
+jwt_refresh_secret=$(tr -cd "[:alnum:]" < /dev/urandom | head -c 42 | xargs -0)
+credentials_secret=$(tr -cd "[:graph:]" < /dev/urandom | head -c 32 | xargs -0)
+
 echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
 echo "UI_BAKERY_PORT=${port}" >> .env
+echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
+echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
+echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
+echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env 
 
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
 printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!"
