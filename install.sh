@@ -148,10 +148,11 @@ fi
 if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker-compose  ....."
-   yes | sudo apt install docker-compose
+   sudo curl -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
 fi
 
-echo "Dounload setup files ----------------------------------"
+echo "Download setup files ----------------------------------"
 
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
 cd ui-bakery-on-premise
