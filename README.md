@@ -282,14 +282,14 @@ Once an update to the on-premise version is available, we will notify you via em
 To update your UI Bakery on-premise version, follow the steps below:
 
 1. Take a full backup of UI Bakery instance.
-1. Download the new version archive:
+2. Download the new version archive:
 
    ```bash
-   curl -k -L -o ui-bakery-on-premise-vlatest.tar.gz https://storageaccountrguib99d2.blob.core.windows.net/ui-bakery-cloud-on-premise/ui-bakery-on-premise-vlatest.tar.gz 
+   curl -k -L -o ui-bakery-on-premise-v2.27.0-rc.tar.gz https://storageaccountrguib99d2.blob.core.windows.net/ui-bakery-cloud-on-premise/ui-bakery-on-premise-v2.27.0-rc.tar.gz 
    ```
 
-1. Unpack archive to the same folder: `tar -xvf ui-bakery-on-premise-vlatest.tar.gz -C ui-bakery-on-premise && cd ui-bakery-on-premise`
-1. Restart the application: `docker-compose up --build -d`
+3. Unpack archive to the same folder: `tar -xvf ui-bakery-on-premise-v2.27.0-rc.tar.gz -C ui-bakery-on-premise && cd ui-bakery-on-premise`
+4. Download new images `docker-compose pull`
+5. Restart the application: `docker-compose down && docker-compose up -d`
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
-
