@@ -35,7 +35,7 @@ On-premise version grants you:
 - [Emails configuration](#configuring-email-provider)
   - [Sendgrid](#configure-sendgrid)
   - [Email templates](#change-email-templates)
-- [Staying up to date](#updating-on-premise-version)
+- [Updating on-premise version](#updating-on-premise-version)
 
 ## Installation
 
@@ -282,14 +282,13 @@ Once an update to the on-premise version is available, we will notify you via em
 To update your UI Bakery on-premise version, follow the steps below:
 
 1. Take a full backup of UI Bakery instance.
-1. Download the new version archive:
+1. Download new images and restart your instance:
 
-   ```bash
-   curl -k -L -o ui-bakery-on-premise-vlatest.tar.gz https://storageaccountrguib99d2.blob.core.windows.net/ui-bakery-cloud-on-premise/ui-bakery-on-premise-vlatest.tar.gz 
-   ```
-
-1. Unpack archive to the same folder: `tar -xvf ui-bakery-on-premise-vlatest.tar.gz -C ui-bakery-on-premise && cd ui-bakery-on-premise`
-1. Restart the application: `docker-compose up --build -d`
+```bash
+sudo docker-compose build --pull 
+sudo docker-compose pull && sudo docker-compose up -d
+sudo docker image prune -a -f
+```
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
 
