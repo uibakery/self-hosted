@@ -48,6 +48,13 @@ jwt_service_account_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head
 jwt_refresh_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 credentials_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
 
+if [ -e .env_old ]; then
+  cp .env_old .env_even_older
+fi
+if [ -e .env ]; then
+  cp .env .env_old
+fi
+
 echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
 echo "UI_BAKERY_PORT=${port}" >> .env
@@ -57,4 +64,4 @@ echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env 
 
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
-printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!"
+printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!\n"
