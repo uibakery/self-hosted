@@ -1,6 +1,6 @@
-<h2 align="center">
+<h3 align="center">
   UI Bakery is a low-code platform to build apps and automations you never had time for
-</h2>
+</h3>
 
 <h3 align="center">
   <b><a href="https://cloud.uibakery.io/auth/register?utm_source=github">Get Started</a></b>
