@@ -1,30 +1,24 @@
-<a href="https://cloud.uibakery.io/auth/register/?utm_source=github"><img src="assets/hero.png" width="100%" alt="UI Bakery - Internal tools and workflow automations"></a>
-
 <h2 align="center">
   UI Bakery is a low-code platform to build apps and automations you never had time for
 </h2>
 
 <h3 align="center">
-  <b><a href="https://cloud.uibakery.io/auth/register/?utm_source=github">Get Started</a></b>
+  <b><a href="https://cloud.uibakery.io/auth/register?utm_source=github">Get Started</a></b>
   •
-  <a href="https://docs.uibakery.io/?utm_source=github">Docs</a>
+  <a href="https://docs.uibakery.io?utm_source=github">Docs</a>
   •
-  <a href="https://uibakery.io/on-premise-ui-bakery/?utm_source=github">Grab your license key</a>
+  <a href="https://docs.uibakery.io/starter-guide/tutorials?utm_source=github">Tutorials</a>
   •
-  <a href="https://docs.uibakery.io/starter-guide/tutorials/?utm_source=github">Tutorials</a>
+  <a href="https://app.getbeamer.com/uibakery/en?utm_source=github">What's new</a> 
   •
-  <a href="https://community.uibakery.io/?utm_source=github">Community</a> 
-  •
-  <a href="https://app.getbeamer.com/uibakery/en/?utm_source=github">What's new</a> 
-  •
-  <a href="https://roadmap.uibakery.io/?utm_source=github">Roadmap</a> 
+  <a href="https://roadmap.uibakery.io?utm_source=github">Roadmap</a> 
 </h3>
 
-# Deploying UI Bakery on-premise
+<a href="https://cloud.uibakery.io/auth/register/?utm_source=github"><img src="assets/hero.png" width="100%" alt="UI Bakery - Internal tools and workflow automations"></a>
+
+## Deploying UI Bakery on-premise
 
 #### Deploy UI Bakery locally to manage your data from your private network
-
------------------------------------------------------------
 
 We understand that you might have lots of data accessible from your private network, that’s why you can use UI Bakery self-hosted version for your benefit.
 
