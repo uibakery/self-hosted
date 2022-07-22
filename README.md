@@ -231,7 +231,8 @@ We suggest using [Sendgrid](https://sendgrid.com/) email provider to send the em
 
    ```bash
    UI_BAKERY_MAILING_PROVIDER=sendgrid
-   SENDGRID_API_KEY=YOUR_API_KEY 
+   SENDGRID_API_KEY=YOUR_API_KEY
+   SENDGRID_EMAIL_FROM=admin@uibakery.io
    ```
 
 1. Restart the containers.
