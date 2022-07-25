@@ -48,9 +48,6 @@ jwt_service_account_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head
 jwt_refresh_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 credentials_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
 
-if [ -e .env_old ]; then
-  cp .env_old .env_even_older
-fi
 if [ -e .env ]; then
   cp .env .env_old
 fi
