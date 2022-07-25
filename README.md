@@ -41,6 +41,7 @@ On-premise version grants you:
   - [Installation steps](#installation-steps)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
+- [Azure container instance](#azure-container-instance)
 - [Running a standalone database instance](#running-a-standalone-database-instance)
 - [Running on a remote instance](#running-on-a-remote-instance)
 - [Google oauth setup](#google-oauth-setup)
@@ -113,6 +114,56 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 4. Run `kubectl apply -f .`
 
 Please note that the application will be exposed on a public ip address on port 3030, so DNS and SSL have to be handled by the user.
+
+## Azure container instance
+
+1. Login docker to azure.
+```bash
+docker login azure
+```
+
+2. Create docker context.
+```bash
+docker context create aci uibakery
+```
+
+3. Use new context.
+```bash
+docker context use uibakery
+```
+
+4. Clone ui bakery self-hosted repository.
+```bash
+git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
+```
+
+5. UI Bakery requires db to persist its data. So we have to create one. We suggest you using [**Azure Database for MySQL**](https://azure.microsoft.com/en-us/services/mysql/#overview).
+
+6. Set `UI_BAKERY_DB_*` variables in *docker-compose-azure-container-instances.yml* for `bakery-back` service.
+```yaml
+- UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
+- UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
+- UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
+- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-test-db}
+- UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
+```
+
+7. Up azure container instance.
+```bash
+docker compose -f docker-compose-azure-container-instances.yml up
+```
+
+8. Find assigned IP address. Run `docker ps` and in colum *PORTS* you'll find assigned IP address.
+
+9. Replace all occurrences of `UI_BAKERY_APP_SERVER_NAME` with the IP address retrieved in the previous step.
+```yaml
+- UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
+```
+
+10. Restart instance to apply new configuration.
+```bash
+docker compose -f docker-compose-external-db.yml up
+```
 
 ## Running a standalone database instance
 
