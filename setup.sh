@@ -63,7 +63,7 @@ echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env
 if [ -e .env ]; then
   printf "${CYAN}Verifying your license key...${NC}\n"
   LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
-  curl -XPOST -H "Content-type: application/json" -d '{"event": "install", "key": "'"${LICENSE_KEY_LINE}"'"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
+  curl -XPOST -H "Content-type: application/json" -d '{"event": "setup", "key": "'"${LICENSE_KEY_LINE}"'"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
   printf "${GREEN}License key verification succeeded!${NC}\n"
 fi
 

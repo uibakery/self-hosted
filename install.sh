@@ -1,4 +1,19 @@
 #!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+printf "Requesting license...\n"
+if [ -e .env ]; 
+then
+  LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
+  curl -XPOST -H "Content-type: application/json" -d '{"event": "install", "key": "'"${LICENSE_KEY_LINE}"'"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
+  printf "License found\n"
+else 
+  curl -XPOST -H "Content-type: application/json" -d '{"event": "install", "key": "Unknown"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
+  printf "No license found\n"
+fi
 
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
