@@ -2,10 +2,11 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
+LICENCE_SERVER="https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb"
 
 if [ -e .env ]; then
   LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
-  curl -XPOST -H "Content-type: application/json" -d '{"event": "update", "key": "'"${LICENSE_KEY_LINE}"'"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
+  curl -s -XPOST -H "Content-type: application/json" -d '{"event": "update", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER  &> /dev/null
 fi
 
 if [ -e docker-compose.yaml ]; then
