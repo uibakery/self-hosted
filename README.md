@@ -358,9 +358,7 @@ To update your UI Bakery on-premise version, follow the steps below:
 1. Download new images and restart your instance:
 
 ```bash
-sudo docker-compose build --pull 
-sudo docker-compose pull && sudo docker-compose up -d
-sudo docker image prune -a -f
+./update.sh
 ```
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)

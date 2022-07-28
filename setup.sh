@@ -60,5 +60,10 @@ echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .en
 echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env 
 
+printf "${CYAN}Verifying your license key...${NC}\n"
+LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
+curl -XPOST -H "Content-type: application/json" -d '{"event": "install", "key": "'"${LICENSE_KEY_LINE}"'"}' 'https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb'
+printf "${GREEN}License key verification succeeded!${NC}\n"
+
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
 printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!\n"
