@@ -4,7 +4,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 
-printf "Enter license key:\n"
+printf "Enter license key(https://uibakery.io/get-an-on-prem-version-of-ui-bakery?utm_source=install_sh):\n"
 while read license; do
   test "$license" != "" && break
   printf "${RED}License key is required!${NC}\n"
