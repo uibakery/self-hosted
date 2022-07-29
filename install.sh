@@ -3,8 +3,8 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
-LICENCE_SERVER="https://cloud.uibakery.io/api/automation/6HOZ4akpRr?key=eeac94fe-07f7-4167-ac8e-653346347adb"
-GET_KEY_LINK="https://uibakery.io/get-an-on-prem-version-of-ui-bakery?utm_source=install_sh"
+LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
+GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
 SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 
 printf "Contacting license server...\n"
