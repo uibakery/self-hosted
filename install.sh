@@ -160,7 +160,7 @@ fi
 if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker-compose  ....."
-   sudo curl -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo curl -s -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
    sudo chmod +x /usr/local/bin/docker-compose
 fi
 
@@ -173,18 +173,15 @@ if [[ "$1" == "TEST" ]]; then
   cp ../setup.sh ./setup.sh
   cp ../update.sh ./update.sh
 else
-  curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
-  curl -k -L -o update.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/update.sh
+  curl -s -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
+  curl -s -k -L -o update.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/update.sh
 fi
-curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
+curl -s -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
-echo "Configuring application settings. This require sudo password"
-
-sudo \
- SESSION_ID=$SESSION_ID \
- GET_KEY_LINK=$GET_KEY_LINK \
- LICENCE_SERVER=$LICENCE_SERVER \
- bash ./setup.sh
+export SESSION_ID
+export GET_KEY_LINK
+export LICENCE_SERVER
+bash ./setup.sh
 echo -e "\033[m ---------------------------------------------"
 
 echo "----------------------------------------------------"
