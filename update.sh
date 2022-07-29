@@ -9,9 +9,9 @@ if [ -e .env ]; then
   curl -s -XPOST -H "Content-type: application/json" -d '{"event": "update", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER  &> /dev/null
 fi
 
-if [ -e docker-compose.yaml ]; then
-  cp docker-compose.yaml docker-compose_old.yaml
-  printf "New ${CYAN}docker-compose.yaml${NC} is downloaded, you can find old version at ${CYAN}docker-compose_old.yaml${NC}\n"
+if [ -e docker-compose.yml ]; then
+  cp docker-compose.yml docker-compose_old.yml
+  printf "New ${CYAN}docker-compose.yml${NC} is downloaded, you can find old version at ${CYAN}docker-compose_old.yml${NC}\n"
   curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
   sudo docker-compose build --pull 
@@ -19,13 +19,13 @@ if [ -e docker-compose.yaml ]; then
   sudo docker image prune -a -f
 fi
 
-if [ -e docker-compose-external-db.yaml ]; then
-  cp docker-compose-external-db.yaml docker-compose-external-db_old.yaml
-  printf "New ${CYAN}New docker-compose-external-db.yaml${NC} is downloaded, you can find old version at ${CYAN}docker-compose-external-db_old.yaml${NC}\n"
+if [ -e docker-compose-external-db.yml ]; then
+  cp docker-compose-external-db.yml docker-compose-external-db_old.yml
+  printf "New ${CYAN}New docker-compose-external-db.yml${NC} is downloaded, you can find old version at ${CYAN}docker-compose-external-db_old.yml${NC}\n"
   curl -k -L -o docker-compose-external-db.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose-external-db.yml
 
-  sudo docker-compose -f docker-compose-external-db.yaml build --pull 
-  sudo docker-compose -f docker-compose-external-db.yaml pull && sudo docker-compose -f docker-compose-external-db.yaml up -d
+  sudo docker-compose -f docker-compose-external-db.yml build --pull 
+  sudo docker-compose -f docker-compose-external-db.yml pull && sudo docker-compose -f docker-compose-external-db.yml up -d
   sudo docker image prune -a -f
 fi
 
