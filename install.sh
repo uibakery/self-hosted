@@ -183,9 +183,6 @@ export SESSION_ID
 export GET_KEY_LINK
 export LICENCE_SERVER
 bash ./setup.sh
-echo -e "\033[m ---------------------------------------------"
-
-echo "----------------------------------------------------"
 echo "Running the application..."
 
 sudo docker-compose up -d

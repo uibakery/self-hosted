@@ -70,4 +70,3 @@ if [ -e .env ]; then
 fi
 
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
-printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!\n"
