@@ -355,12 +355,16 @@ Once an update to the on-premise version is available, we will notify you via em
 To update your UI Bakery on-premise version, follow the steps below:
 
 1. Take a full backup of UI Bakery instance.
-1. Download new images and restart your instance:
+1. Go to your `ui-bakery-on-premise` folder:
 
 ```bash
-sudo docker-compose build --pull 
-sudo docker-compose pull && sudo docker-compose up -d
-sudo docker image prune -a -f
+cd ./ui-bakery-on-premise
+```
+
+1. Run `./update.sh` that will download new images and restart your instance:
+
+```bash
+./update.sh
 ```
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)

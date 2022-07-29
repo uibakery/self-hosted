@@ -17,3 +17,7 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+.env
+.env_old
+ui-bakery-on-premise

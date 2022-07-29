@@ -3,7 +3,8 @@ GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-
+printf "${CYAN}Get UI Bakery license - ${GET_KEY_LINK}:\n${NC}"
+printf '\n'
 printf "Enter license key:\n"
 while read license; do
   test "$license" != "" && break
@@ -12,6 +13,7 @@ while read license; do
 done
 printf "License key: ${license}\n\n"
 
+curl -s -XPOST -H "Content-type: application/json" -d '{"event": "license", "session": "'"${SESSION_ID}"'", "key": "'"${license}"'"}' $LICENCE_SERVER  &> /dev/null
 
 printf "Enter PORT[3030]:\n"
 while read port; do
@@ -60,5 +62,11 @@ echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .en
 echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env 
 
+if [ -e .env ]; then
+  printf "${CYAN}Verifying your license key...${NC}\n"
+  LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
+  curl -s -XPOST -H "Content-type: application/json" -d '{"event": "finish", "session": "'"${SESSION_ID}"'", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER &> /dev/null
+  printf "${GREEN}License key verification succeeded!${NC}\n"
+fi
+
 printf "${GREEN}UI Bakery setup is done!${NC}\n"
-printf "Run ${CYAN}docker-compose up -d${NC} to bootstrap your instance!\n"

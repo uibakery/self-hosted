@@ -1,4 +1,14 @@
 #!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
+GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
+SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+
+printf "Contacting license server...\n"
+curl -s -XPOST -H "Content-type: application/json" -d '{"event": "start", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
 
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
@@ -76,7 +86,8 @@ if [ -n "$I" ]; then
           NEXT_INSTALL_OPERATION="EXIT"
        fi
    else
-      echo "Make sure the installed version of docker is ${MIN_VERSION_DOCKER} or higher. Continue? Y/n (Default - Y)"
+      echo "Make sure the installed version of docker is ${MIN_VERSION_DOCKER} or higher."
+      echo "Continue? Y/n (Default - Y)"
       while read docker_version_y_n; do
         if [[ "$docker_version_y_n" == "Y" ]] || [[ "$docker_version_y_n" == "y" ]] || [[ "$docker_version_y_n" == "" ]]; then
          NEED_INSTALL_DOCKER="NO"
@@ -113,7 +124,8 @@ if [ -n "$I" ]; then
          NEXT_INSTALL_OPERATION="EXIT"
        fi
     else
-      echo "Make sure the installed version of docker-compose is ${MIN_VERSION_DOCKER_COMPOSE} or higher. Continue? Y/n (Default - Y)"
+      echo "Make sure the installed version of docker-compose is ${MIN_VERSION_DOCKER_COMPOSE} or higher."
+      echo "Continue? Y/n (Default - Y)"
       while read docker_compose_version_y_n; do
         if [[ "$docker_compose_version_y_n" == "Y" ]] || [[ "$docker_compose_version_y_n" == "y" ]] || [[ "$docker_compose_version_y_n" == "" ]]; then
          NEED_INSTALL_DOCKER_COMPOSE="NO"
@@ -141,6 +153,7 @@ fi
 if [[ "$NEED_INSTALL_DOCKER" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker  ....."
+   printf "Docker installation requries sudo permissions\n"
    curl -fsSL https://get.docker.com -o get-docker.sh
    yes | sudo sh get-docker.sh
 fi
@@ -148,7 +161,7 @@ fi
 if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker-compose  ....."
-   sudo curl -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo curl -s -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
    sudo chmod +x /usr/local/bin/docker-compose
 fi
 
@@ -157,13 +170,19 @@ echo "Download setup files ----------------------------------"
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
 cd ui-bakery-on-premise
 
-curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
-curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
+if [[ "$1" == "TEST" ]]; then
+  cp ../setup.sh ./setup.sh
+  cp ../update.sh ./update.sh
+else
+  curl -s -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
+  curl -s -k -L -o update.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/update.sh
+fi
+curl -s -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
-echo "Configuring application settings....."
-sudo bash ./setup.sh
-echo -e "\033[m ---------------------------------------------"
+export SESSION_ID
+export GET_KEY_LINK
+export LICENCE_SERVER
+bash ./setup.sh
+echo "Running the application..."
 
-echo "----------------------------------------------------"
-echo "Running the application....."
 sudo docker-compose up -d
