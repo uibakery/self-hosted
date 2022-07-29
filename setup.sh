@@ -3,7 +3,7 @@ GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-printf "\e]8;;${GET_KEY_LINK}\e\\[Get UI Bakery license]\e]8;;\e\\"
+printf "${CYAN}Get UI Bakery license - ${GET_KEY_LINK}:\n${NC}"
 printf '\n'
 printf "Enter license key:\n"
 while read license; do

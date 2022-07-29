@@ -169,23 +169,25 @@ echo "Download setup files ----------------------------------"
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
 cd ui-bakery-on-premise
 
-curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
-curl -k -L -o update.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/update.sh
+if [[ "$1" == "TEST" ]]; then
+  cp ../setup.sh ./setup.sh
+  cp ../update.sh ./update.sh
+else
+  curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
+  curl -k -L -o update.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/update.sh
+fi
 curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
-# comment out the curl above and uncomment this for testing and development
-#cp ../setup.sh ./setup.sh
-#cp ../update.sh ./update.sh
+echo "Configuring application settings. This require sudo password"
 
-echo "Configuring application settings....."
-
-export SESSION_ID
-export GET_KEY_LINK
-export LICENCE_SERVER
-./setup.sh
+sudo \
+ SESSION_ID=$SESSION_ID \
+ GET_KEY_LINK=$GET_KEY_LINK \
+ LICENCE_SERVER=$LICENCE_SERVER \
+ bash ./setup.sh
 echo -e "\033[m ---------------------------------------------"
 
 echo "----------------------------------------------------"
-echo "Running the application..... This may require sudo password"
+echo "Running the application..."
 
 sudo docker-compose up -d
