@@ -153,6 +153,7 @@ fi
 if [[ "$NEED_INSTALL_DOCKER" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker  ....."
+   printf "Docker installation requries sudo permissions\n"
    curl -fsSL https://get.docker.com -o get-docker.sh
    yes | sudo sh get-docker.sh
 fi
