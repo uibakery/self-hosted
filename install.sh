@@ -7,7 +7,7 @@ LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
 GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
 SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 
-printf "Contacting license server...\n"
+printf "Starting installation process...\n"
 curl -s -XPOST -H "Content-type: application/json" -d '{"event": "start", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
 
 MIN_VERSION_DOCKER="20.10.11"
@@ -95,7 +95,7 @@ if [ -n "$I" ]; then
         elif [[ "$docker_version_y_n" == "N" ]] || [[ "$docker_version_y_n" == "n" ]]; then
          exit
         else
-         echo "Y - yes, i have have proper version of docker; N - no, i want to exit from install"
+         echo "Y - yes, I have have proper version of docker; N - no, I want to exit from install"
         fi 
      done
    fi    
@@ -133,7 +133,7 @@ if [ -n "$I" ]; then
         elif [[ "$docker_compose_version_y_n" == "N" ]] || [[ "$docker_compose_version_y_n" == "n" ]]; then
          exit
         else
-         echo "Y - yes, i have have proper version of docker-compose; N - no, i want to exit from install"
+         echo "Y - yes, I have have proper version of docker-compose; N - no, I want to exit from install"
         fi 
      done
     fi
