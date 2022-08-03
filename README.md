@@ -89,7 +89,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
     {BakeryPort} (default 3030) is the port that Bakery runs 
 
-1. After creating and running the virtual machine, connect to it from outside using the SSH protocol. Then install according to the [general installation procedure](#installation-steps)
+1. After creating and running the virtual machine, connect to it from outside using the SSH protocol. Then install according to the [general installation procedure](#installation-steps) (steps 1 and 2)
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at
 (http://{Public IP address Azure VM}:{BakeryPort}
