@@ -77,6 +77,22 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 1. Once the installation is completed, open the browser using URL and port provided earlier. By default it is [http://localhost:3030/](http://localhost:3030/).
 
 **NOTE**: If Docker of the version less than the required (minimum 20.10.11) is already installed on the server, and/or Docker Compose (minimum 1.29.2), the script will be stopped. You need to update the versions of components manually and run the script again.
+#### Features of installation on Azure Virtual machine with Ubuntu
+
+1. Select an image of Ubuntu 18.04 or higher
+
+1. For instance size, select minimum Standard_F2s_v2 - 2 vcpus, 4 GiB memory
+
+1. Under the Networking tab, configure selected (or created) network security group  to contain the following ports:
+
+    22 (ssh) to allow you to ssh into the instance and configure it
+
+    {BakeryPort} (default 3030) is the port that Bakery runs 
+
+1. After creating and running the virtual machine, connect to it from outside using the SSH protocol. Then install according to the [general installation procedure](#installation-steps)
+
+1. After the installation is completed and launched, enter the bakery from a browser on your local machine at
+(http://{Public IP address Azure VM}:{BakeryPort}
 
 ## Manual installation
 
