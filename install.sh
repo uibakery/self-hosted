@@ -7,8 +7,9 @@ LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
 GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
 SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 
-printf "Contacting license server...\n"
-curl -s -XPOST -H "Content-type: application/json" -d '{"event": "start", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
+printf "${GREEN}Welcome to UI Bakery installation script. Setup process won't take more than a couple of minutes.\n${NC}"
+printf "${CYAN}Starting dependencies configuration...\n${NC}"
+curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
 
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
@@ -55,7 +56,7 @@ function check_version {
  local Q_NEED_INSTALL_DOCKER=0
  if [[ "$Q_INSTALL_DOCKER" == "YES" ]]; then
      echo "The minimum required version should be ${min_version[0]}.${min_version[1]}.${min_version[2]}"
-     echo -e "\033[0m\033[0m\033[31m You need to manually upgrade the component to at least the minimum required version. Installation will be aborted !"
+     echo -e "\033[0m\033[0m\033[31m You need to manually upgrade the component to at least the minimum required version. Installation will be aborted."
      echo -e "\033[m"
      Q_NEED_INSTALL_DOCKER=1
  fi
@@ -74,7 +75,7 @@ echo ""
 echo "Checking docker-ce ----------------------------"
 I=`which docker`
 if [ -n "$I" ]; then
-   echo "Docker-ce is already installed...."
+   printf "${GREEN}Docker-ce is already installed\n${NC}"
    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
        J=`dpkg -s docker-ce | grep "Version" `
        echo "$J"
@@ -95,7 +96,7 @@ if [ -n "$I" ]; then
         elif [[ "$docker_version_y_n" == "N" ]] || [[ "$docker_version_y_n" == "n" ]]; then
          exit
         else
-         echo "Y - yes, i have have proper version of docker; N - no, i want to exit from install"
+         echo "Y - yes, I have have proper version of docker; N - no, I want to exit from install"
         fi 
      done
    fi    
@@ -112,7 +113,7 @@ echo ""
 echo "Checking docker-compose ----------------------------"
 I=`which docker-compose`
 if [ -n "$I" ]; then
-   echo "Docker-compose is already installed...."
+   printf "${GREEN}Docker-compose is already installed\n${NC}"
    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
        J=`dpkg -s docker-compose | grep "Version" `
        echo "$J"
@@ -133,7 +134,7 @@ if [ -n "$I" ]; then
         elif [[ "$docker_compose_version_y_n" == "N" ]] || [[ "$docker_compose_version_y_n" == "n" ]]; then
          exit
         else
-         echo "Y - yes, i have have proper version of docker-compose; N - no, i want to exit from install"
+         echo "Y - yes, I have have proper version of docker-compose; N - no, I want to exit from install"
         fi 
      done
     fi
@@ -165,7 +166,7 @@ if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
    sudo chmod +x /usr/local/bin/docker-compose
 fi
 
-echo "Download setup files ----------------------------------"
+printf "Downloading setup files ----------------------------------\n\n"
 
 [ -d ./ui-bakery-on-premise ] || mkdir ui-bakery-on-premise
 cd ui-bakery-on-premise
