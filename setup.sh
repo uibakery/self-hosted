@@ -82,7 +82,7 @@ done
 
 if [[ "$CUSTOM_LICENSE_KEY" == "NO" ]]; then
   printf "${CYAN}Issuing a trial license...\n${NC}"
-  license=$(curl -s -XPOST -H "Content-type: application/json" -d '{"event": "start_trial", "session": "'"${SESSION_ID}"'", "email": "'"${email}"'"}' $LICENCE_SERVER)
+  license=$(curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_trial", "session": "'"${SESSION_ID}"'", "email": "'"${email}"'"}' $LICENCE_SERVER)
   if [[ "$license" == "" ]]; then
     printf "${RED}Failed to contact a license server. Please contact UI Bakery support at ${GET_KEY_LINK}\n${NC}"
     CUSTOM_LICENSE_KEY="YES"
@@ -100,16 +100,15 @@ if [[ "$CUSTOM_LICENSE_KEY" == "YES" ]]; then
   done
 fi
 
-printf "License key: ${license}\n\n"
 echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
 
-curl -s -XPOST -H "Content-type: application/json" -d '{"event": "license", "session": "'"${SESSION_ID}"'", "key": "'"${license}"'"}' $LICENCE_SERVER  &> /dev/null
+curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "license", "session": "'"${SESSION_ID}"'", "key": "'"${license}"'"}' $LICENCE_SERVER  &> /dev/null
 
 
 if [ -e .env ]; then
   printf "${CYAN}Finishing up installation...${NC}\n"
   LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
-  curl -s -XPOST -H "Content-type: application/json" -d '{"event": "finish", "session": "'"${SESSION_ID}"'", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER &> /dev/null
+  curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "finish", "session": "'"${SESSION_ID}"'", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER &> /dev/null
 fi
 
 printf "${GREEN}Running UI Bakery at ${url}:${port}${NC}\n"
