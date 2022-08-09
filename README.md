@@ -89,13 +89,11 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. For instance size, select minimum `Standard_F2s_v2 - 2 vCPUs, 4 GiB memory`
 
-1. If you want to access through password, in `Administrator account` section in `Authentication type` menu item select `Password` and setup admin username and password. Otherwise leave `SSH public key` and it will generate the keys after creation
+1. In `Administrator account` section in `Authentication type` menu item select `SSH public key` and it will generate the keys after VM creation
 
 1. In `Inbound port rules` leave `SSH(22)` as by default
 
 1. In the `Networking` tab select existing or create new Virtual Network and Subnet used by this VM
-
-1. Public IP address will be created automatically
 
 1. In `NIC network security group` select `Advanced`
 
@@ -117,7 +115,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. Click `Create`
 
-1. After creating and running the virtual machine, connect to it from outside using admin/password or the SSH protocol, as it was configured.
+1. After creating and running the virtual machine, connect to it from outside using SSH protocol.
 
 1. Run this command preferably from `/home` Linux directory to download, install and launch UI Bakery:
 
@@ -125,10 +123,9 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
-1. In the process, upon request, enter the previously received license code, hosting URL and port.
+1. In the process, upon request, enter the previously received license code, hosting URL (localhost) and port ({BakeryPort}).
 
-1. After the installation is completed and launched, enter the bakery from a browser on your local machine at
-   (http://{Public IP address Azure VM}:{BakeryPort}
+1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
 
 ## Manual installation
 
