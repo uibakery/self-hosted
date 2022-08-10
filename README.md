@@ -40,6 +40,7 @@ On-premise version grants you:
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [Installation steps](#installation-steps)
+- [Deploying on Azure VM](#deploying-on-azure-virtual-machine)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
 - [Azure container instance](#azure-container-instance)
@@ -79,7 +80,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 **NOTE**: If Docker of the version less than the required (minimum 20.10.11) is already installed on the server, and/or Docker Compose (minimum 1.29.2), the script will be stopped. You need to update the versions of components manually and run the script again.
 
-## Deploying on Azure Virtual Machine```
+## Deploying on Azure Virtual Machine
 
 1. Open [Azure Portal](http://portal.azure.com/) and on the search field in the top type in `Virtual machines` and select this item in result search window
 
