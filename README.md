@@ -101,7 +101,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. Click `+ Add an inbound rule`
 
-1. Add {BakeryPort} (default 3030, where Bareky runs) is the `Destination port ranges`
+1. Add {BakeryPort} (default 3030, you will need to select the same port while running a command for Bakery installation later) is the `Destination port ranges`
 
 1. In `Protocol` Choose `TCP`
 
@@ -123,7 +123,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
-1. In the process, upon request, enter the previously received license code, hosting URL (localhost) and port ({BakeryPort}).
+1. In the process, upon request, enter the previously received license code, hosting URL (use default, localhost) and port ({BakeryPort}, which you selected in the earlier steps).
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
 
