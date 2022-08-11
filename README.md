@@ -82,19 +82,19 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 ## Deploying on Azure Virtual Machine
 
-1. Open [Azure Portal](http://portal.azure.com/) and on the search field in the top type in `Virtual machines` and select this item in result search window
+1. Open [Azure Portal](http://portal.azure.com/) and on the search field at the top type in `Virtual machines` and select this item in the result search window
 
-1. Click on `+ Create` button in the top left corner and select `Azure Virtual machine` in the menu
+1. Click on the `+ Create` button in the top left corner and select `Azure Virtual machine` in the menu
 
 1. Select an image of `Ubuntu 18.04` or higher
 
 1. For instance size, select minimum `Standard_F2s_v2 - 2 vCPUs, 4 GiB memory`
 
-1. In `Administrator account` section in `Authentication type` menu item select `SSH public key` and it will generate the keys after VM creation
+1. In the `Administrator account` section in the `Authentication type` menu item select `SSH public key` and it will generate the keys after VM creation
 
 1. In `Inbound port rules` leave `SSH(22)` as by default
 
-1. In the `Networking` tab select existing or create new Virtual Network and Subnet used by this VM
+1. In the `Networking` tab select existing or create a new Virtual Network and Subnet used by this VM
 
 1. In `NIC network security group` select `Advanced`
 
@@ -102,15 +102,15 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. Click `+ Add an inbound rule`
 
-1. Add {BakeryPort} (default 3030, you will need to select the same port while running a command for Bakery installation later) is the `Destination port ranges`
+1. Add {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Destination port ranges`
 
 1. In `Protocol` Choose `TCP`
 
 1. Click `Add`
 
-1. Check that `SSH (TCP/22)` is confugured by default. If not, add it manually using same algorithm as for {BakeryPort}
+1. Check that `SSH (TCP/22)` is configured by default. If not, add it manually using the same algorithm as for {BakeryPort}
 
-1. Click `Ok` to finish creating Network security group
+1. Click `Ok` to finish creating a Network security group
 
 1. Click `Review + create`
 
@@ -118,13 +118,13 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. After creating and running the virtual machine, connect to it from outside using SSH protocol.
 
-1. Run this command preferably from `/home` Linux directory to download, install and launch UI Bakery:
+1. Run this command preferably from the `/home` Linux directory to download, install and launch UI Bakery:
 
    ```bash
    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
-1. In the process, upon request, enter the previously received license code, hosting URL (use default, localhost) and port ({BakeryPort}, which you selected in the earlier steps).
+1. Upon request, enter the previously received license code, hosting URL - Azure Virtual Machine IP address, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
 
