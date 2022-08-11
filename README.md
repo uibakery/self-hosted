@@ -36,9 +36,11 @@ On-premise version grants you:
 :warning: If you have already installed UI Bakery on-premise version, follow [this guide](#updating-on-premise-version) to update your version.
 
 ## Table of contents
+
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [Installation steps](#installation-steps)
+- [Deploying on Azure VM](#deploying-on-azure-virtual-machine)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
 - [Azure container instance](#azure-container-instance)
@@ -78,6 +80,54 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 **NOTE**: If Docker of the version less than the required (minimum 20.10.11) is already installed on the server, and/or Docker Compose (minimum 1.29.2), the script will be stopped. You need to update the versions of components manually and run the script again.
 
+## Deploying on Azure Virtual Machine
+
+1. Open [Azure Portal](http://portal.azure.com/) and on the search field at the top type in `Virtual machines` and select this item in the result search window
+
+1. Click on the `+ Create` button in the top left corner and select `Azure Virtual machine` in the menu
+
+1. Select an image of `Ubuntu 18.04` or higher
+
+1. For instance size, select minimum `Standard_F2s_v2 - 2 vCPUs, 4 GiB memory`
+
+1. In the `Administrator account` section in the `Authentication type` menu item select `SSH public key` and it will generate the keys after VM creation
+
+1. In `Inbound port rules` leave `SSH(22)` as by default
+
+1. In the `Networking` tab select existing or create a new Virtual Network and Subnet used by this VM
+
+1. In `NIC network security group` select `Advanced`
+
+1. In `Configure network security group` click `Create new`
+
+1. Click `+ Add an inbound rule`
+
+1. Add {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Destination port ranges`
+
+1. In `Protocol` Choose `TCP`
+
+1. Click `Add`
+
+1. Check that `SSH (TCP/22)` is configured by default. If not, add it manually using the same algorithm as for {BakeryPort}
+
+1. Click `Ok` to finish creating a Network security group
+
+1. Click `Review + create`
+
+1. Click `Create`
+
+1. After creating and running the virtual machine, connect to it from outside using SSH protocol.
+
+1. Run this command preferably from the `/home` Linux directory to download, install and launch UI Bakery:
+
+   ```bash
+   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+   ```
+
+1. Upon request, enter the previously received license code, hosting URL - Azure Virtual Machine IP address, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+
+1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
+
 ## Manual installation
 
 :warning: MySQL instance is included into the out of the box container and doesn't require any additional setup. If you need to have a standalone database, read [Running a standalone database instance](#running-a-standalone-database-instance)
@@ -88,16 +138,17 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
   ```bash
   mkdir ui-bakery-on-premise && cd ui-bakery-on-premise && curl -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml && curl -k -L -o docker-compose-external-db.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose-external-db.yml && curl -k -L -o setup.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/setup.sh
-  ```  
+  ```
 
 - Get the license key [from UI Backery Team](https://uibakery.io/on-premise-ui-bakery). You'll get a key like of the following format: `eyJhbaj8es9fj9aesI6IkpXVCJ9.eyJsjioOHGEFOJeo0JSe98fJEJSEJFImVtYWlsIjoibmlrLnBvbHRvcmF0c2t5QGdtYWlsLmNvbSJ9.2n9q1LmjnBn62KyAM3FlYZ8PzQcxmIK0_mptNv38ufM`
 
 - Run `./setup.sh`:
+
   - Enter the license key
   - Enter the port (leave empty for local installation, 3030 port will be used)
   - Enter the server URL (leave empty for local installation)
 
-- Run `docker-compose up -d` to start the containers  
+- Run `docker-compose up -d` to start the containers
 
 - Wait until all containers are up and running
 
@@ -108,9 +159,11 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 1. Clone the repository `git clone git@github.com:uibakery/self-hosted.git`
 2. Open the `kubernetes` directory
 3. Edit the `ui-bakery-configmap.yaml`, and set the required variables inside the `{{ ... }}`, where:
-  - `UI_BAKERY_APP_SERVER_NAME` - your {server ip address}:3030, for example `http://123.123.123.123:3030`
-  - `UI_BAKERY_LICENSE_KEY` - get it from UI Bakery team
-  - You either have to run a [standalone database instance](#running-a-standalone-database-instance) or make sure standard `PersistentVolumeClaim` exists in your cluster.
+
+- `UI_BAKERY_APP_SERVER_NAME` - your {server ip address}:3030, for example `http://123.123.123.123:3030`
+- `UI_BAKERY_LICENSE_KEY` - get it from UI Bakery team
+- You either have to run a [standalone database instance](#running-a-standalone-database-instance) or make sure standard `PersistentVolumeClaim` exists in your cluster.
+
 4. Run `kubectl apply -f .`
 
 Please note that the application will be exposed on a public ip address on port 3030, so DNS and SSL have to be handled by the user.
@@ -118,33 +171,39 @@ Please note that the application will be exposed on a public ip address on port 
 ## Azure container instance
 
 1. Login docker to azure.
+
 ```bash
 docker login azure
 ```
 
 2. Create docker context.
+
 ```bash
 docker context create aci uibakery
 ```
 
 3. Use new context.
+
 ```bash
 docker context use uibakery
 ```
 
 4. Clone ui bakery self-hosted repository.
+
 ```bash
 git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
 ```
 
 5. UI Bakery requires db to persist its data. So we have to create one. We suggest you using [**Azure Database for MySQL**](https://azure.microsoft.com/en-us/services/mysql/#overview).
 
-6. Set `UI_BAKERY_LICENSE_KEY` variable in *docker-compose-azure-container-instances.yml* for `bakery-back` service.
+6. Set `UI_BAKERY_LICENSE_KEY` variable in _docker-compose-azure-container-instances.yml_ for `bakery-back` service.
+
 ```yaml
 - UI_BAKERY_LICENSE_KEY=${UI_BAKERY_LICENSE_KEY:-eyJhbGciOiJIUz}
 ```
 
-7. Set `UI_BAKERY_DB_*` variables in *docker-compose-azure-container-instances.yml* for `bakery-back` service.
+7. Set `UI_BAKERY_DB_*` variables in _docker-compose-azure-container-instances.yml_ for `bakery-back` service.
+
 ```yaml
 - UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
 - UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
@@ -154,18 +213,21 @@ git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
 ```
 
 8. Up azure container instance.
+
 ```bash
 docker compose -f docker-compose-azure-container-instances.yml up
 ```
 
-9. Find assigned IP address. Run `docker ps` and in colum *PORTS* you'll find assigned IP address.
+9. Find assigned IP address. Run `docker ps` and in colum _PORTS_ you'll find assigned IP address.
 
 10. Replace all occurrences of `UI_BAKERY_APP_SERVER_NAME` with the IP address retrieved in the previous step.
+
 ```yaml
 - UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
 ```
 
 11. Restart instance to apply new configuration.
+
 ```bash
 docker compose -f docker-compose-external-db.yml up
 ```
@@ -190,10 +252,10 @@ In case when a 3rd party MySQL instance is required:
 
 If you would like to run UI Bakery not on localhost, but on a server, you need to provide the following variables:
 
-  ```bash
-  UI_BAKERY_APP_SERVER_NAME=http://YOUR_DOMAIN_OR_IP:3030
-  UI_BAKERY_PORT=3030
-  ```
+```bash
+UI_BAKERY_APP_SERVER_NAME=http://YOUR_DOMAIN_OR_IP:3030
+UI_BAKERY_PORT=3030
+```
 
 :warning: UI_BAKERY_PORT variable must match port in UI_BAKERY_APP_SERVER_NAME variable
 
@@ -203,14 +265,15 @@ In your DNS provider, configure the following records:
 
 Then modify your environment variable with the following values:
 
-  ```bash
-  UI_BAKERY_APP_SERVER_NAME=https://YOUR_DOMAIN
-  UI_BAKERY_PORT=80
-  ```
+```bash
+UI_BAKERY_APP_SERVER_NAME=https://YOUR_DOMAIN
+UI_BAKERY_PORT=80
+```
 
 ## Google OAuth setup
 
 1. Create OAuth Client ID in [Google Developer Console](https://console.cloud.google.com/apis/credentials)
+
    - Create or choose an existing project.
    - Click on “Create credentials”.
    - Choose “OAuth Client ID”.
@@ -241,7 +304,7 @@ Then modify your environment variable with the following values:
 1. You can add a role mapping from identity provider role to UI Bakery role via env variable:
 
    ```bash
-   UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2 
+   UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
    ```
 
 1. You can set the variable `UI_BAKERY_SAML_LOGIN_AUTO` to true to enable automatic login. Any unauthorized user will be redirected to SAML login flow.
@@ -299,50 +362,50 @@ Once configured, your instance will start using your account to send the user in
 
 By default, email templates and subjects are provided as environment variables, so you can adjust the emails by modifying their content:
 
-  ```bash
-  # tells that email will be sent as plain text/html
-  UI_BAKERY_MAILING_TEMPLATES_MODE=custom
+```bash
+# tells that email will be sent as plain text/html
+UI_BAKERY_MAILING_TEMPLATES_MODE=custom
 
-  UI_BAKERY_MAILING_WELCOME_TEMPLATE=Hello userName,<br> Welcome to UI Bakery workspace.
-  UI_BAKERY_MAILING_WELCOME_SUBJECT=Welcome to UI Bakery workspace
+UI_BAKERY_MAILING_WELCOME_TEMPLATE=Hello userName,<br> Welcome to UI Bakery workspace.
+UI_BAKERY_MAILING_WELCOME_SUBJECT=Welcome to UI Bakery workspace
 
-  UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE=Hello userName,<br> Here's your <a href="resetPasswordUrl">password reset link</a>.
-  UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT=Reset password request
+UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE=Hello userName,<br> Here's your <a href="resetPasswordUrl">password reset link</a>.
+UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT=Reset password request
 
-  UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE=Hello userName,<br> Here's a link <a href="changeEmailUrl">to change your email</a>.
-  UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT=Change email request
+UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE=Hello userName,<br> Here's a link <a href="changeEmailUrl">to change your email</a>.
+UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT=Change email request
 
-  UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=Hello userName,<br> Here's a <a href="organizationUrl">link to access the organizationName workspace</a>.
-  UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT=You are invited to UI Bakery workspace
-  ```
+UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=Hello userName,<br> Here's a <a href="organizationUrl">link to access the organizationName workspace</a>.
+UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT=You are invited to UI Bakery workspace
+```
 
 You can use the following built-in email variables to add user values to your emails:
 
-  ```bash
-  # All emails
-  userName, userEmail, subject, userId
+```bash
+# All emails
+userName, userEmail, subject, userId
 
-  # Reset password request
-  resetPasswordUrl
+# Reset password request
+resetPasswordUrl
 
-  # Invitation email
-  organizationUrl, organizationName
+# Invitation email
+organizationUrl, organizationName
 
-  # Change email request
-  changeEmailUrl
-  ```
+# Change email request
+changeEmailUrl
+```
 
 Alternatively, you can set up email temples using [SendGrid dynamic templates](https://mc.sendgrid.com/dynamic-templates) and put template ids instead of plain HTML emails:
 
-  ```bash
-  # tells that email will be sent using dynamic templates
-  UI_BAKERY_MAILING_TEMPLATES_MODE=provided
+```bash
+# tells that email will be sent using dynamic templates
+UI_BAKERY_MAILING_TEMPLATES_MODE=provided
 
-  UI_BAKERY_MAILING_WELCOME_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
-  UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
-  UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
-  UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
-  ```
+UI_BAKERY_MAILING_WELCOME_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
+UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
+UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
+UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
+```
 
 :warning: Note, that in this case an email subject will be taken from a dynamic template configuration and variables such as `UI_BAKERY_MAILING_WELCOME_SUBJECT` will be ignored.
 
@@ -368,4 +431,3 @@ cd ./ui-bakery-on-premise
 ```
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
-
