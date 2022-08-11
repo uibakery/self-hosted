@@ -19,6 +19,7 @@ services:
   bakery-front:
     container_name: bakery-front
     image: cruibakeryonprem.azurecr.io/cloud/bakery-front:aci-2.28.1
+    restart: always
     deploy:
       resources:
         limits:
@@ -79,6 +80,7 @@ services:
   workbench-front:
     container_name: workbench-front
     image: cruibakeryonprem.azurecr.io/cloud/workbench-front:aci-2.28.1
+    restart: always
     deploy:
       resources:
         limits:
@@ -96,6 +98,7 @@ services:
   datasource:
     container_name: datasource
     image: cruibakeryonprem.azurecr.io/cloud/datasource:2.28.1
+    restart: always
     deploy:
       resources:
         limits:
@@ -113,6 +116,7 @@ services:
   bakery-back:
     container_name: bakery-back
     image: cruibakeryonprem.azurecr.io/cloud/bakery-back:2.28.1
+    restart: always
     deploy:
       resources:
         limits:
@@ -221,6 +225,7 @@ services:
   automation:
     container_name: automation
     image: cruibakeryonprem.azurecr.io/cloud/automation:2.28.1
+    restart: always
     deploy:
       resources:
         limits:
