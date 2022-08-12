@@ -1,6 +1,6 @@
 # Supported Environment Variables
-| Environment variable name | Description                    |
-| ------------------------- | ------------------------------ |
+| Environment variable name | Description                                                                                                                |
+| ------------------------- |----------------------------------------------------------------------------------------------------------------------------|
 |UI_BAKERY_LICENSE_KEY||
 |UI_BAKERY_APP_CLIENT_URL||
 |UI_BAKERY_APP_SERVER_NAME||
@@ -33,9 +33,13 @@
 |UI_BAKERY_SAML_ENTITY_ID||
 |UI_BAKERY_SAML_METADATA_URL||
 |UI_BAKERY_SAML_LOGIN_AUTO||
-|UI_BAKERY_ROLE_MAPPING||
 |UI_BAKERY_SAML_NAME_CLAIM||
 |UI_BAKERY_SAML_ROLE_CLAIM||
+|UI_BAKERY_SAML_SYNC_ROLES| Enable roles syncronization from Identity Server to UI Bakery                                                              |
+|UI_BAKERY_ROLE_MAPPING| Mapping for roles if necessary, UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2 |
+|UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN| Enable roles sync on login                                                                                                 |
+|UI_BAKERY_SAML_HARD_SYNC_ROLES| Rewrite roles on sync                                                                                                      |
+|UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN| Sync roles for admin and editor user roles as well                                                                         |
 |UI_BAKERY_APP_TITLE||
 |UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL||
 |UI_BAKERY_BRANDING_AUTH_CARD_STYLES||
