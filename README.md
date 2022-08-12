@@ -323,6 +323,7 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 
 1. To sync roles on logic as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
 1. By default, UI Bakery will only sync roles for end-users, leaving ADMIN and EDITOR roles unsynced. To sync roles for all users, set `UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
+
     :warning: Please note, this way admin accounts may lose the access to the system in a case of malformed configuration.
    
 ## Other authentication setting
