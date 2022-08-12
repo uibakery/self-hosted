@@ -17,20 +17,16 @@ MIN_VERSION_DOCKER_COMPOSE="1.29.2"
 function check_version {
 
  local Q_INSTALL_DOCKER="NO"
- local position=0
  local IFS=""
 
  if [[ "$1" == "DOCKER" ]]; then
-   position=2
    IFS='.' read -ra min_version <<< "$MIN_VERSION_DOCKER"
  else
-   position=1
    IFS='.' read -ra min_version <<< "$MIN_VERSION_DOCKER_COMPOSE"
  fi
 
- IFS=':' read -ra version_array <<< "$2"
- IFS='~' read -ra subversion_array <<< "${version_array[${position}]}"
- IFS='.' read -ra subsubversion_array <<< "${subversion_array[0]}"
+ IFS=' ' read -ra version_array <<< "$2"
+ IFS='.' read -ra subsubversion_array <<< "${version_array[2]}"
 
  local c_version="${subsubversion_array[0]//[[:space:]]/}"
  if (( $c_version < "${min_version[0]}" )); then
@@ -44,7 +40,7 @@ function check_version {
     elif (( $c_subversion > "${min_version[1]}" ));  then
        Q_INSTALL_DOCKER="NO"
     else
-       IFS='-' read -ra c_subsubversion_array <<< "${subsubversion_array[2]}"
+       IFS=',' read -ra c_subsubversion_array <<< "${subsubversion_array[2]}"
        local c_subsubversion="${c_subsubversion_array[0]//[[:space:]]/}"
        if (( $c_subsubversion < "${min_version[2]}" ));  then
           Q_INSTALL_DOCKER="YES"
@@ -72,12 +68,12 @@ OS_AUTO_INSTALL="ubuntu"
 
 NEXT_INSTALL_OPERATION=""
 echo ""
-echo "Checking docker-ce ----------------------------"
+echo "Checking docker ----------------------------"
 I=`which docker`
 if [ -n "$I" ]; then
-   printf "${GREEN}Docker-ce is already installed\n${NC}"
+   printf "${GREEN}Docker is already installed\n${NC}"
    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       J=`dpkg -s docker-ce | grep "Version" `
+       J=`docker -v`
        echo "$J"
        check_version "DOCKER" "$J"
        f_result=$?
@@ -115,7 +111,7 @@ I=`which docker-compose`
 if [ -n "$I" ]; then
    printf "${GREEN}Docker-compose is already installed\n${NC}"
    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       J=`dpkg -s docker-compose | grep "Version" `
+       J=`docker-compose -v`
        echo "$J"
        check_version "DOCKER_COMPOSE" "$J"
        f_result=$?
