@@ -136,13 +136,9 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
   
 1. Input 'Bakery' in `Security group name`  and 'Bakery security group' in `Description`.
  
-1. In block `Inbound rules` click `Add rule` button
+1. In block `Inbound rules` click `Add rule` button.  Select 'Custom TCP' in the `Type`, input  {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port range` and select 'Anywhere-IPv4' in the `Source`.
 
- Select 'Custom TCP' in the `Type`, input  {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port range` and select 'Anywhere-IPv4' in the `Source`
-
-1. In block `Inbound rules` click `Add rule` button
-
- Select 'SSH' in the `Type` and select 'Anywhere-IPv4' in the `Source`
+1. In block `Inbound rules` click `Add rule` button. Select 'SSH' in the `Type` and select 'Anywhere-IPv4' in the `Source`
 
 1. Click `Create security group`
 
