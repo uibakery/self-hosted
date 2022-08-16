@@ -170,7 +170,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
-1. Upon request, enter the previously received license code, hosting URL - Azure Virtual Machine IP address, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+1. Upon request, enter the previously received license code, hosting URL - Public IPv4 address AWS EC2 Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IPv4 address AWS EC2 Instance}:{BakeryPort}
 
