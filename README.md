@@ -308,7 +308,7 @@ UI_BAKERY_PORT=80
 
 By default, UI Bakery will not sync any roles provided by the Identity Provider. 
 
-1. To enable roles synchronization, set the variable `UI_BAKERY_SAML_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received roles by name. 
+1. To enable roles synchronization, set the variable `UI_BAKERY_SAML_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received roles by name. By default, roles sync will be done only during the sign up process. 
 1. By default, UI Bakery will try to match roles by names. If a role match is found, the matched role will be assigned to the user.
    - Additionally, you can configure a role mapping from identity provider role id/name to a UI Bakery role:
 
@@ -322,7 +322,7 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
    During user sign up, a default 'user' role will be assigned unless UI_BAKERY_SAML_HARD_SYNC_ROLES is enabled.
    :warning: Please note, if no roles are found, the user will be removed from the organization and will no longer be able to login.
 
-1. To sync roles on logic as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
+1. To sync roles on login as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
 1. By default, UI Bakery will only sync roles for end-users, leaving ADMIN and EDITOR roles unsynced. To sync roles for all users, set `UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
 
     :warning: Please note, this way admin accounts may lose the access to the system in a case of malformed configuration.
