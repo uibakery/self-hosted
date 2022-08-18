@@ -100,7 +100,7 @@ if [[ "$CUSTOM_LICENSE_KEY" == "YES" ]]; then
   done
 fi
 
-echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
+echo "UI_BAKERY_LICENSE_KEY=${license}" >> .env
 
 curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "license", "session": "'"${SESSION_ID}"'", "key": "'"${license}"'"}' $LICENCE_SERVER  &> /dev/null
 
