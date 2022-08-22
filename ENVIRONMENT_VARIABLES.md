@@ -10,7 +10,7 @@
 |UI_BAKERY_DB_PORT| MySQL port, must be specified when external database is used.                                                                                                                  |
 |UI_BAKERY_DB_USERNAME| MySQL user name, must be specified when external database is used.                                                                                                             |
 |UI_BAKERY_DB_POOL_SIZE| Database connection pool size, can be specified when external database is used. Default value is `100`.                                                                        |
-|UI_BAKERY_CREDENTIALS_SECRET| Encyption key for datasource credentials. Must be exact 32 characters long. Changing this variable on existed intance may lead to loose access to already connected datasource. |
+|UI_BAKERY_CREDENTIALS_SECRET| Encryption key for data source credentials. Must be exactly 32 characters long. Changing this variable on existed instance may lead to losing access to already connected data source. |
 |UI_BAKERY_JWT_SECRET| JWT secret is used to sign user requests to UI Bakery API.                                                                                                                     |
 |UI_BAKERY_JWT_REFRESH_SECRET| Similar to `UI_BAKERY_JWT_SECRET` but for refresh token.                                                                                                                       |                                                                 |
 |UI_BAKERY_SINGLE_ORGANIZATION| When `true` only one organization can exist. All other attempts to register new one will fail.                                                                                 |
