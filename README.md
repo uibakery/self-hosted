@@ -208,7 +208,7 @@ git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
 - UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
 - UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
 - UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
-- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-test-db}
+- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-db}
 - UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
 ```
 
@@ -229,14 +229,22 @@ docker compose -f docker-compose-azure-container-instances.yml up
 11. Restart instance to apply new configuration.
 
 ```bash
-docker compose -f docker-compose-external-db.yml up
+docker compose -f docker-compose-azure-container-instances.yml up
 ```
 
 ## Running a standalone database instance
 
 In case when a 3rd party MySQL instance is required:
 
-1. Provide the following environment variables:
+1. Create database and user
+    ```sql
+        CREATE DATABASE bakery;
+    ```
+    ```sql
+        GRANT ALL PRIVILEGES ON bakery.* TO 'username'@'ip';
+    ```
+
+2. Provide the following environment variables:
 
    ```bash
    UI_BAKERY_DB_HOST=192.168.0.1
@@ -246,7 +254,7 @@ In case when a 3rd party MySQL instance is required:
    UI_BAKERY_DB_PASSWORD=password
    ```
 
-1. Run `docker-compose -f ./docker-compose-external-db.yml up` to start the containers, alternatively, `docker-compose -f ./docker-compose-external-db.yml up -d` to run containers in the background.
+3. Run `docker-compose -f ./docker-compose-external-db.yml up` to start the containers, alternatively, `docker-compose -f ./docker-compose-external-db.yml up -d` to run containers in the background.
 
 ## Running on a remote instance
 
