@@ -43,7 +43,7 @@
 |UI_BAKERY_BRANDING_LOGO_URL| URL to image. Allows you to replace UI Bakery logo.                                                                                                                            |
 |UI_BAKERY_BRANDING_MENU_LOGO_URL| URL to image. Allows you to replace UI Bakery logo in menu.                                                                                                                    |
 |UI_BAKERY_MAILING_PROVIDER| Should be set to `sendgrid` to enable email messages. Defaul value is `noop`                                                                                                   |
-|SENDGRID_API_KEY| SendGrid API key. Required if transactional emails to users are needed.                                                                                                        |
+|SENDGRID_API_KEY| SendGrid API key. Required if transactional emails to users are required.                                                                                                        |
 |SENDGRID_EMAIL_FROM| Email sender address. Default value is `admin@uibakery.io`.                                                                                                                    |
 |SENDGRID_NAME_FROM| Email sender name. Default value is `Admin`.                                                                                                                                   |
 |SENDGRID_SYSTEM_EMAIL_FROM| Email sender address for welcome email. Default value is `admin@uibakery.io`.                                                                                                  |
