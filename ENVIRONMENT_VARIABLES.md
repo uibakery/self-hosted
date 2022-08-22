@@ -27,7 +27,7 @@
 |UI_BAKERY_SAML_ENABLED| Set to `true` to enable SAML authentication.                                                                                                                                   |
 |UI_BAKERY_SAML_ENTITY_ID| Global unique name (Entity ID) for SAML Entity. For example `http://adapplicationregistry.onmicrosoft.com/myorganization/myapp`. Required for SAML athentication.              |
 |UI_BAKERY_SAML_METADATA_URL| URL to SAML metadata XML. Required for SAML athentication.                                                                                                                     |
-|UI_BAKERY_SAML_LOGIN_AUTO| When `true` SAML authentication flow starts immediately when user opens Sign In or Sign up page. When `false` user must click `Login with SAML` explicitly.                    |
+|UI_BAKERY_SAML_LOGIN_AUTO| When `true`, SAML authentication flow starts as soon as a user opens Sign In or Sign up page. When `false`, a user must click `Login with SAML` explicitly.                    |
 |UI_BAKERY_ROLE_MAPPING| Key pair SAML role mapping where key is a SAML provider custom claim and value is UI Bakery role name. For example `mycustomattribute1->editor,mycustomattribute1->user`       |
 |UI_BAKERY_SAML_NAME_CLAIM| Name of the custom attribute for SAML that will be used for UI Bakery user name. Default value is `name`.                                                                      |
 |UI_BAKERY_SAML_ROLE_CLAIM| Name of the custom attribute for SAML that will be used for UI Bakery role mapping. Default value is `role`.                                                                   |
