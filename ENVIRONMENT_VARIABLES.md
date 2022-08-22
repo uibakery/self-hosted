@@ -13,7 +13,7 @@
 |UI_BAKERY_CREDENTIALS_SECRET| Encryption key for data source credentials. Must be exactly 32 characters long. Changing this variable on existed instance may lead to losing access to already connected data source. |
 |UI_BAKERY_JWT_SECRET| JWT secret is used to sign user requests to UI Bakery API.                                                                                                                     |
 |UI_BAKERY_JWT_REFRESH_SECRET| Similar to `UI_BAKERY_JWT_SECRET` but for refresh token.                                                                                                                       |                                                                 |
-|UI_BAKERY_SINGLE_ORGANIZATION| When `true` only one organization can exist. All other attempts to register new one will fail.                                                                                 |
+|UI_BAKERY_SINGLE_ORGANIZATION| When `true`, only one organization can exist. All other attempts to register new one will fail.                                                                                 |
 |UI_BAKERY_DATASOURCE_TIMEOUT| Datasource request timeout in milliseconds. Default value is `90000`.                                                                                                          |
 |UI_BAKERY_DATASOURCE_MAX_SIZE| Datasource request maximum response size in bytes. Default value is `102400000`.                                                                                               |
 |UI_BAKERY_GSHEET_CLIENT_ID| Google Sheet API Client Id. Must be provided when GSheet datasource is required.                                                                                               |
