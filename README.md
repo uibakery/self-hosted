@@ -236,12 +236,9 @@ docker compose -f docker-compose-azure-container-instances.yml up
 
 In case when a 3rd party MySQL instance is required:
 
-1. Create database and user
+1. Create database and user. User must have the following permissions:
     ```sql
-        CREATE DATABASE bakery;
-    ```
-    ```sql
-        GRANT ALL PRIVILEGES ON bakery.* TO 'username'@'ip';
+        GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, LOCK TABLES, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
     ```
 
 2. Provide the following environment variables:
