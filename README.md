@@ -241,7 +241,7 @@ In case when a 3rd party MySQL instance is required:
         GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, LOCK TABLES, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
     ```
 
-2. Provide the following environment variables:
+1. Provide the following environment variables:
 
    ```bash
    UI_BAKERY_DB_HOST=192.168.0.1
@@ -251,7 +251,7 @@ In case when a 3rd party MySQL instance is required:
    UI_BAKERY_DB_PASSWORD=password
    ```
 
-3. Run `docker-compose -f ./docker-compose-external-db.yml up` to start the containers, alternatively, `docker-compose -f ./docker-compose-external-db.yml up -d` to run containers in the background.
+1. Run `docker-compose -f ./docker-compose-external-db.yml up` to start the containers, alternatively, `docker-compose -f ./docker-compose-external-db.yml up -d` to run containers in the background.
 
 ## Running on a remote instance
 
