@@ -45,7 +45,7 @@ if [ -e .env ]; then
 fi
 
 
-echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
+echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" > .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
 echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
@@ -108,6 +108,7 @@ curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/
 if [ -e .env ]; then
   printf "${CYAN}Finishing up installation...${NC}\n"
   LICENSE_KEY_LINE=$(grep -E -i -o 'UI_BAKERY_LICENSE_KEY=(.*)$' ./.env)
+  echo '{"event": "finish", "session": "'"${SESSION_ID}"'", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}'
   curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "finish", "session": "'"${SESSION_ID}"'", "key": "'"${LICENSE_KEY_LINE/UI_BAKERY_LICENSE_KEY=/}"'"}' $LICENCE_SERVER &> /dev/null
 fi
 
