@@ -130,7 +130,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 ## Deploying on AWS EC2 instance
 
-1. Open [AWS Management Console](http://console.aws.amazon.com/) and select Services - EC2 (Virtual Servers in the Cloude)
+1. Open [AWS Management Console](http://console.aws.amazon.com/) and select Services - EC2 (Virtual Servers in the Cloud)
 
 1. Select `Network & Security` - `Security Groups`. Click `Create security group` button in the top right corner
 
