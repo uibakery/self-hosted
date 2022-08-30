@@ -41,6 +41,8 @@ On-premise version grants you:
   - [Requirements](#requirements)
   - [Installation steps](#installation-steps)
 - [Deploying on Azure VM](#deploying-on-azure-virtual-machine)
+- [Deploying on AWS EC2 Instance](#deploying-on-aws-ec2-instance)
+- [Deploying on Google Cloud Compute Engine VM instance](#deploying-on-google-cloud-compute-engine-vm-instance)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
 - [Azure container instance](#azure-container-instance)
