@@ -152,19 +152,21 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. Go to the block `Protocols and ports`. Select `Specified protocols and ports` and `TCP`, input `{BakeryPort}` (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port`
 
+1. Click `Create` button at the bottom of the page
+
 1. On your project page, select `Navigation Menu` - `Compute Engine` - `VM instances`
 
-1. Select Vm instanse `Bakery` and press `SSH - Open in Browser Window`. Will be open `SSH-in-browser` window.
+1. Select VM instance `Bakery` and press `SSH - Open in Browser Window`. Will be open `SSH-in-browser` window.
 
 1. Run this command preferably to download, install and launch UI Bakery:
 
-   ```bash
-   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
-   ```
+    ```bash
+    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+    ```
 
 1. Upon request, enter the previously received license code, hosting URL - External IP address VM Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
 
-1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{External IP address Vm Instance}:{BakeryPort}
+1. After the installation is completed and launched, enter the UI Bakery from a browser on your local machine at http://{External IP address Vm Instance}:{BakeryPort}
 
 ## Manual installation
 
