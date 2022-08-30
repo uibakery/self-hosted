@@ -128,6 +128,52 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
 
+## Deploying on AWS EC2 instance
+
+1. Open [AWS Management Console](http://console.aws.amazon.com/) and select Services - EC2 (Virtual Servers in the Cloud)
+
+1. Select `Network & Security` - `Security Groups`. Click `Create security group` button in the top right corner
+
+1. Input `Bakery` in `Security group name` and `Bakery security group` in `Description`
+
+1. In block `Inbound rules` click `Add rule` button. Select `Custom TCP` in the `Type`, input {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port range` and select `Anywhere-IPv4` in the `Source`
+
+1. In block `Inbound rules` click `Add rule` button. Select `SSH` in the `Type` and select `Anywhere-IPv4` in the `Source`
+
+1. Click `Create security group`
+
+1. Select `Network & Security` - `Key Pairs`. Click `Create key pairs` button in the top right corner
+
+1. Input `Bakery` in `Name`. Select `RCA` in `Key pair type`. Select `.pem` in `Private key file format`, if you will be connecting to the VM using OpenSSH, or select `.ppk` in `Private key file format`, if you will be connecting to the VM using Putty
+
+1. Save the key file to the disk of the local machine
+
+1. Select `Instances` - `Instance Types`. Select `t2.medium` in the `Instance types` list. Click `Action` - `Launch instance` button in the top right corner
+
+1. Input 'Bakery' in `Name`
+
+1. Select an image of `Ubuntu Server 18.04` or higher in the `Application and OS Images (Amazon Machine Image)`
+
+1. Select 'Bakery' in `Key pair (login)` - `Key pair name - required`
+
+1. Select 'Bakery' in `Network settings` - `Select existing security group` - `Common security groups`
+
+1. Input 20 GiB in `Configure storage` - `1x`
+
+1. Click `Launch instance` button in the bottom right corner
+
+1. After creating and running the virtual machine, connect to it from outside (OpenSSH or Putty) using SSH protocol (use the previously saved key file)
+
+1. Run this command preferably from the `/home` Linux directory to download, install and launch UI Bakery:
+
+   ```bash
+   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+   ```
+
+1. Upon request, enter the previously received license code, hosting URL - Public IPv4 address AWS EC2 Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+
+1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IPv4 address AWS EC2 Instance}:{BakeryPort}
+
 ## Manual installation
 
 :warning: MySQL instance is included into the out of the box container and doesn't require any additional setup. If you need to have a standalone database, read [Running a standalone database instance](#running-a-standalone-database-instance)
