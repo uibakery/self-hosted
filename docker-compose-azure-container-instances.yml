@@ -20,6 +20,8 @@ services:
     container_name: bakery-front
     image: cruibakeryonprem.azurecr.io/cloud/bakery-front:aci-2.28.1
     restart: always
+    environment:
+      - UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
     deploy:
       resources:
         limits:
@@ -32,6 +34,8 @@ services:
     container_name: workbench-front
     image: cruibakeryonprem.azurecr.io/cloud/workbench-front:aci-2.28.1
     restart: always
+    environment:
+      - UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
     deploy:
       resources:
         limits:
@@ -56,6 +60,13 @@ services:
     container_name: bakery-back
     image: cruibakeryonprem.azurecr.io/cloud/bakery-back:2.28.1
     restart: always
+    environment:
+      - UI_BAKERY_LICENSE_KEY=${UI_BAKERY_LICENSE_KEY:-PUT_LICENCE_HERE}
+      - UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
+      - UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
+      - UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
+      - UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-db}
+      - UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
     deploy:
       resources:
         limits:

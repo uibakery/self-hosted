@@ -8,6 +8,7 @@ services:
       - "bakery-back"
     image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
     restart: always
+    env_file: .env
     ports:
       - "${UI_BAKERY_PORT:-3030}:3030"
 
@@ -15,23 +16,28 @@ services:
     container_name: bakery-front
     image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
     restart: always
+    env_file: .env
 
   workbench-front:
     container_name: workbench-front
     image: cruibakeryonprem.azurecr.io/cloud/workbench-front:latest
     restart: always
+    env_file: .env
 
   datasource:
     container_name: datasource
     image: cruibakeryonprem.azurecr.io/cloud/datasource:latest
     restart: always
+    env_file: .env
 
   bakery-back:
     container_name: bakery-back
     image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
     restart: always
+    env_file: .env
 
   automation:
     container_name: automation
     image: cruibakeryonprem.azurecr.io/cloud/automation:latest
     restart: always
+    env_file: .env
