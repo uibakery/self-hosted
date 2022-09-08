@@ -1,89 +1,62 @@
 # Supported Environment Variables
-| Environment variable name | Description                                                                                                                |
-| ------------------------- |----------------------------------------------------------------------------------------------------------------------------|
-|UI_BAKERY_LICENSE_KEY||
-|UI_BAKERY_APP_CLIENT_URL||
-|UI_BAKERY_APP_SERVER_NAME||
-|UI_BAKERY_WORKBENCH_PATH||
-|UI_BAKERY_PORT||
-|UI_BAKERY_DB_DATABASE||
-|UI_BAKERY_DB_HOST||
-|UI_BAKERY_DB_PASSWORD||
-|UI_BAKERY_DB_POOL_SIZE||
-|UI_BAKERY_DB_PORT||
-|UI_BAKERY_DB_USERNAME||
-|UI_BAKERY_CREDENTIALS_SECRET||
-|UI_BAKERY_JWT_REFRESH_SECRET||
-|UI_BAKERY_JWT_SECRET||
-|UI_BAKERY_ORGANIZATION_MENU_ENABLED||
-|UI_BAKERY_SINGLE_ORGANIZATION||
-|UI_BAKERY_INITIAL_PROJECT_TEMPLATE_ID||
-|UI_BAKERY_INITIAL_PROJECT_TEMPLATE_NAME||
-|UI_BAKERY_DATASOURCE_TIMEOUT||
-|UI_BAKERY_DATASOURCE_MAX_SIZE||
-|UI_BAKERY_GSHEET_CLIENT_ID||
-|UI_BAKERY_GSHEET_CLIENT_SECRET||
-|UI_BAKERY_SALESFORCE_CLIENT_ID||
-|UI_BAKERY_SALESFORCE_CLIENT_SECRET||
-|UI_BAKERY_EMAIL_AUTH_ENABLED||
-|UI_BAKERY_GOOGLE_CLIENT_ID||
-|UI_BAKERY_AUTH_RESTRICTED_DOMAIN||
-|UI_BAKERY_REGISTER_URL||
-|UI_BAKERY_SAML_ENABLED||
-|UI_BAKERY_SAML_ENTITY_ID||
-|UI_BAKERY_SAML_METADATA_URL||
-|UI_BAKERY_SAML_LOGIN_AUTO||
-|UI_BAKERY_SAML_NAME_CLAIM||
-|UI_BAKERY_SAML_ROLE_CLAIM||
+| Environment variable name | Description                                                                                                                                                                    |
+| ------------------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|UI_BAKERY_LICENSE_KEY| UI Bakery licence key. To get your key [contact us](https://uibakery.io/contact-us).                                                                                           |
+|UI_BAKERY_APP_SERVER_NAME| Full domain address where UI Bakery is hosted. For example `https://bakery.mycompany.com`.                                                                                     |
+|UI_BAKERY_PORT| Defines the port UI Bakery is run on.                                                                                                                                          |
+|UI_BAKERY_DB_DATABASE| MySQL database name, must be specified when external database is used.                                                                                                         |
+|UI_BAKERY_DB_HOST| MySQL host name, must be specified when external database is used.                                                                                                             |
+|UI_BAKERY_DB_PASSWORD| MySQL user password, must be specified when external database is used.                                                                                                         |
+|UI_BAKERY_DB_PORT| MySQL port, must be specified when external database is used.                                                                                                                  |
+|UI_BAKERY_DB_USERNAME| MySQL user name, must be specified when external database is used.                                                                                                             |
+|UI_BAKERY_DB_POOL_SIZE| Database connection pool size, can be specified when external database is used. Default value is `100`.                                                                        |
+|UI_BAKERY_CREDENTIALS_SECRET| Encryption key for data source credentials. Must be exactly 32 characters long. Changing this variable on existed instance may lead to losing access to already connected data source. |
+|UI_BAKERY_JWT_SECRET| JWT secret is used to sign user requests to UI Bakery API.                                                                                                                     |
+|UI_BAKERY_JWT_REFRESH_SECRET| Similar to `UI_BAKERY_JWT_SECRET` but for refresh token.                                                                                                                       |                                                                 |
+|UI_BAKERY_SINGLE_ORGANIZATION| When `true`, only one organization can exist. All other attempts to register new one will fail.                                                                                 |
+|UI_BAKERY_DATASOURCE_TIMEOUT| Datasource request timeout in milliseconds. Default value is `90000`.                                                                                                          |
+|UI_BAKERY_DATASOURCE_MAX_SIZE| Datasource request maximum response size in bytes. Default value is `102400000`.                                                                                               |
+|UI_BAKERY_GSHEET_CLIENT_ID| Google Sheet API Client Id. Must be provided when GSheet datasource is required.                                                                                               |
+|UI_BAKERY_GSHEET_CLIENT_SECRET| Google Sheet API Client Secret. Must be provided when GSheet datasource is required.                                                                                           |
+|UI_BAKERY_SALESFORCE_CLIENT_ID| Salesforce API Client Id. Must be provided when Salesforce datasource is required.                                                                                             |
+|UI_BAKERY_SALESFORCE_CLIENT_SECRET| Salesforce API Client Secret. Must be provided when Salesforce datasource is required.                                                                                         |
+|UI_BAKERY_EMAIL_AUTH_ENABLED| By default is `true`. Can be set to `false` to allow authentication only with Google or SAML SSO.                                                                              |
+|UI_BAKERY_GOOGLE_CLIENT_ID| Google OAuth Client Id. Must be provided to enable authentication with Google.                                                                                                 |
+|UI_BAKERY_AUTH_RESTRICTED_DOMAIN| Used to restrict which email addresses are allowed to authenticate with Google. For example `mycompany.com`                                                                    |
+|UI_BAKERY_REGISTER_URL| URL for UI Bakery Sign Up page. Default value is `/register`.                                                                                                                  |
+|UI_BAKERY_SAML_ENABLED| Set to `true` to enable SAML authentication.                                                                                                                                   |
+|UI_BAKERY_SAML_ENTITY_ID| Global unique name (Entity ID) for SAML Entity. For example `http://adapplicationregistry.onmicrosoft.com/myorganization/myapp`. Required for SAML athentication.              |
+|UI_BAKERY_SAML_METADATA_URL| URL to SAML metadata XML. Required for SAML athentication.                                                                                                                     |
+|UI_BAKERY_SAML_LOGIN_AUTO| When `true`, SAML authentication flow starts as soon as a user opens Sign In or Sign up page. When `false`, a user must click `Login with SAML` explicitly.                    |
+|UI_BAKERY_SAML_NAME_CLAIM| Name of the custom attribute for SAML that will be used for UI Bakery user name. Default value is `name`.                                                                      |
+|UI_BAKERY_SAML_ROLE_CLAIM| Name of the custom attribute for SAML that will be used for UI Bakery role mapping. Default value is `role`.                                                                   |
 |UI_BAKERY_SAML_SYNC_ROLES| Enable roles syncronization from Identity Server to UI Bakery                                                              |
 |UI_BAKERY_ROLE_MAPPING| Mapping for roles if necessary, UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2 |
 |UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN| Enable roles sync on login                                                                                                 |
 |UI_BAKERY_SAML_HARD_SYNC_ROLES| Rewrite roles on sync                                                                                                      |
 |UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN| Sync roles for admin and editor user roles as well                                                                         |
-|UI_BAKERY_APP_TITLE||
-|UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL||
-|UI_BAKERY_BRANDING_AUTH_CARD_STYLES||
-|UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES||
-|UI_BAKERY_BRANDING_AUTH_HEADER_STYLES||
-|UI_BAKERY_BRANDING_AUTH_LOGO_STYLES||
-|UI_BAKERY_BRANDING_FAVICON||
-|UI_BAKERY_BRANDING_LOADER_STYLES||
-|UI_BAKERY_BRANDING_LOADER||
-|UI_BAKERY_BRANDING_LOGO_URL||
-|UI_BAKERY_BRANDING_MENU_LOGO_URL||
-|UI_BAKERY_AZURE_BLOB_STORAGE_CONNECTION_STRING||
-|UI_BAKERY_AZURE_CONTAINER_NAME||
-|UI_BAKERY_AZURE_CONTAINER_PREFIX||
-|UI_BAKERY_AZURE_STORAGE||
-|UI_BAKERY_OUTBOUND_IP_ADDRESSES||
-|UI_BAKERY_SSH_PUBLIC_KEY||
-|UI_BAKERY_SSH_TUNNEL_KEY||
-|UI_BAKERY_SSH_TUNNEL_PASSWORD||
-|UI_BAKERY_SSH_TUNNEL_USER||
-|UI_BAKERY_SENTRY_ENABLED||
-|SENTRY_DSN||
-|UI_BAKERY_GTM_ID||
-|UI_BAKERY_GTM_NO_SCRIPT||
-|UI_BAKERY_GTM||
-|SEND_IN_BLUE_API_KEY||
-|SEND_IN_BLUE_CONFIRM_EMAIL_CHANGE_TEMPLATE||
-|SEND_IN_BLUE_RESET_PASSWORD_TEMPLATE||
-|SEND_IN_BLUE_SHARE_WITH_USER_TEMPLATE||
-|SEND_IN_BLUE_WELCOME_TEMPLATE||
-|SENDGRID_API_KEY||
-|SENDGRID_EMAIL_FROM||
-|SENDGRID_NAME_FROM||
-|SENDGRID_SYSTEM_EMAIL_FROM||
-|SENDGRID_SYSTEM_NAME_FROM||
-|UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT||
-|UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE||
-|UI_BAKERY_MAILING_JOIN_COMMUNITY_SUBJECT||
-|UI_BAKERY_MAILING_JOIN_COMMUNITY_TEMPLATE||
-|UI_BAKERY_MAILING_PROVIDER||
-|UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT||
-|UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE||
-|UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT||
-|UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE||
-|UI_BAKERY_MAILING_TEMPLATES_MODE||
-|UI_BAKERY_MAILING_WELCOME_SUBJECT||
-|UI_BAKERY_MAILING_WELCOME_TEMPLATE||
+|UI_BAKERY_APP_TITLE| HTML `<title/>` tag content. Default value is `UI Bakery`.                                                                                                                     |
+|UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL| URL to image. Allows you to set custom background image for auth screen.                                                                                                       |
+|UI_BAKERY_BRANDING_AUTH_CARD_STYLES| Allows you to set custom CSS styles for card on auth screen.                                                                                                                   |
+|UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES| Allows you to set custom CSS styles for "LOGIN WITH GOOGLE" button on auth screen.                                                                                             |
+|UI_BAKERY_BRANDING_AUTH_HEADER_STYLES| Allows you to set custom CSS styles for headers ("Login" and "Signup") on auth screens.                                                                                        |
+|UI_BAKERY_BRANDING_AUTH_LOGO_STYLES| Allows you to set custom CSS styles for logo on auth screens.                                                                                                                  |
+|UI_BAKERY_BRANDING_FAVICON| URL to image. Allows you to set custom favicon.                                                                                                                                |
+|UI_BAKERY_BRANDING_LOADER_STYLES| Allows you to set custom CSS styles for loader                                                                                                                                 |
+|UI_BAKERY_BRANDING_LOADER| URL to image. Allows you to set custom loader image.                                                                                                                           |
+|UI_BAKERY_BRANDING_LOGO_URL| URL to image. Allows you to replace UI Bakery logo.                                                                                                                            |
+|UI_BAKERY_BRANDING_MENU_LOGO_URL| URL to image. Allows you to replace UI Bakery logo in menu.                                                                                                                    |
+|UI_BAKERY_MAILING_PROVIDER| Should be set to `sendgrid` to enable email messages. Defaul value is `noop`                                                                                                   |
+|SENDGRID_API_KEY| SendGrid API key. Required if transactional emails to users are required.                                                                                                        |
+|SENDGRID_EMAIL_FROM| Email sender address. Default value is `admin@uibakery.io`.                                                                                                                    |
+|SENDGRID_NAME_FROM| Email sender name. Default value is `Admin`.                                                                                                                                   |
+|SENDGRID_SYSTEM_EMAIL_FROM| Email sender address for welcome email. Default value is `admin@uibakery.io`.                                                                                                  |
+|SENDGRID_SYSTEM_NAME_FROM| Email sender name for welcome email. Default value is `Admin`.                                                                                                                                   |
+|UI_BAKERY_MAILING_WELCOME_SUBJECT| Subject for weclome email. Defaul value is `Welcome to UI Bakery workspace`.                                                                                                   |
+|UI_BAKERY_MAILING_WELCOME_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}` and `{{userEmail}}`.                                                                     |
+|UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT| Subject for email change email. Defaul value is `Change email request`.                                                                                                        |
+|UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{changeEmailUrl}}`.                                               |
+|UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT| Subject for password reset email. Defaul value is `Reset password request`.                                                                                                    |
+|UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{resetPasswordUrl}}`.                                             |
+|UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT| Subject for inviting user email. Defaul value is `You are invited to UI Bakery workspace`.                                                                                     |
+|UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`.                      |
