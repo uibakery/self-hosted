@@ -49,8 +49,9 @@ On-premise version grants you:
 - [Running on a remote instance](#running-on-a-remote-instance)
 - [Google oauth setup](#google-oauth-setup)
 - [SAML authentication setup](#saml-authentication-setup)
-  - [Authentication settings](#other-authentication-setting)
-  - [Limitations](#limitations)
+  - [SAML roles synchronization](#saml-roles-synchronization)
+- [Authentication settings](#other-authentication-setting)
+- [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
 - [Emails configuration](#configuring-email-provider)
   - [Sendgrid](#configure-sendgrid)
@@ -353,14 +354,34 @@ UI_BAKERY_PORT=80
 
 1. Set variable `UI_BAKERY_SAML_ENABLED=true`
 
-1. You can add a role mapping from identity provider role to UI Bakery role via env variable:
-
-   ```bash
-   UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
-   ```
-
 1. You can set the variable `UI_BAKERY_SAML_LOGIN_AUTO` to true to enable automatic login. Any unauthorized user will be redirected to SAML login flow.
 
+### SAML roles synchronization
+
+By default, UI Bakery will not sync any roles provided by the Identity Provider. 
+
+1. To enable roles synchronization, set the variable `UI_BAKERY_SAML_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received **roles by names**. Roles sync will be done only during the sign up process. If a match is found (e.g. SSO returned a `support` role and UI Bakery has this role in the workspace), current user roles will be deleted and the matched SSO role(s) will be assinged to the user.
+
+    :warning: During user sign up, a default `user` role will be assigned unless `UI_BAKERY_SAML_HARD_SYNC_ROLES` is enabled.
+    
+    :warning: If no match is found, UI Bakery will leave the current user roles. See `UI_BAKERY_SAML_HARD_SYNC_ROLES` to change this behaviour.
+1. Additionally, you can configure a role mapping from identity provider role id/name to a UI Bakery role:
+
+      ```bash
+      UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
+      ```
+1. If your setup requires a complete syncronization, when UI Bakery overwrites all roles, removing existing ones and adding new ones received from Identity Provider even if SSO returns no matching roles (e.g. user has no access to the system), use the following variable:
+   ```bash
+    UI_BAKERY_SAML_HARD_SYNC_ROLES=true
+   ```
+   
+   :warning: Please note, if no roles are found, the user will be removed from the organization and will no longer be able to access it.
+
+1. To sync roles during the login as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
+1. By default, UI Bakery will only sync roles for end-users, leaving the `admin` and `editor` roles untouched. To sync roles for all users, set `UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
+
+    :warning: Please note, this way admin accounts may lose the access to the system in a case of malformed configuration.
+   
 ## Other authentication setting
 
 1. You can disable email authentication by providing the environment variable `UI_BAKERY_GOOGLE_AUTH_ONLY=true`
