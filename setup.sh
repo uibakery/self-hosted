@@ -2,6 +2,15 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
+LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
+GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
+
+
+if [ -z "${SESSION_ID}" ];
+then
+  SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+  curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_custom", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
+fi
 
 printf "${CYAN}Starting UI Bakery configuration...\n${NC}"
 

@@ -181,8 +181,6 @@ fi
 curl -s -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
 export SESSION_ID
-export GET_KEY_LINK
-export LICENCE_SERVER
 bash ./setup.sh
 echo "Running the application..."
 
