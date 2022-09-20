@@ -84,5 +84,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 1024M
+    environment:
+      - UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
     ports:
       - "4000:4000"
