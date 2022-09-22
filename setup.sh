@@ -8,7 +8,7 @@ GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
 
 if [ -z "${SESSION_ID}" ];
 then
-  SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+  SESSION_ID=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
   curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_custom", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
 fi
 
@@ -44,10 +44,10 @@ done
 url=${url:-http://localhost}
 printf "URL: ${url}\n\n"
 
-jwt_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
-jwt_service_account_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 55 | xargs -0)
-jwt_refresh_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
-credentials_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
+jwt_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+jwt_service_account_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 55 | xargs -0)
+jwt_refresh_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+credentials_secret=$(LC_ALL=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
 
 if [ -e .env ]; then
   cp .env .env_old
