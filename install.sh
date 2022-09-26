@@ -5,7 +5,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
 GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
-SESSION_ID=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+SESSION_ID=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 
 printf "${GREEN}Welcome to UI Bakery installation script. Setup process won't take more than a couple of minutes.\n${NC}"
 printf "${CYAN}Starting dependencies configuration...\n${NC}"
@@ -97,16 +97,16 @@ if [ -n "$I" ]; then
          exit
         else
          echo "Y - yes, I have have proper version of docker; N - no, I want to exit from install"
-        fi 
+        fi
      done
-   fi    
+   fi
 else
     if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
        NEED_INSTALL_DOCKER="YES"
     else
        echo "Please, install docker first."
        exit
-    fi   
+    fi
 fi
 
 echo ""
@@ -135,7 +135,7 @@ if [ -n "$I" ]; then
          exit
         else
          echo "Y - yes, I have have proper version of docker-compose; N - no, I want to exit from install"
-        fi 
+        fi
      done
     fi
 else
@@ -144,7 +144,7 @@ else
     else
        echo "Please, install docker-compose first."
        exit
-    fi     
+    fi
 fi
 
 if [[ "$NEXT_INSTALL_OPERATION" == "EXIT" ]]; then
