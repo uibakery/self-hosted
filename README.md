@@ -42,6 +42,7 @@ On-premise version grants you:
   - [Installation steps](#installation-steps)
 - [Deploying on Azure VM](#deploying-on-azure-virtual-machine)
 - [Deploying on AWS EC2 instance](#deploying-on-aws-ec2-instance)
+- [Deploying on Google Cloud Compute Engine VM instance](#deploying-on-google-cloud-compute-engine-vm-instance)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
 - [Azure container instance](#azure-container-instance)
@@ -175,6 +176,46 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 1. Upon request, enter the previously received license code, hosting URL - Public IPv4 address AWS EC2 Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IPv4 address AWS EC2 Instance}:{BakeryPort}
+
+## Deploying on Google Cloud Compute Engine VM instance
+
+1. Open [Google Cloud Console](http://console.cloud.google.com/). On your project page, select `Navigation Menu` - `Compute Engine` - `VM instances`
+
+1. Select `Create an instance` - `New Vm instance`
+
+1. Input `bakery` in `Name`. Select region and zone
+
+1. Select `E2` in `Series` field and `e2-medium` in `Machine Type` field in the block `Machine configuration - Machine family - General-purpose`
+
+1. Press `Change` button in block `Boot Disk`
+
+1. Select `Ubuntu` in the `Operation System`, `Ubuntu 18.04 LTS` or higher in the `Version` and input `20` in `Size (GB)`. Click `Select` button
+
+1. Click `Create` button at the bottom of the page
+
+1. On your project page, select `Navigation Menu` - `VPC Network` - `Firewall` and press `Create a firewall rule` button
+
+1. Input `bakery` in `Name` and select `All instances in the network` in `Targets`
+
+1. Input `0.0.0.0/0` in `Source IPv4 ranges`
+
+1. Go to the block `Protocols and ports`. Select `Specified protocols and ports` and `TCP`, input `{BakeryPort}` (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port`
+
+1. Click `Create` button at the bottom of the page
+
+1. On your project page, select `Navigation Menu` - `Compute Engine` - `VM instances`
+
+1. Select VM instance `Bakery` and press `SSH - Open in Browser Window`. Will be open `SSH-in-browser` window.
+
+1. Run this command preferably to download, install and launch UI Bakery:
+
+    ```bash
+    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+    ```
+
+1. Upon request, enter the previously received license code, hosting URL - External IP address VM Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+
+1. After the installation is completed and launched, enter the UI Bakery from a browser on your local machine at http://{External IP address Vm Instance}:{BakeryPort}
 
 ## Manual installation
 
