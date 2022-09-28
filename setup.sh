@@ -2,6 +2,15 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
+LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
+GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
+
+
+if [ -z "${SESSION_ID}" ];
+then
+  SESSION_ID=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+  curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_custom", "session": "'"${SESSION_ID}"'"}' $LICENCE_SERVER  &> /dev/null
+fi
 
 printf "${CYAN}Starting UI Bakery configuration...\n${NC}"
 
@@ -35,17 +44,17 @@ done
 url=${url:-http://localhost}
 printf "URL: ${url}\n\n"
 
-jwt_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
-jwt_service_account_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 55 | xargs -0)
-jwt_refresh_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
-credentials_secret=$(LC_CTYPE=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
+jwt_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+jwt_service_account_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 55 | xargs -0)
+jwt_refresh_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
+credentials_secret=$(LC_ALL=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
 
 if [ -e .env ]; then
   cp .env .env_old
 fi
 
 
-echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
+echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" > .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
 echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
@@ -100,7 +109,7 @@ if [[ "$CUSTOM_LICENSE_KEY" == "YES" ]]; then
   done
 fi
 
-echo "UI_BAKERY_LICENSE_KEY=${license}" > .env
+echo "UI_BAKERY_LICENSE_KEY=${license}" >> .env
 
 curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "license", "session": "'"${SESSION_ID}"'", "key": "'"${license}"'"}' $LICENCE_SERVER  &> /dev/null
 

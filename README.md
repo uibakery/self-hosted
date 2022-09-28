@@ -41,6 +41,8 @@ On-premise version grants you:
   - [Requirements](#requirements)
   - [Installation steps](#installation-steps)
 - [Deploying on Azure VM](#deploying-on-azure-virtual-machine)
+- [Deploying on AWS EC2 instance](#deploying-on-aws-ec2-instance)
+- [Deploying on Google Cloud Compute Engine VM instance](#deploying-on-google-cloud-compute-engine-vm-instance)
 - [Manual installation](#manual-installation)
 - [Kubernetes](#kubernetes)
 - [Azure container instance](#azure-container-instance)
@@ -48,8 +50,9 @@ On-premise version grants you:
 - [Running on a remote instance](#running-on-a-remote-instance)
 - [Google oauth setup](#google-oauth-setup)
 - [SAML authentication setup](#saml-authentication-setup)
-  - [Authentication settings](#other-authentication-setting)
-  - [Limitations](#limitations)
+  - [SAML roles synchronization](#saml-roles-synchronization)
+- [Authentication settings](#other-authentication-setting)
+- [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
 - [Emails configuration](#configuring-email-provider)
   - [Sendgrid](#configure-sendgrid)
@@ -127,6 +130,92 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 1. Upon request, enter the previously received license code, hosting URL - Azure Virtual Machine IP address, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
 
 1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IP address Azure VM}:{BakeryPort}
+
+## Deploying on AWS EC2 instance
+
+1. Open [AWS Management Console](http://console.aws.amazon.com/) and select Services - EC2 (Virtual Servers in the Cloud)
+
+1. Select `Network & Security` - `Security Groups`. Click `Create security group` button in the top right corner
+
+1. Input `Bakery` in `Security group name` and `Bakery security group` in `Description`
+
+1. In block `Inbound rules` click `Add rule` button. Select `Custom TCP` in the `Type`, input {BakeryPort} (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port range` and select `Anywhere-IPv4` in the `Source`
+
+1. In block `Inbound rules` click `Add rule` button. Select `SSH` in the `Type` and select `Anywhere-IPv4` in the `Source`
+
+1. Click `Create security group`
+
+1. Select `Network & Security` - `Key Pairs`. Click `Create key pairs` button in the top right corner
+
+1. Input `Bakery` in `Name`. Select `RCA` in `Key pair type`. Select `.pem` in `Private key file format`, if you will be connecting to the VM using OpenSSH, or select `.ppk` in `Private key file format`, if you will be connecting to the VM using Putty
+
+1. Save the key file to the disk of the local machine
+
+1. Select `Instances` - `Instance Types`. Select `t2.medium` in the `Instance types` list. Click `Action` - `Launch instance` button in the top right corner
+
+1. Input 'Bakery' in `Name`
+
+1. Select an image of `Ubuntu Server 18.04` or higher in the `Application and OS Images (Amazon Machine Image)`
+
+1. Select 'Bakery' in `Key pair (login)` - `Key pair name - required`
+
+1. Select 'Bakery' in `Network settings` - `Select existing security group` - `Common security groups`
+
+1. Input 20 GiB in `Configure storage` - `1x`
+
+1. Click `Launch instance` button in the bottom right corner
+
+1. After creating and running the virtual machine, connect to it from outside (OpenSSH or Putty) using SSH protocol (use the previously saved key file)
+
+1. Run this command preferably from the `/home` Linux directory to download, install and launch UI Bakery:
+
+   ```bash
+   curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+   ```
+
+1. Upon request, enter the previously received license code, hosting URL - Public IPv4 address AWS EC2 Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+
+1. After the installation is completed and launched, enter the bakery from a browser on your local machine at http://{Public IPv4 address AWS EC2 Instance}:{BakeryPort}
+
+## Deploying on Google Cloud Compute Engine VM instance
+
+1. Open [Google Cloud Console](http://console.cloud.google.com/). On your project page, select `Navigation Menu` - `Compute Engine` - `VM instances`
+
+1. Select `Create an instance` - `New Vm instance`
+
+1. Input `bakery` in `Name`. Select region and zone
+
+1. Select `E2` in `Series` field and `e2-medium` in `Machine Type` field in the block `Machine configuration - Machine family - General-purpose`
+
+1. Press `Change` button in block `Boot Disk`
+
+1. Select `Ubuntu` in the `Operation System`, `Ubuntu 18.04 LTS` or higher in the `Version` and input `20` in `Size (GB)`. Click `Select` button
+
+1. Click `Create` button at the bottom of the page
+
+1. On your project page, select `Navigation Menu` - `VPC Network` - `Firewall` and press `Create a firewall rule` button
+
+1. Input `bakery` in `Name` and select `All instances in the network` in `Targets`
+
+1. Input `0.0.0.0/0` in `Source IPv4 ranges`
+
+1. Go to the block `Protocols and ports`. Select `Specified protocols and ports` and `TCP`, input `{BakeryPort}` (use 3030 by default, you will need to select the same port during UI Bakery installation later) in the `Port`
+
+1. Click `Create` button at the bottom of the page
+
+1. On your project page, select `Navigation Menu` - `Compute Engine` - `VM instances`
+
+1. Select VM instance `Bakery` and press `SSH - Open in Browser Window`. Will be open `SSH-in-browser` window.
+
+1. Run this command preferably to download, install and launch UI Bakery:
+
+    ```bash
+    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
+    ```
+
+1. Upon request, enter the previously received license code, hosting URL - External IP address VM Instance, and port ({BakeryPort} which you selected in the earlier steps 3030 by default).
+
+1. After the installation is completed and launched, enter the UI Bakery from a browser on your local machine at http://{External IP address Vm Instance}:{BakeryPort}
 
 ## Manual installation
 
@@ -208,7 +297,7 @@ git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
 - UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
 - UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
 - UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
-- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-test-db}
+- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-db}
 - UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
 ```
 
@@ -229,12 +318,17 @@ docker compose -f docker-compose-azure-container-instances.yml up
 11. Restart instance to apply new configuration.
 
 ```bash
-docker compose -f docker-compose-external-db.yml up
+docker compose -f docker-compose-azure-container-instances.yml up
 ```
 
 ## Running a standalone database instance
 
 In case when a 3rd party MySQL instance is required:
+
+1. Create database and user. User must have the following permissions:
+    ```sql
+        GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, LOCK TABLES, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
+    ```
 
 1. Provide the following environment variables:
 
@@ -301,14 +395,34 @@ UI_BAKERY_PORT=80
 
 1. Set variable `UI_BAKERY_SAML_ENABLED=true`
 
-1. You can add a role mapping from identity provider role to UI Bakery role via env variable:
-
-   ```bash
-   UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
-   ```
-
 1. You can set the variable `UI_BAKERY_SAML_LOGIN_AUTO` to true to enable automatic login. Any unauthorized user will be redirected to SAML login flow.
 
+### SAML roles synchronization
+
+By default, UI Bakery will not sync any roles provided by the Identity Provider. 
+
+1. To enable roles synchronization, set the variable `UI_BAKERY_SAML_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received **roles by names**. Roles sync will be done only during the sign up process. If a match is found (e.g. SSO returned a `support` role and UI Bakery has this role in the workspace), current user roles will be deleted and the matched SSO role(s) will be assinged to the user.
+
+    :warning: During user sign up, a default `user` role will be assigned unless `UI_BAKERY_SAML_HARD_SYNC_ROLES` is enabled.
+    
+    :warning: If no match is found, UI Bakery will leave the current user roles. See `UI_BAKERY_SAML_HARD_SYNC_ROLES` to change this behaviour.
+1. Additionally, you can configure a role mapping from identity provider role id/name to a UI Bakery role:
+
+      ```bash
+      UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
+      ```
+1. If your setup requires a complete syncronization, when UI Bakery overwrites all roles, removing existing ones and adding new ones received from Identity Provider even if SSO returns no matching roles (e.g. user has no access to the system), use the following variable:
+   ```bash
+    UI_BAKERY_SAML_HARD_SYNC_ROLES=true
+   ```
+   
+   :warning: Please note, if no roles are found, the user will be removed from the organization and will no longer be able to access it.
+
+1. To sync roles during the login as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
+1. By default, UI Bakery will only sync roles for end-users, leaving the `admin` and `editor` roles untouched. To sync roles for all users, set `UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
+
+    :warning: Please note, this way admin accounts may lose the access to the system in a case of malformed configuration.
+   
 ## Other authentication setting
 
 1. You can disable email authentication by providing the environment variable `UI_BAKERY_GOOGLE_AUTH_ONLY=true`
