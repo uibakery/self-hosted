@@ -60,3 +60,5 @@
 |UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{resetPasswordUrl}}`.                                                             |
 |UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT| Subject for inviting user email. Defaul value is `You are invited to UI Bakery workspace`.                                                                                                     |
 |UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`.                                      |
+|UI_BAKERY_MAINTENANCE_TIME_GMT| Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                                      |
+|UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS| How many hours prior to maintenance the notice must be shown                                   |
