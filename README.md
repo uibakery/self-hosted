@@ -544,4 +544,18 @@ cd ./ui-bakery-on-premise
 ./update.sh
 ```
 
+
+# How to update licence key
+
+To update your UI Bakery licence key you need to change corresponding variable:
+```
+UI_BAKERY_LICENSE_KEY=key_value
+```
+For docker-compose setup environment variables are located in `ui-bakery-on-premise/.env` file.
+
+To restart your instance use the following command:
+```bash
+docker-compose up -d
+```
+
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
