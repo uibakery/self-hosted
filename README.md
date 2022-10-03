@@ -547,7 +547,7 @@ cd ./ui-bakery-on-premise
 
 # How to update licence key
 
-To update your UI Bakery licence key you need to change corresponding variable:
+To update your UI Bakery licence key, you need to change the corresponding variable:
 ```
 UI_BAKERY_LICENSE_KEY=key_value
 ```
