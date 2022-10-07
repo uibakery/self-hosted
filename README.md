@@ -568,7 +568,7 @@ However, there is a bunch of additional setup steps we recommend following:
  - Put your instance behind HTTPS.
  - Use a standalone database.
  - Enable automatic backups for instance and database machines.
- - Store your environment variables in secure place like secrets manager or key vault.
+ - Store your environment variables in a secure place like secrets manager or key vault.
 
 Make sure you override the following variables:
 ```
