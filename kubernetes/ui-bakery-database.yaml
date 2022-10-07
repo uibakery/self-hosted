@@ -56,7 +56,6 @@ metadata:
   name: mysql-pv-claim
   namespace: ui-bakery
 spec:
-  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
