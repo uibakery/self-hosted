@@ -586,7 +586,7 @@ JAVA_OPTS=-Xmx1024m
 NODE_OPTS=--max-old-space-size=1024
 ```
 
-You can estimate memory size for both variables with the multiplying below:
+You can estimate memory size for both variables with the below multiplying:
 ```
 S - request size in MB
 T - time required to process a request
