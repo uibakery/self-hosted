@@ -562,7 +562,7 @@ docker-compose up -d
 
 # UI Bakery in production
 
-UI Bakery installation ready for production out of the box.
+UI Bakery installation is ready for production out of the box.
 However, there are a bunch of additional setup steps we recommend doing   
 
  - Put your instance behind HTTPS.
