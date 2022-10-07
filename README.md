@@ -58,6 +58,7 @@ On-premise version grants you:
   - [Sendgrid](#configure-sendgrid)
   - [Email templates](#change-email-templates)
 - [Updating on-premise version](#updating-on-premise-version)
+- [How to update licence key](#how-to-update-licence-key)
 
 ## Installation
 
@@ -543,5 +544,39 @@ cd ./ui-bakery-on-premise
 ```bash
 ./update.sh
 ```
+
+
+# How to update licence key
+
+To update your UI Bakery licence key, you need to change the corresponding variable:
+```
+UI_BAKERY_LICENSE_KEY=key_value
+```
+For docker-compose setup, environment variables are located in `ui-bakery-on-premise/.env` file.
+
+To restart your instance, use the following command:
+```bash
+docker-compose up -d
+```
+
+
+# UI Bakery in production
+
+UI Bakery installation ready for production out of the box.
+However, there are a bunch of additional setup steps we recommend doing   
+
+ - Put your instance behind HTTPS.
+ - Use standalone database.
+ - Enable automatic backups for instance and database machines.
+
+Make sure you override the following variables:
+```
+UI_BAKERY_CREDENTIALS_SECRET
+UI_BAKERY_JWT_SECRET
+UI_BAKERY_JWT_REFRESH_SECRET
+UI_BAKERY_CREDENTIALS_SECRET
+```
+
+If you have used install script then your .env file already contains unique values for those vars.
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
