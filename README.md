@@ -589,7 +589,7 @@ NODE_OPTS=--max-old-space-size=1024
 You can estimate memory size for both variables with the below multiplying:
 ```
 S - request size in MB
-T - time required to process a request
+T - time required to process request
 N - number of concurent requests 
 
 MEMORY_NEEDED=S*T*N
