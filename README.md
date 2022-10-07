@@ -566,7 +566,7 @@ UI Bakery installation is ready for production out of the box.
 However, there are a bunch of additional setup steps we recommend doing   
 
  - Put your instance behind HTTPS.
- - Use standalone database.
+ - Use a standalone database.
  - Enable automatic backups for instance and database machines.
  - Store your environment variables in secure place like secrets manager or key vault.
 
