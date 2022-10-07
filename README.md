@@ -568,6 +568,7 @@ However, there are a bunch of additional setup steps we recommend doing
  - Put your instance behind HTTPS.
  - Use standalone database.
  - Enable automatic backups for instance and database machines.
+ - Store your environment variables in secure place like secrets manager or key vault.
 
 Make sure you override the following variables:
 ```
@@ -578,5 +579,21 @@ UI_BAKERY_CREDENTIALS_SECRET
 ```
 
 If you have used install script then your .env file already contains unique values for those vars.
+
+You can set the following environment variables to limit resource consumption (MB):
+```
+JAVA_OPTS=-Xmx1024m
+NODE_OPTS=--max-old-space-size=1024
+```
+
+You can estimate memory size for both variables with the multiplying below:
+```
+S - request size in MB
+T - time required to process a request
+N - number of concurent requests 
+
+MEMORY_NEEDED=S*T*N
+```
+
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
