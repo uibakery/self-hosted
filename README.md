@@ -578,7 +578,7 @@ UI_BAKERY_JWT_REFRESH_SECRET
 UI_BAKERY_CREDENTIALS_SECRET
 ```
 
-If you have used install script then your .env file already contains unique values for those vars.
+If you have used install script, then your .env file already contains unique values for those vars.
 
 You can set the following environment variables to limit resource consumption (MB):
 ```
