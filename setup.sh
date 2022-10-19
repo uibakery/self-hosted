@@ -56,10 +56,10 @@ fi
 
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" > .env
 echo "UI_BAKERY_PORT=${port}" >> .env
-echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
-echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
-echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
-echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env
+echo "UI_BAKERY_JWT_SECRET='${jwt_secret}'" >> .env
+echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET='${jwt_service_account_secret}'" >> .env
+echo "UI_BAKERY_JWT_REFRESH_SECRET='${jwt_refresh_secret}'" >> .env
+echo "UI_BAKERY_CREDENTIALS_SECRET='${credentials_secret}'" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
 printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"
