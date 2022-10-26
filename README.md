@@ -314,7 +314,7 @@ docker compose -f docker-compose-azure-container-instances.yml up
 10. Replace all occurrences of `UI_BAKERY_APP_SERVER_NAME` with the IP address retrieved in the previous step.
 
 ```yaml
-- UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123:80
+- UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123
 ```
 
 11. Restart instance to apply new configuration.
