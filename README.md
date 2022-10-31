@@ -576,9 +576,15 @@ UI_BAKERY_JWT_SECRET
 UI_BAKERY_JWT_REFRESH_SECRET
 UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET
 UI_BAKERY_CREDENTIALS_SECRET
+UI_BAKERY_TEMPLATE_MAKER_PASSWORD
 ```
 
 If you have used install script, then your .env file already contains unique values for those vars.
+Otherwise, you can generate values for these variables with the script:
+```
+echo "'$(LC_ALL=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)'"
+```
+
 
 You can set the following environment variables to limit resource consumption (MB):
 ```
