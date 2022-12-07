@@ -393,7 +393,7 @@ Provide the following variables to set up OAuth2 SSO:
    UI_BAKERY_OAUTH_CLIENT_ID=0oa3deycosL4fFEvx5d0
    UI_BAKERY_OAUTH_SECRET=sO8BPgTb5MVs9kS37Qoml5sCEK7faFX78VDP2E3q
    UI_BAKERY_OAUTH_SCOPE=openid email offline_access profile
-   UI_BAKERY_OAUTH_AUTH_URL==https://mybakery.okta.com/oauth2/v1/authorize
+   UI_BAKERY_OAUTH_AUTH_URL=https://mybakery.okta.com/oauth2/v1/authorize
    UI_BAKERY_OAUTH_TOKEN_URL=https://mybakery.okta.com/oauth2/v1/token
    UI_BAKERY_OAUTH_USERINFO_URL=https://mybakery.okta.com/oauth2/v1/userinfo
    UI_BAKERY_OAUTH_EMAIL_KEY=email
