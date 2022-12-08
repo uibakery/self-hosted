@@ -62,3 +62,4 @@
 |UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE| Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`.                                      |
 |UI_BAKERY_MAINTENANCE_TIME_GMT| Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                                      |
 |UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS| How many hours prior to maintenance the notice must be shown                                   |
+|UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION| If true, allows calling actions when UI Bakery is embedded in an iframe                                   |
