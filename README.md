@@ -425,7 +425,7 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 1. Additionally, you can configure a role mapping from identity provider role id/name to a UI Bakery role:
 
       ```bash
-      UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
+      UI_BAKERY_SSO_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
       ```
 1. If your setup requires a complete syncronization, when UI Bakery overwrites all roles, removing existing ones and adding new ones received from Identity Provider even if SSO returns no matching roles (e.g. user has no access to the system), use the following variable:
    ```bash
