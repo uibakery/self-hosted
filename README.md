@@ -49,6 +49,7 @@ On-premise version grants you:
 - [Running a standalone database instance](#running-a-standalone-database-instance)
 - [Running on a remote instance](#running-on-a-remote-instance)
 - [Google oauth setup](#google-oauth-setup)
+- [Generic OAuth2 SSO provider](#generic-oauth2-sso-provider)
 - [SAML authentication setup](#saml-authentication-setup)
 - [SSO roles synchronization](#sso-roles-synchronization)
 - [Authentication settings](#other-authentication-setting)
