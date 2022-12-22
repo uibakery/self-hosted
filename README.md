@@ -27,7 +27,7 @@ On-premise version grants you:
 - A quick setup process
 - Custom branding
 - Custom domain hosting
-- Google SSO
+- OAuth2 SSO
 - SAML-based identity providers
 - Data is stored securely under your own VPS
 
@@ -49,8 +49,9 @@ On-premise version grants you:
 - [Running a standalone database instance](#running-a-standalone-database-instance)
 - [Running on a remote instance](#running-on-a-remote-instance)
 - [Google oauth setup](#google-oauth-setup)
+- [Generic OAuth2 SSO provider](#generic-oauth2-sso-provider)
 - [SAML authentication setup](#saml-authentication-setup)
-  - [SAML roles synchronization](#saml-roles-synchronization)
+- [SSO roles synchronization](#sso-roles-synchronization)
 - [Authentication settings](#other-authentication-setting)
 - [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
@@ -289,18 +290,18 @@ git clone https://github.com/uibakery/self-hosted.git && cd self-hosted
 
 6. Set `UI_BAKERY_LICENSE_KEY` variable in _docker-compose-azure-container-instances.yml_ for `bakery-back` service.
 
-```yaml
-- UI_BAKERY_LICENSE_KEY=${UI_BAKERY_LICENSE_KEY:-eyJhbGciOiJIUz}
+```bash
+UI_BAKERY_LICENSE_KEY=${UI_BAKERY_LICENSE_KEY:-eyJhbGciOiJIUz}
 ```
 
 7. Set `UI_BAKERY_DB_*` variables in _docker-compose-azure-container-instances.yml_ for `bakery-back` service.
 
-```yaml
-- UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
-- UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
-- UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
-- UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-db}
-- UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
+```bash
+UI_BAKERY_DB_HOST=${UI_BAKERY_DB_HOST:-azure-container-instance-test-db.mysql.database.azure.com}
+UI_BAKERY_DB_PORT=${UI_BAKERY_DB_PORT:-3306}
+UI_BAKERY_DB_DATABASE=${UI_BAKERY_DB_DATABASE:-bakery}
+UI_BAKERY_DB_USERNAME=${UI_BAKERY_DB_USERNAME:-uibakeryuser@azure-container-instance-db}
+UI_BAKERY_DB_PASSWORD=${UI_BAKERY_DB_PASSWORD:-uibakerypassword}
 ```
 
 8. Up azure container instance.
@@ -313,8 +314,8 @@ docker compose -f docker-compose-azure-container-instances.yml up
 
 10. Replace all occurrences of `UI_BAKERY_APP_SERVER_NAME` with the IP address retrieved in the previous step.
 
-```yaml
-- UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123
+```bash
+UI_BAKERY_APP_SERVER_NAME=https://123.123.123.123
 ```
 
 11. Restart instance to apply new configuration.
@@ -366,7 +367,9 @@ UI_BAKERY_APP_SERVER_NAME=https://YOUR_DOMAIN
 UI_BAKERY_PORT=80
 ```
 
-## Google OAuth setup
+## Google OAuth2 setup
+
+UI Bakery Google OAuth2 can be done by one setting.
 
 1. Create OAuth Client ID in [Google Developer Console](https://console.cloud.google.com/apis/credentials)
 
@@ -381,12 +384,25 @@ UI_BAKERY_PORT=80
 
 1. Provide `UI_BAKERY_GOOGLE_CLIENT_ID=Your Client ID` environment variable.
 1. Provide `UI_BAKERY_APP_SERVER_NAME=http(s)://youdomain.com` environment variable in case you want to run UI Bakery on a custom domain/IP.
-1. Run `docker-compose up` if you want to use the embedded database.
-1. Or run `docker-compose -f ./docker-compose-external-db.yml` up with environment variables described in [Running a standalone database instance](#running-a-standalone-database-instance) above in case you want to use an external database.
+
+## Generic OAuth2 SSO provider 
+
+UI Bakery supports integration with OAuth2 providers.
+Provide the following variables to set up OAuth2 SSO:
+
+   ```bash
+   UI_BAKERY_OAUTH_CLIENT_ID=0oa3deycosL4fFEvx5d0
+   UI_BAKERY_OAUTH_SECRET=sO8BPgTb5MVs9kS37Qoml5sCEK7faFX78VDP2E3q
+   UI_BAKERY_OAUTH_SCOPE=openid email offline_access profile
+   UI_BAKERY_OAUTH_AUTH_URL=https://mybakery.okta.com/oauth2/v1/authorize
+   UI_BAKERY_OAUTH_TOKEN_URL=https://mybakery.okta.com/oauth2/v1/token
+   UI_BAKERY_OAUTH_USERINFO_URL=https://mybakery.okta.com/oauth2/v1/userinfo
+   UI_BAKERY_OAUTH_EMAIL_KEY=email
+   ```
 
 ## SAML authentication setup
 
-1. Configure your Identity provider. In identity provider settings, set **Sign on URL** and **Reply URL** to `https://APP_LOCATION/api/auth/login/saml`. Replace `APP_LOCATION` with UI Bakery instance URL. Configure **name** and **role** attributes. You can set claim name in identity provider settings or in UI Bakery env variables `UI_BAKERY_SAML_NAME_CLAIM` and `UI_BAKERY_SAML_ROLE_CLAIM`.
+1. Configure your Identity provider. In identity provider settings, set **Sign on URL** and **Reply URL** to `https://APP_LOCATION/api/auth/login/saml`. Replace `APP_LOCATION` with UI Bakery instance URL. Configure **name** and **role** attributes. You can set claim name in identity provider settings or in UI Bakery env variables `UI_BAKERY_SSO_NAME_CLAIM` and `UI_BAKERY_SSO_ROLE_CLAIM`.
 
 1. Provide URL of your identity provider metadata and entity ID via the following env variables:
 
@@ -397,37 +413,37 @@ UI_BAKERY_PORT=80
 
 1. Set variable `UI_BAKERY_SAML_ENABLED=true`
 
-1. You can set the variable `UI_BAKERY_SAML_LOGIN_AUTO` to true to enable automatic login. Any unauthorized user will be redirected to SAML login flow.
-
-### SAML roles synchronization
+### SSO roles synchronization
 
 By default, UI Bakery will not sync any roles provided by the Identity Provider. 
 
-1. To enable roles synchronization, set the variable `UI_BAKERY_SAML_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received **roles by names**. Roles sync will be done only during the sign up process. If a match is found (e.g. SSO returned a `support` role and UI Bakery has this role in the workspace), current user roles will be deleted and the matched SSO role(s) will be assinged to the user.
+1. To enable roles synchronization, set the variable `UI_BAKERY_SSO_SYNC_ROLES=true`. Out of the box, UI Bakery will try to match received **roles by names**. Roles sync will be done only during the sign up process. If a match is found (e.g. SSO returned a `support` role and UI Bakery has this role in the workspace), current user roles will be deleted and the matched SSO role(s) will be assinged to the user.
 
-    :warning: During user sign up, a default `user` role will be assigned unless `UI_BAKERY_SAML_HARD_SYNC_ROLES` is enabled.
+    :warning: During user sign up, a default `user` role will be assigned unless `UI_BAKERY_SSO_HARD_SYNC_ROLES` is enabled.
     
-    :warning: If no match is found, UI Bakery will leave the current user roles. See `UI_BAKERY_SAML_HARD_SYNC_ROLES` to change this behaviour.
+    :warning: If no match is found, UI Bakery will leave the current user roles. See `UI_BAKERY_SSO_HARD_SYNC_ROLES` to change this behaviour.
 1. Additionally, you can configure a role mapping from identity provider role id/name to a UI Bakery role:
 
       ```bash
-      UI_BAKERY_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
+      UI_BAKERY_SSO_ROLE_MAPPING=identityRoleName->bakeryRoleName,identityRoleName2->bakeryRoleName2
       ```
 1. If your setup requires a complete syncronization, when UI Bakery overwrites all roles, removing existing ones and adding new ones received from Identity Provider even if SSO returns no matching roles (e.g. user has no access to the system), use the following variable:
    ```bash
-    UI_BAKERY_SAML_HARD_SYNC_ROLES=true
+    UI_BAKERY_SSO_HARD_SYNC_ROLES=true
    ```
    
    :warning: Please note, if no roles are found, the user will be removed from the organization and will no longer be able to access it.
 
-1. To sync roles during the login as well, set `UI_BAKERY_SAML_SYNC_ROLES_ON_LOGIN=true`
-1. By default, UI Bakery will only sync roles for end-users, leaving the `admin` and `editor` roles untouched. To sync roles for all users, set `UI_BAKERY_SAML_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
+1. To sync roles during the login as well, set `UI_BAKERY_SSO_SYNC_ROLES_ON_LOGIN=true`
+1. By default, UI Bakery will only sync roles for end-users, leaving the `admin` and `editor` roles untouched. To sync roles for all users, set `UI_BAKERY_SSO_SYNC_ROLES_FOR_EDITOR_AND_ADMIN=true`
 
     :warning: Please note, this way admin accounts may lose the access to the system in a case of malformed configuration.
    
 ## Other authentication setting
 
-1. You can disable email authentication by providing the environment variable `UI_BAKERY_GOOGLE_AUTH_ONLY=true`
+1. You can set the variable `UI_BAKERY_SSO_LOGIN_AUTO` to true to enable automatic login. Any unauthorized user will be redirected to SSO login flow.
+
+1. You can disable email authentication by providing the environment variable `UI_BAKERY_EMAIL_AUTH_ENABLED=false`
 
 1. Provide `UI_BAKERY_AUTH_RESTRICTED_DOMAIN=domain.com` environment variable to restrict Google login only to the specified domain.
 
