@@ -53,6 +53,7 @@ On-premise version grants you:
 - [SAML authentication setup](#saml-authentication-setup)
 - [SSO roles synchronization](#sso-roles-synchronization)
 - [Authentication settings](#other-authentication-setting)
+- [Embedding](#embedding)
 - [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
 - [Emails configuration](#configuring-email-provider)
@@ -446,6 +447,48 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 1. You can disable email authentication by providing the environment variable `UI_BAKERY_EMAIL_AUTH_ENABLED=false`
 
 1. Provide `UI_BAKERY_AUTH_RESTRICTED_DOMAIN=domain.com` environment variable to restrict Google login only to the specified domain.
+
+## Embedding
+
+UI Bakery self-hosted can be easily embedden in other web applications and pages. It is also possible to setup two-way communitcation between embedded app and website the app is embedded in.
+
+1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery application (e.g. `https://custom-uibakery.com/share/SKDUFYUDF`)
+
+```html
+<script src="https://custom-uibakery.com/uibakery-embedded.js"></script>
+<iframe width="100%" height="50%" id="uibakery" src="https://custom-uibakery.com/share/SKDUFYUDF"></iframe>
+```
+
+2. Add a script tag to the page where UI Bakery app is embedded to communicate with internal app actions:
+
+```html
+<input type="number" value="10" />
+<button>Execute Action</button>
+
+<script>
+  const bakery = UIBakery('#uibakery');
+  bakery.onReady(() => {
+    document.querySelector('button').addEventListener('click', () => {
+      const limit = parseInt(document.querySelector('input').value, 10);
+
+      // execute UI Bakery action with {{params}} = { limit: 10 }
+      bakery.triggerAction('actionName', { limit });
+    });
+
+    // listen to messages sent from UI Bakery
+    bakery.onMessage('customEvent', params => {
+      console.log(params);
+    });
+  });
+</script>
+```
+
+3. Use the following code to send messages from UI Bakery actions to the parent window
+
+```js
+
+UIBakeryEmbedded.emitMessage('customEvent', {{data}})	;
+```
 
 ## Limitations
 
