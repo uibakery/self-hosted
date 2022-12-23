@@ -53,6 +53,7 @@ On-premise version grants you:
 - [SAML authentication setup](#saml-authentication-setup)
 - [SSO roles synchronization](#sso-roles-synchronization)
 - [Authentication settings](#other-authentication-setting)
+- [Embedding](#embedding)
 - [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
 - [Emails configuration](#configuring-email-provider)
@@ -446,6 +447,43 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 1. You can disable email authentication by providing the environment variable `UI_BAKERY_EMAIL_AUTH_ENABLED=false`
 
 1. Provide `UI_BAKERY_AUTH_RESTRICTED_DOMAIN=domain.com` environment variable to restrict Google login only to the specified domain.
+
+## Embedding
+
+1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery project (e.g. `.../share/SKDUFYUDF`)
+
+```html
+<iframe width="100%" height="50%" id="uibakery" src="..."></iframe>
+
+<input type="number" value="10" />
+<button>Execute Action</button>
+
+<script src="uibakery-embedded.js"></script>
+<script>
+  const bakery = UIBakery('#uibakery');
+  bakery.onReady(() => {
+    document.querySelector('button').addEventListener('click', () => {
+      const limit = parseInt(document.querySelector('input').value, 10);
+
+      // execute UI Bakery action
+      bakery.triggerAction('external', { limit });
+    });
+
+    // listen to message sent from UI Bakery
+    bakery.onMessage('customEvent', params => {
+      console.log(params);
+    });
+  });
+</script>
+```
+
+1. Use the following code to send messages from UI Bakery to the parent window
+
+```js
+
+
+UIBakeryEmbedded.emitMessage('customEvent', {{data}})	;
+```
 
 ## Limitations
 
