@@ -450,26 +450,32 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 
 ## Embedding
 
-1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery application (e.g. `.../share/SKDUFYUDF`)
+UI Bakery self-hosted can be easily embedden in other web applications and pages. It is also possible to setup two-way communitcation between embedded app and website the app is embedded in.
+
+1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery application (e.g. `https://custom-uibakery.com/share/SKDUFYUDF`)
 
 ```html
-<iframe width="100%" height="50%" id="uibakery" src="..."></iframe>
+<script src="https://custom-uibakery.com/uibakery-embedded.js"></script>
+<iframe width="100%" height="50%" id="uibakery" src="https://custom-uibakery.com/share/SKDUFYUDF"></iframe>
+```
 
+2. Add a script tag to the page where UI Bakery app is embedded to communicate with internal app actions:
+
+```html
 <input type="number" value="10" />
 <button>Execute Action</button>
 
-<script src="uibakery-embedded.js"></script>
 <script>
   const bakery = UIBakery('#uibakery');
   bakery.onReady(() => {
     document.querySelector('button').addEventListener('click', () => {
       const limit = parseInt(document.querySelector('input').value, 10);
 
-      // execute UI Bakery action
-      bakery.triggerAction('external', { limit });
+      // execute UI Bakery action with {{params}} = { limit: 10 }
+      bakery.triggerAction('actionName', { limit });
     });
 
-    // listen to message sent from UI Bakery
+    // listen to messages sent from UI Bakery
     bakery.onMessage('customEvent', params => {
       console.log(params);
     });
@@ -477,7 +483,7 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 </script>
 ```
 
-1. Use the following code to send messages from UI Bakery to the parent window
+3. Use the following code to send messages from UI Bakery actions to the parent window
 
 ```js
 
