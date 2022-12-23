@@ -481,7 +481,6 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 
 ```js
 
-
 UIBakeryEmbedded.emitMessage('customEvent', {{data}})	;
 ```
 
