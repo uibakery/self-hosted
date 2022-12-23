@@ -450,7 +450,7 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 
 ## Embedding
 
-1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery project (e.g. `.../share/SKDUFYUDF`)
+1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery application (e.g. `.../share/SKDUFYUDF`)
 
 ```html
 <iframe width="100%" height="50%" id="uibakery" src="..."></iframe>
