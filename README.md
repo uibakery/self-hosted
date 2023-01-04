@@ -48,8 +48,8 @@ On-premise version grants you:
 - [Azure container instance](#azure-container-instance)
 - [Running a standalone database instance](#running-a-standalone-database-instance)
 - [Running on a remote instance](#running-on-a-remote-instance)
-- [Google oauth setup](#google-oauth-setup)
-- [Generic OAuth2 SSO provider](#generic-oauth2-sso-provider)
+- [SSO with OpenId providers](#sso-with-openid-providers)
+- [Google SSO](#google-sso)
 - [SAML authentication setup](#saml-authentication-setup)
 - [SSO roles synchronization](#sso-roles-synchronization)
 - [Authentication settings](#other-authentication-setting)
@@ -368,7 +368,9 @@ UI_BAKERY_APP_SERVER_NAME=https://YOUR_DOMAIN
 UI_BAKERY_PORT=80
 ```
 
-## Google OAuth2 setup
+## Google SSO
+
+:warning: This configuration is deprecated. Use [SSO with OpenId providers](#sso-with-openid-providers) instead.
 
 UI Bakery Google OAuth2 can be done by one setting.
 
@@ -386,13 +388,11 @@ UI Bakery Google OAuth2 can be done by one setting.
 1. Provide `UI_BAKERY_GOOGLE_CLIENT_ID=Your Client ID` environment variable.
 1. Provide `UI_BAKERY_APP_SERVER_NAME=http(s)://youdomain.com` environment variable in case you want to run UI Bakery on a custom domain/IP.
 
-## Generic OAuth2 SSO provider
+## SSO with OpenId providers
 
-In your UI Bakery instance you can setup Single Sign On with custom OpenID provider.
-UI Bakery supports the Authorization Code Flow.
+In your UI Bakery instance, it is possible to configure Single Sign On with a custom OpenID provider that utilizes the Authorization Code Flow.
 
-To set up OAuth2 SSO register redirect URI in your provider `UI_BAKERY_APP_SERVER_NAME/auth/oauth2/callback` 
-and provide the following variables:
+To set up OAuth2 SSO with UI Bakery, you will need to register the redirect URI in the provider's settings. The redirect URI should be `UI_BAKERY_APP_SERVER_NAME/auth/oauth2/callback`. In addition, you will need to provide the following variables:
 
    ```bash
    UI_BAKERY_OAUTH_CLIENT_ID=0oa3deycosL4fFEvx5d0
