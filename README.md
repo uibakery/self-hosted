@@ -388,7 +388,8 @@ UI Bakery Google OAuth2 can be done by one setting.
 
 ## Generic OAuth2 SSO provider 
 
-UI Bakery supports integration with OAuth2 providers.
+UI Bakery supports integration with OAuth2 providers. 
+Register UI Bakery redirect callback in your provider `UI_BAKERY_APP_SERVER_NAME/auth/oauth2/callback`.
 Provide the following variables to set up OAuth2 SSO:
 
    ```bash
