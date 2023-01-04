@@ -405,6 +405,14 @@ To set up OAuth2 SSO with UI Bakery, you will need to register the redirect URI 
    UI_BAKERY_OAUTH_ID_KEY=sub
    ```
 
+You can use OAuth2 token in HTTP data source requests.
+For example add header `Authorization: Bearer UI_BAKERY_SSO_TOKEN` in data source configuration and placeholder `UI_BAKERY_SSO_TOKEN` will be replaced with real token before request.
+To make it work you need to enable token broadcasting by changing the following env variable:
+
+   ```bash
+   UI_BAKERY_SSO_BROADCAST_TOKEN=true
+   ```
+
 ## SAML authentication setup
 
 1. Configure your Identity provider. In identity provider settings, set **Sign on URL** and **Reply URL** to `https://APP_LOCATION/api/auth/login/saml`. Replace `APP_LOCATION` with UI Bakery instance URL. Configure **name** and **role** attributes. You can set claim name in identity provider settings or in UI Bakery env variables `UI_BAKERY_SSO_NAME_CLAIM` and `UI_BAKERY_SSO_ROLE_CLAIM`.
