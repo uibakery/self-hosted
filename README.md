@@ -386,11 +386,13 @@ UI Bakery Google OAuth2 can be done by one setting.
 1. Provide `UI_BAKERY_GOOGLE_CLIENT_ID=Your Client ID` environment variable.
 1. Provide `UI_BAKERY_APP_SERVER_NAME=http(s)://youdomain.com` environment variable in case you want to run UI Bakery on a custom domain/IP.
 
-## Generic OAuth2 SSO provider 
+## Generic OAuth2 SSO provider
 
-UI Bakery supports integration with OAuth2 providers. 
-Register UI Bakery redirect callback in your provider `UI_BAKERY_APP_SERVER_NAME/auth/oauth2/callback`.
-Provide the following variables to set up OAuth2 SSO:
+In your UI Bakery instance you can setup Single Sign On with custom OpenID provider.
+UI Bakery supports the Authorization Code Flow.
+
+To set up OAuth2 SSO register redirect URI in your provider `UI_BAKERY_APP_SERVER_NAME/auth/oauth2/callback` 
+and provide the following variables:
 
    ```bash
    UI_BAKERY_OAUTH_CLIENT_ID=0oa3deycosL4fFEvx5d0
@@ -400,6 +402,7 @@ Provide the following variables to set up OAuth2 SSO:
    UI_BAKERY_OAUTH_TOKEN_URL=https://mybakery.okta.com/oauth2/v1/token
    UI_BAKERY_OAUTH_USERINFO_URL=https://mybakery.okta.com/oauth2/v1/userinfo
    UI_BAKERY_OAUTH_EMAIL_KEY=email
+   UI_BAKERY_OAUTH_ID_KEY=sub
    ```
 
 ## SAML authentication setup
