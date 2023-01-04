@@ -405,9 +405,9 @@ To set up OAuth2 SSO with UI Bakery, you will need to register the redirect URI 
    UI_BAKERY_OAUTH_ID_KEY=sub
    ```
 
-You can use OAuth2 token in HTTP data source requests.
-For example add header `Authorization: Bearer UI_BAKERY_SSO_TOKEN` in data source configuration and placeholder `UI_BAKERY_SSO_TOKEN` will be replaced with real token before request.
-To make it work you need to enable token broadcasting by changing the following env variable:
+The SSO user token that is obtained can be used in the HTTP data source configuration to be included in all requests. The token is available as the `UI_BAKERY_SSO_TOKEN` placeholder. To use the token, you can set up the Authorization header with the value `Bearer UI_BAKERY_SSO_TOKEN` in the data source configuration. The placeholder `UI_BAKERY_SSO_TOKEN` will be replaced with the actual token before the request is sent.
+
+To enable token broadcasting, you need to set the following environment variable:
 
    ```bash
    UI_BAKERY_SSO_BROADCAST_TOKEN=true
