@@ -450,7 +450,9 @@ By default, UI Bakery will not sync any roles provided by the Identity Provider.
 
 ## Embedding
 
-UI Bakery self-hosted can be easily embedden in other web applications and pages. It is also possible to setup two-way communitcation between embedded app and website the app is embedded in.
+UI Bakery self-hosted can be easily embedded in other web applications and pages. It is also possible to setup two-way communitcation between embedded app and website the app is embedded in.
+
+Before you proceed, make sure that `UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION=true` variable is enabled in your instance.
 
 1. Embed UI Bakery in an iframe where `src` is a link to an Embedded UI Bakery application (e.g. `https://custom-uibakery.com/share/SKDUFYUDF`)
 
