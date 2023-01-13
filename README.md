@@ -603,24 +603,25 @@ This way, you don't need to manage templates content inside of your environment 
 
 # Branding
 
-To make UI Bakery feel like part of your systems you can do branding: 
+To make UI Bakery feel like a part of your own systems, you can do some branding:
 
-- Change app title in the browser tab:
+
+- Change the title of the app in the browser tab:
 ```bash
 UI_BAKERY_APP_TITLE=UI Bakery
 ```
 
-- Replace the UI Bakery logo with the custom logo on auth screens:
+- Replace the UI Bakery logo with your own logo on the login screens:
 ```bash
 UI_BAKERY_BRANDING_LOGO_URL=https://cloud.uibakery.io/assets/logo.svg
 ```
 
-- Change the background image on all auth screens:
+- Change the background image on all login screens:
 ```bash
 UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL=https://cloud.uibakery.io/assets/auth-background.webp
 ```
 
-- Provided custom loader as an inline `SVG` with `class="loader-logo"`:
+- Use a custom loader as an inline SVG with the `class="loader-logo"`:
 ```bash
 UI_BAKERY_BRANDING_LOADER='<?xml version="1.0" encoding="UTF-8"?>
 <svg class="loader-logo" viewBox="0 0 27 39" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -630,17 +631,17 @@ UI_BAKERY_BRANDING_LOADER='<?xml version="1.0" encoding="UTF-8"?>
 </svg>'
 ```
 
-- Customize loader container styles as an inline CSS:
+- Customize the loader container's styles with inline CSS:
 ```bash
 UI_BAKERY_BRANDING_LOADER_STYLES="background: #003D4C; transform: scale(2)"
 ```
 
-- Change favicon:
+- Change the website's favicon:
 ```bash
 UI_BAKERY_BRANDING_FAVICON=https://www.merits.com/hubfs/favicon-96.png
 ```
 
-- Customize the logo at the top left corner of workspace:
+- Customize the logo at the top left corner of the workspace:
 ```bash
 UI_BAKERY_BRANDING_MENU_LOGO_URL=https://cloud.uibakery.io/assets/logo.svg
 ```
