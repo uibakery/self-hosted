@@ -73,7 +73,7 @@
 | Environment variable name                           | Description                                                                                               |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
 | UI_BAKERY_APP_TITLE                                 | HTML `<title/>` tag content. Default value is `UI Bakery`.                                                |
-| UI_BAKERY_GTM                                       | An arbitary HTML tag that will be added after the <body> open tag. Can be used to provide custom styles or scripts `<style>.header-container {  background-color: aquamarine; }</style>`       |
+| UI_BAKERY_GTM                                       | An arbitary HTML tag that will be added after the <body> open tag. Can be used to provide custom styles or scripts `<style>.header-container {  background-color: aquamarine!important; }</style>`       |
 | UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL              | URL to image. Allows you to set custom background image for auth screen.                                  |
 | UI_BAKERY_BRANDING_AUTH_CARD_STYLES                 | CSS styles for card on auth screens. `background: transparent; box-shadow: none;`.                        |
 | UI_BAKERY_BRANDING_AUTH_HEADER_STYLES               | CSS styles for card headers ("Login" and "Signup") on auth screens. `font-weight: 600; font-size: 2rem;`. |
