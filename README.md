@@ -626,7 +626,8 @@ UI_BAKERY_BRANDING_LOADER='<?xml version="1.0" encoding="UTF-8"?>
 <svg class="loader-logo" viewBox="0 0 27 39" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
 <path id="a" d="m14.266 30.487c-2.943 0.552-5.771-1.41-6.317-4.381-0.546-2.972 1.396-5.828 4.338-6.38 2.943-0.552 5.77 1.41 6.317 4.382 0.547 2.971-1.396 5.827-4.338 6.379m10.56-11.99c-3.616-6.441-11.716-8.704-18.095-5.053-6.379 3.65-8.619 11.83-5.004 18.272 3.615 6.441 11.715 8.704 18.093 5.054s8.619-11.832 5.004-18.273"/>
-</defs>'
+</defs>
+</svg>'
 ```
 
 - Customize loader container styles as an inline CSS:

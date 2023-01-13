@@ -70,21 +70,21 @@
 
 ## Branding
 
-| Environment variable name                           | Description                                                                                            |
-|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| UI_BAKERY_APP_TITLE                                 | HTML `<title/>` tag content. Default value is `UI Bakery`.                                             |
-| UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL              | URL to image. Allows you to set custom background image for auth screen.                               |
-| UI_BAKERY_BRANDING_AUTH_CARD_STYLES                 | Allows you to set custom CSS styles for card on auth screen.                                         s |
-| UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES           | Allows you to set custom CSS styles for "LOGIN WITH GOOGLE" button on auth screen.                     |
-| UI_BAKERY_BRANDING_AUTH_HEADER_STYLES               | Allows you to set custom CSS styles for headers ("Login" and "Signup") on auth screens.                |
-| UI_BAKERY_BRANDING_AUTH_LOGO_STYLES                 | Allows you to set custom CSS styles for logo on auth screens.                                          |
-| UI_BAKERY_BRANDING_FAVICON                          | URL to image. Allows you to set custom favicon.                                                        |
-| UI_BAKERY_BRANDING_LOADER_STYLES                    | Allows you to set custom CSS styles for loader                                                         |
-| UI_BAKERY_BRANDING_LOADER                           | SVG or HTML text. Allows you to set custom loader image.                                               |
-| UI_BAKERY_BRANDING_LOGO_URL                         | URL to image. Allows you to replace UI Bakery logo.                                                    |
-| UI_BAKERY_BRANDING_MENU_LOGO_URL                    | URL to image. Allows you to replace UI Bakery logo in menu.                                            |
-| UI_BAKERY_BRANDING_AUTH_FORGOT_PASSWORD_LINK_HIDDEN | `true` or `false` - show the reset password link.                                                      |
-| UI_BAKERY_BRANDING_AUTH_SIGN_UP_LINK_HIDDEN         | `true` or `false` - show the sign up link.                                                             |
+| Environment variable name                           | Description                                                                                               |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_APP_TITLE                                 | HTML `<title/>` tag content. Default value is `UI Bakery`.                                                |
+| UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL              | URL to image. Allows you to set custom background image for auth screen.                                  |
+| UI_BAKERY_BRANDING_AUTH_CARD_STYLES                 | CSS styles for card on auth screens. `background: transparent; box-shadow: none;`.                        |
+| UI_BAKERY_BRANDING_AUTH_HEADER_STYLES               | CSS styles for card headers ("Login" and "Signup") on auth screens. `font-weight: 600; font-size: 2rem;`. |
+| UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES           | CSS styles for "LOGIN WITH GOOGLE" button on auth screens. `background: white; border: none;`.            |
+| UI_BAKERY_BRANDING_AUTH_LOGO_STYLES                 | CSS styles for logo on auth screens. `margin-bottom: 2rem; width: 100%; height: 2.5rem;`                  |
+| UI_BAKERY_BRANDING_FAVICON                          | URL to image. Allows you to set custom favicon.                                                           |
+| UI_BAKERY_BRANDING_LOADER                           | Loader image. `<svg class="loader-logo"></svg>`, `class="loader-logo"` is required.                       |
+| UI_BAKERY_BRANDING_LOADER_STYLES                    | CSS styles for loader. `background: #003D4C; transform: scale(2)`.                                        |
+| UI_BAKERY_BRANDING_LOGO_URL                         | URL to image. Allows you to replace UI Bakery logo.                                                       |
+| UI_BAKERY_BRANDING_MENU_LOGO_URL                    | URL to image. Allows you to replace UI Bakery logo in top left corner of the workspace.                   |
+| UI_BAKERY_BRANDING_AUTH_FORGOT_PASSWORD_LINK_HIDDEN | `true` or `false` - show the reset password link.                                                         |
+| UI_BAKERY_BRANDING_AUTH_SIGN_UP_LINK_HIDDEN         | `true` or `false` - show the sign up link.                                                                |
 
 ## Mailing
 
