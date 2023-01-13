@@ -59,6 +59,7 @@ On-premise version grants you:
 - [Emails configuration](#configuring-email-provider)
   - [Sendgrid](#configure-sendgrid)
   - [Email templates](#change-email-templates)
+- [Branding](#branding)
 - [Updating on-premise version](#updating-on-premise-version)
 - [How to update licence key](#how-to-update-licence-key)
 - [UI Bakery in production](#ui-bakery-in-production)
@@ -599,6 +600,53 @@ UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=d-c3f84d76543941c084ff2de0exxxxxxx
 :warning: Note, that in this case an email subject will be taken from a dynamic template configuration and variables such as `UI_BAKERY_MAILING_WELCOME_SUBJECT` will be ignored.
 
 This way, you don't need to manage templates content inside of your environment variables and can build more advanced email with images and custom styles.
+
+# Branding
+
+To make UI Bakery feel like a part of your own systems, you can do some branding:
+
+
+- Change the title of the app in the browser tab:
+```bash
+UI_BAKERY_APP_TITLE=UI Bakery
+```
+
+- Replace the UI Bakery logo with your own logo on the login screens:
+```bash
+UI_BAKERY_BRANDING_LOGO_URL=https://cloud.uibakery.io/assets/logo.svg
+```
+
+- Change the background image on all login screens:
+```bash
+UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL=https://cloud.uibakery.io/assets/auth-background.webp
+```
+
+- Use a custom loader as an inline SVG with the `class="loader-logo"`:
+```bash
+UI_BAKERY_BRANDING_LOADER='<?xml version="1.0" encoding="UTF-8"?>
+<svg class="loader-logo" viewBox="0 0 27 39" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path id="a" d="m14.266 30.487c-2.943 0.552-5.771-1.41-6.317-4.381-0.546-2.972 1.396-5.828 4.338-6.38 2.943-0.552 5.77 1.41 6.317 4.382 0.547 2.971-1.396 5.827-4.338 6.379m10.56-11.99c-3.616-6.441-11.716-8.704-18.095-5.053-6.379 3.65-8.619 11.83-5.004 18.272 3.615 6.441 11.715 8.704 18.093 5.054s8.619-11.832 5.004-18.273"/>
+</defs>
+</svg>'
+```
+
+- Customize the loader container's styles with inline CSS:
+```bash
+UI_BAKERY_BRANDING_LOADER_STYLES="background: #003D4C; transform: scale(2)"
+```
+
+- Change the website's favicon:
+```bash
+UI_BAKERY_BRANDING_FAVICON=https://www.merits.com/hubfs/favicon-96.png
+```
+
+- Customize the logo at the top left corner of the workspace:
+```bash
+UI_BAKERY_BRANDING_MENU_LOGO_URL=https://cloud.uibakery.io/assets/logo.svg
+```
+
+Other more specific branding settings are also available, check [Branding environment variables](ENVIRONMENT_VARIABLES.md#branding).
 
 # Updating on-premise version
 
