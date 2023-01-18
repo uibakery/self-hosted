@@ -406,13 +406,27 @@ To set up OAuth2 SSO with UI Bakery, you will need to register the redirect URI 
    UI_BAKERY_OAUTH_ID_KEY=sub
    ```
 
-The SSO user token that is obtained can be used in the HTTP data source configuration to be included in all requests. The token is available as the `UI_BAKERY_SSO_TOKEN` placeholder. To use the token, you can set up the Authorization header with the value `Bearer UI_BAKERY_SSO_TOKEN` in the data source configuration. The placeholder `UI_BAKERY_SSO_TOKEN` will be replaced with the actual token before the request is sent.
+The SSO user token that is obtained can be used in the HTTP data source configuration to be included in all requests.
+The token is available as the `UI_BAKERY_SSO_TOKEN` placeholder.
+To use the token, you can set up the Authorization header with the value `Bearer UI_BAKERY_SSO_TOKEN` in the data source configuration.
+The placeholder `UI_BAKERY_SSO_TOKEN` will be replaced with the actual token before the request is sent.
 
 To enable token broadcasting, you need to set the following environment variable:
 
    ```bash
    UI_BAKERY_SSO_BROADCAST_TOKEN=true
    ```
+
+### SSO token refresh
+
+When the OAuth token expires, UI Bakery will try to refresh it under the following conditions: 
+
+ - The variable `UI_BAKERY_SSO_BROADCAST_TOKEN` must be set to `true`
+ - The `refresh_token` claim must be present
+ - The `expires_in` claim must also be present
+
+If you don't have `expires_in` in token, you can set the variable `UI_BAKERY_OAUTH_FORCE_TOKEN_REFRESH` to `true`
+to force OAuth token refresh on every UI Bakery token refresh attempt.
 
 ## SAML authentication setup
 
