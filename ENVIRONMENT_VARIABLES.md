@@ -86,6 +86,8 @@
 | UI_BAKERY_BRANDING_MENU_LOGO_URL                    | URL to image. Allows you to replace UI Bakery logo in top left corner of the workspace.                   |
 | UI_BAKERY_BRANDING_AUTH_FORGOT_PASSWORD_LINK_HIDDEN | `true` or `false` - show the reset password link.                                                         |
 | UI_BAKERY_BRANDING_AUTH_SIGN_UP_LINK_HIDDEN         | `true` or `false` - show the sign up link.                                                                |
+| UI_BAKERY_ONBOARDING_URL         | Link to a "Get a demo" button (builder & user menu). Set to an empty string to hide the button.                                                                |
+| UI_BAKERY_INTRO_VIDEO_URL         | Link to a "Watch video intro" button (builder & user menu). Set to an empty string to hide the button.                                                              |
 
 ## Mailing
 
