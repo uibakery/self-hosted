@@ -533,12 +533,12 @@ Start with creating OAuth Client ID in [Google Developer Console](https://consol
 - A Salesforce account
 
 ## Setting up the connection
-1. In Salesforce, navigate to the "Connected Apps" section and create a new connected app. Enter the name and contact information for the app.
+1. In Salesforce, navigate to the "App Manager" section and create a new connected app. Enter the name and contact information for the app.
 2. Enable OAuth settings and enter the callback URL `http(s)://YOUR_UIBAKERY_IP_OR_DOMAIN/salesforce-oauth-callback`.
 3. In the "Selected OAuth Scopes" section, add all the necessary OAuth scopes. Make sure to include `access and manage your data` and `perform requests on your behalf at any time`. Even though `Full access` is an option, it's important to note that it doesn't grant all the necessary permissions.
 4. Save the connected app and make note of the Consumer Key (Client ID) and Consumer Secret (Client Secret). 
-5. In UI Bakery, create a new Salesforce datasource and enter the Salesforce URL.
-6. Save Client ID and Client Secret to the `UI_BAKERY_SALESFORCE_CLIENT_ID` and `UI_BAKERY_SALESFORCE_CLIENT_SECRET` environment variables and restart docker container.
+5. Save Client ID and Client Secret to the `UI_BAKERY_SALESFORCE_CLIENT_ID` and `UI_BAKERY_SALESFORCE_CLIENT_SECRET` environment variables and restart docker container.
+6. In UI Bakery, create a new Salesforce datasource and enter the Salesforce URL.
 7. Test the connection to ensure it is successful.
 
 ## Troubleshooting
