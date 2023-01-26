@@ -48,7 +48,6 @@ jwt_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 jwt_service_account_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 55 | xargs -0)
 jwt_refresh_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 credentials_secret=$(LC_ALL=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 32 | xargs -0)
-template_maker_password=$(LC_ALL=C tr -cd "A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\\-+=" < /dev/urandom | head -c 16 | xargs -0)
 
 if [ -e .env ]; then
   cp .env .env_old
@@ -61,7 +60,6 @@ echo "UI_BAKERY_JWT_SECRET='${jwt_secret}'" >> .env
 echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET='${jwt_service_account_secret}'" >> .env
 echo "UI_BAKERY_JWT_REFRESH_SECRET='${jwt_refresh_secret}'" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET='${credentials_secret}'" >> .env
-echo "UI_BAKERY_TEMPLATE_MAKER_PASSWORD='${template_maker_password}'" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
 printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"
