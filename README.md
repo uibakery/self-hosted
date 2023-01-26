@@ -652,7 +652,9 @@ Other more specific branding settings are also available, check [Branding enviro
 
 Once an update to the on-premise version is available, we will notify you via email.
 
-To update your UI Bakery on-premise version, follow the steps below:
+## Update to the latest version
+
+To update your UI Bakery on-premise version to the latest one, follow the steps below:
 
 1. Take a full backup of UI Bakery instance.
 1. Go to your `ui-bakery-on-premise` folder:
@@ -665,6 +667,79 @@ cd ./ui-bakery-on-premise
 
 ```bash
 ./update.sh
+```
+
+## Update to the specific version
+
+To update your UI Bakery on-premise version to the specific version, follow the steps below:
+
+1. Take a full backup of UI Bakery instance.
+1. Go to your `ui-bakery-on-premise` folder:
+
+```bash
+cd ./ui-bakery-on-premise
+```
+
+1. Open the docker-compose.yml file and replace the versions for all images with the specific version desired. 
+For example, to update to version `3.0.0`, the following changes should be made:
+```diff
+version: "3.9"
+services:
+  bakery-gateway:
+    container_name: gateway
+    depends_on:
+      - "bakery-front"
+      - "workbench-front"
+      - "bakery-back"
+-    image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
++    image: cruibakeryonprem.azurecr.io/cloud/gateway:3.0.0
+    restart: always
+    env_file: .env
+    ports:
+      - "${UI_BAKERY_PORT:-3030}:3030"
+
+  bakery-front:
+    container_name: bakery-front
+-    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
++    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:3.0.0
+    restart: always
+    env_file: .env
+
+  workbench-front:
+    container_name: workbench-front
+-    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:latest
++    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:3.0.0
+    restart: always
+    env_file: .env
+
+  datasource:
+    container_name: datasource
+-    image: cruibakeryonprem.azurecr.io/cloud/datasource:latest
++    image: cruibakeryonprem.azurecr.io/cloud/datasource:3.0.0
+    restart: always
+    env_file: .env
+
+  bakery-back:
+    container_name: bakery-back
+    depends_on:
+      db:
+        condition: service_healthy
+-    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
++    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:3.0.0
+    restart: always
+    env_file: .env
+
+  automation:
+    container_name: automation
+-    image: cruibakeryonprem.azurecr.io/cloud/automation:latest
++    image: cruibakeryonprem.azurecr.io/cloud/automation:3.0.0
+    restart: always
+    env_file: .env
+```
+
+1. Then restart the system
+```bash
+docker-compose up -d
 ```
 
 
