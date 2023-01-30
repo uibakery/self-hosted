@@ -10,6 +10,7 @@
 | UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS    | How many hours prior to maintenance the notice must be shown                                    |
 | UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION | If true, allows calling actions when UI Bakery is embedded in an iframe                         |
 | UI_BAKERY_ENABLED_FEATURE_FLAGS             | Comma-separated list of globally enabled feature flags.                                         |
+| UI_BAKERY_TEMPLATE_MAKER_ACCOUNT_PASSWORD   | An account to manage instance app templates. Empty value disables the access (default).         |
 
 ## Database
 
