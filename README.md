@@ -64,6 +64,7 @@ On-premise version grants you:
 - [Updating on-premise version](#updating-on-premise-version)
 - [How to update licence key](#how-to-update-licence-key)
 - [UI Bakery in production](#ui-bakery-in-production)
+- [Setting up SSL](#setting-up-ssl)
 
 ## Installation
 
@@ -816,6 +817,9 @@ N - number of concurent requests
 
 MEMORY_NEEDED=S*T*N
 ```
+
+# Setting up SSL
+The guide on how to set up SSL for UI Bakery on Ubuntu could be found [here](https://docs.uibakery.io/on-premise/setting-up-ssl-on-ubuntu).
 
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
