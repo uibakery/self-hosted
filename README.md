@@ -760,6 +760,7 @@ services:
 
 1. Then restart the system
 ```bash
+docker-compose down
 docker-compose up -d
 ```
 
