@@ -562,7 +562,9 @@ We suggest using [Sendgrid](https://sendgrid.com/) email provider to send the em
    ```bash
    UI_BAKERY_MAILING_PROVIDER=sendgrid
    SENDGRID_API_KEY=YOUR_API_KEY
-   SENDGRID_EMAIL_FROM=your@company.com # make sure this domain is authorized to send emails in your sendgrid account
+   SENDGRID_EMAIL_FROM=your@company.com # is used for welcome email
+   SENDGRID_SYSTEM_EMAIL_FROM=noreply@company.com # is used for other system emails like invitation, reset password and email change
+   # make sure this domain is authorized to send emails in your sendgrid account
    ```
 
 1. Restart the containers.
