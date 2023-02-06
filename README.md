@@ -493,18 +493,51 @@ Before you proceed, make sure that `UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION=
     });
 
     // listen to messages sent from UI Bakery
-    bakery.onMessage('customEvent', params => {
+    bakery.onMessage('eventName', params => {
       console.log(params);
     });
   });
 </script>
 ```
 
-3. Use the following code to send messages from UI Bakery actions to the parent window
+### Listen to messages from UI Bakery in the host app
+
+To listen to messages from UI Bakery, use the `bakery.onMessage('eventName')` method:
+
+- In your host app, listen to a message from a UI Bakery app:
+```js
+bakery.onReady(() => {
+  //...
+
+  bakery.onMessage('eventName', params => {
+    console.log(params);
+  });
+});
+```
+- In the UI Bakery app, send the message (for example, in an Action code) so that it can be received by the host app.
 
 ```js
+UIBakeryEmbedded.emitMessage('eventName', {{data}})	;
+```
 
-UIBakeryEmbedded.emitMessage('customEvent', {{data}})	;
+### Send a message from the host app to UI Bakery
+
+To send a message from the host app to UI Bakery, use `bakery.triggerAction('actionName', { ... });` method. This method triggers a specific action and passes the second argument as a `{{params}}` variable:
+
+- In your host app, trigger an action with the custom params:
+```js
+bakery.onReady(() => {
+  //...
+  bakery.triggerAction('setUser', { user: 'email@example.com' });
+});
+```
+- In the UI Bakery app, create the 'setUser' action and use `{{params}}` variable to receive the data:
+
+```js
+// ... setUser action
+console.log({{params.user}});
+
+return {{params.user}}
 ```
 
 ## Limitations
