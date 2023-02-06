@@ -563,6 +563,7 @@ We suggest using [Sendgrid](https://sendgrid.com/) email provider to send the em
    UI_BAKERY_MAILING_PROVIDER=sendgrid
    SENDGRID_API_KEY=YOUR_API_KEY
    SENDGRID_EMAIL_FROM=your@company.com # make sure this domain is authorized to send emails in your sendgrid account
+   SENDGRID_SYSTEM_EMAIL_FROM=your@company.com # usually it's the same as email above
    ```
 
 1. Restart the containers.
