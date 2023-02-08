@@ -829,7 +829,6 @@ UI_BAKERY_JWT_SECRET
 UI_BAKERY_JWT_REFRESH_SECRET
 UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET
 UI_BAKERY_CREDENTIALS_SECRET
-UI_BAKERY_TEMPLATE_MAKER_PASSWORD
 ```
 
 If you have used install script, then your .env file already contains unique values for those vars.
