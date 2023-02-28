@@ -65,6 +65,7 @@ On-premise version grants you:
 - [How to update licence key](#how-to-update-licence-key)
 - [UI Bakery in production](#ui-bakery-in-production)
 - [Setting up SSL](#setting-up-ssl)
+- [Health check API](#health-check-api)
 
 ## Installation
 
@@ -856,5 +857,8 @@ MEMORY_NEEDED=S*T*N
 # Setting up SSL
 The guide on how to set up SSL for UI Bakery on Ubuntu could be found [here](https://docs.uibakery.io/on-premise/setting-up-ssl-on-ubuntu).
 
+
+# Health check API
+The health check API that can be accessed at the endpoint `/api/actuator/health`. This API endpoint can be used to verify the overall health of the software application, including its dependencies and resources.
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
