@@ -41,7 +41,7 @@
 | UI_BAKERY_GSHEET_CLIENT_SECRET                  | Google Sheet API Client Secret. Must be provided when GSheet datasource is required.                                                                                                              |
 | UI_BAKERY_SALESFORCE_CLIENT_ID                  | Salesforce API Client Id. Must be provided when Salesforce datasource is required.                                                                                                                |
 | UI_BAKERY_SALESFORCE_CLIENT_SECRET              | Salesforce API Client Secret. Must be provided when Salesforce datasource is required.                                                                                                            |
-| UI_BAKERY_HTTPS_PROXY_URL              | HTTPS Proxy URL to send correct HTTP requests from datasource through proxy                                                                                                                       |
+| UI_BAKERY_HTTPS_PROXY_URL              | HTTPS Proxy URL to send HTTPS requests from datasource through proxy                                                                                                                              |
 
 ## Authentication
 
