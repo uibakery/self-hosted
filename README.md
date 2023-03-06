@@ -810,6 +810,7 @@ UI_BAKERY_LICENSE_KEY=key_value
 For docker-compose setup, the environment variables are located in `ui-bakery-on-premise/.env` file.
 To restart your instance, use the following command:
 ```bash
+docker-compose down
 docker-compose up -d
 ```
 
