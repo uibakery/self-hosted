@@ -1,14 +1,18 @@
 # Supported environment variables
 
-| Environment variable name                   | Description                                                                                     |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------|
-| UI_BAKERY_LICENSE_KEY                       | UI Bakery license key. To get your key [contact us](https://uibakery.io/contact-us).            |
-| UI_BAKERY_APP_SERVER_NAME                   | Full domain address where UI Bakery is hosted. For example `https://bakery.mycompany.com`.      |
-| UI_BAKERY_PORT                              | Defines the port UI Bakery is run on.                                                           |
-| UI_BAKERY_SINGLE_ORGANIZATION               | When `true`, only one organization can exist. All other attempts to register new one will fail. |
-| UI_BAKERY_MAINTENANCE_TIME_GMT              | Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                     |
-| UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS    | How many hours prior to maintenance the notice must be shown                                    |
-| UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION | If true, allows calling actions when UI Bakery is embedded in an iframe                         |
+| Environment variable name                   | Description                                                                                                                   |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_LICENSE_KEY                       | UI Bakery license key. To get your key [contact us](https://uibakery.io/contact-us).                                          |
+| UI_BAKERY_APP_SERVER_NAME                   | Full domain address where UI Bakery is hosted. For example `https://bakery.mycompany.com`.                                    |
+| UI_BAKERY_PORT                              | Defines the port UI Bakery is run on.                                                                                         |
+| UI_BAKERY_SINGLE_ORGANIZATION               | When `true`, only one organization can exist. All other attempts to register new one will fail.                               |
+| UI_BAKERY_MAINTENANCE_TIME_GMT              | Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                                                   |
+| UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS    | How many hours prior to maintenance the notice must be shown                                                                  |
+| UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION | If true, allows calling actions when UI Bakery is embedded in an iframe                                                       |
+| UI_BAKERY_ENABLED_FEATURE_FLAGS             | Comma-separated list of globally enabled feature flags.                                                                       |
+| UI_BAKERY_TEMPLATE_MAKER_ACCOUNT_PASSWORD   | An account to manage instance app templates. Empty value disables the access (default).                                       |
+| UI_BAKERY_AUTOMATIC_BACKUP_INTERVAL         | The interval defines how often UI Bakery has to create automatic backups of your project in milliseconds. Default 15 minutes. |
+| UI_BAKERY_AUTOMATIC_BACKUP_RETENTION        | Defines how long UI Bakery should persist automatic backup in milliseconds. Default 1 week.                                   |
 
 ## Database
 
@@ -31,14 +35,15 @@
 
 ## Datasources
 
-| Environment variable name                       | Description                                                                                                                                                                                       |
-|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| UI_BAKERY_DATASOURCE_TIMEOUT                    | Datasource request timeout in milliseconds. Default value is `90000`.                                                                                                                             |
-| UI_BAKERY_DATASOURCE_MAX_SIZE                   | Datasource request maximum response size in bytes. Default value is `102400000`.                                                                                                                  |
-| UI_BAKERY_GSHEET_CLIENT_ID                      | Google Sheet API Client Id. Must be provided when GSheet datasource is required.                                                                                                                  |
-| UI_BAKERY_GSHEET_CLIENT_SECRET                  | Google Sheet API Client Secret. Must be provided when GSheet datasource is required.                                                                                                              |
-| UI_BAKERY_SALESFORCE_CLIENT_ID                  | Salesforce API Client Id. Must be provided when Salesforce datasource is required.                                                                                                                |
-| UI_BAKERY_SALESFORCE_CLIENT_SECRET              | Salesforce API Client Secret. Must be provided when Salesforce datasource is required.                                                                                                            |
+| Environment variable name                | Description                                                                                                                                                                                       |
+|------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_DATASOURCE_TIMEOUT             | Datasource request timeout in milliseconds. Default value is `90000`.                                                                                                                             |
+| UI_BAKERY_DATASOURCE_MAX_SIZE            | Datasource request maximum response size in bytes. Default value is `102400000`.                                                                                                                  |
+| UI_BAKERY_GSHEET_CLIENT_ID               | Google Sheet API Client Id. Must be provided when GSheet datasource is required.                                                                                                                  |
+| UI_BAKERY_GSHEET_CLIENT_SECRET           | Google Sheet API Client Secret. Must be provided when GSheet datasource is required.                                                                                                              |
+| UI_BAKERY_SALESFORCE_CLIENT_ID           | Salesforce API Client Id. Must be provided when Salesforce datasource is required.                                                                                                                |
+| UI_BAKERY_SALESFORCE_CLIENT_SECRET       | Salesforce API Client Secret. Must be provided when Salesforce datasource is required.                                                                                                            |
+| UI_BAKERY_HTTPS_PROXY_URL                | HTTPS Proxy URL to send HTTPS requests from datasource through proxy                                                                                                                              |
 
 ## Authentication
 
@@ -73,22 +78,28 @@
 
 ## Branding
 
-| Environment variable name                           | Description                                                                                               |
-|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| UI_BAKERY_APP_TITLE                                 | HTML `<title/>` tag content. Default value is `UI Bakery`.                                                |
-| UI_BAKERY_GTM                                       | Arbitary HTML that will be added after the open `<body>` tag. Can be used to provide custom styles or scripts `<style>.header-container { background-color: aquamarine!important; }</style> <script type="text/javascript" src="http://expansionscollective.com/testscripts/jquery.fullPage.js"></script>`       |
-| UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL              | URL to image. Allows you to set custom background image for auth screen.                                  |
-| UI_BAKERY_BRANDING_AUTH_CARD_STYLES                 | CSS styles for card on auth screens. `background: transparent; box-shadow: none;`.                        |
-| UI_BAKERY_BRANDING_AUTH_HEADER_STYLES               | CSS styles for card headers ("Login" and "Signup") on auth screens. `font-weight: 600; font-size: 2rem;`. |
-| UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES           | CSS styles for "LOGIN WITH GOOGLE" button on auth screens. `background: white; border: none;`.            |
-| UI_BAKERY_BRANDING_AUTH_LOGO_STYLES                 | CSS styles for logo on auth screens. `margin-bottom: 2rem; width: 100%; height: 2.5rem;`                  |
-| UI_BAKERY_BRANDING_FAVICON                          | URL to image. Allows you to set custom favicon.                                                           |
-| UI_BAKERY_BRANDING_LOADER                           | Loader image. `<svg class="loader-logo"></svg>`, `class="loader-logo"` is required.                       |
-| UI_BAKERY_BRANDING_LOADER_STYLES                    | CSS styles for loader. `background: #003D4C; transform: scale(2)`.                                        |
-| UI_BAKERY_BRANDING_LOGO_URL                         | URL to image. Allows you to replace UI Bakery logo.                                                       |
-| UI_BAKERY_BRANDING_MENU_LOGO_URL                    | URL to image. Allows you to replace UI Bakery logo in top left corner of the workspace.                   |
-| UI_BAKERY_BRANDING_AUTH_FORGOT_PASSWORD_LINK_HIDDEN | `true` or `false` - show the reset password link.                                                         |
-| UI_BAKERY_BRANDING_AUTH_SIGN_UP_LINK_HIDDEN         | `true` or `false` - show the sign up link.                                                                |
+| Environment variable name                           | Description                                                                                                                                                                                                                                                                                                  |
+|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_APP_TITLE                                 | HTML `<title/>` tag content. Default value is `UI Bakery`.                                                                                                                                                                                                                                                   |
+| UI_BAKERY_GTM                                       | Arbitary HTML that will be added after the open `<body>` tag. Can be used to provide custom styles or scripts `<style>.header-container { background-color: aquamarine!important; }</style> <script type="text/javascript" src="http://expansionscollective.com/testscripts/jquery.fullPage.js"></script>`   |
+| UI_BAKERY_BRANDING_AUTH_BACKGROUND_URL              | URL to image. Allows you to set custom background image for auth screen.                                                                                                                                                                                                                                     |
+| UI_BAKERY_BRANDING_AUTH_CARD_STYLES                 | CSS styles for card on auth screens. `background: transparent; box-shadow: none;`.                                                                                                                                                                                                                           |
+| UI_BAKERY_BRANDING_AUTH_HEADER_STYLES               | CSS styles for card headers ("Login" and "Signup") on auth screens. `font-weight: 600; font-size: 2rem;`.                                                                                                                                                                                                    |
+| UI_BAKERY_BRANDING_AUTH_GOOGLE_BTN_STYLES           | CSS styles for "LOGIN WITH GOOGLE" button on auth screens. `background: white; border: none;`.                                                                                                                                                                                                               |
+| UI_BAKERY_BRANDING_AUTH_LOGO_STYLES                 | CSS styles for logo on auth screens. `margin-bottom: 2rem; width: 100%; height: 2.5rem;`                                                                                                                                                                                                                     |
+| UI_BAKERY_BRANDING_FAVICON                          | URL to image. Allows you to set custom favicon.                                                                                                                                                                                                                                                              |
+| UI_BAKERY_BRANDING_LOADER                           | Loader image. `<svg class="loader-logo"></svg>`, `class="loader-logo"` is required.                                                                                                                                                                                                                          |
+| UI_BAKERY_BRANDING_LOADER_STYLES                    | CSS styles for loader. `background: #003D4C; transform: scale(2)`.                                                                                                                                                                                                                                           |
+| UI_BAKERY_BRANDING_LOGO_URL                         | URL to image. Allows you to replace UI Bakery logo.                                                                                                                                                                                                                                                          |
+| UI_BAKERY_BRANDING_AUTH_SSO_BTN_TEXT                | Custom text on the SSO button. `Login with my SSO`                                                                                                                                                                                                                                                           |
+| UI_BAKERY_BRANDING_AUTH_SSO_BTN_STYLES              | CSS styles for the SSO button. `margin-bottom: 1rem`                                                                                                                                                                                                                                                         |
+| UI_BAKERY_BRANDING_AUTH_SSO_BTN_ICON                | URL to image. Allows you to place image on the SSO button.                                                                                                                                                                                                                                                   |
+| UI_BAKERY_BRANDING_AUTH_SSO_BTN_ICON_STYLES         | CSS styles for a image on the SSO button. `height: 1rem; width: auto`                                                                                                                                                                                                                                        |
+| UI_BAKERY_BRANDING_MENU_LOGO_URL                    | URL to image. Allows you to replace UI Bakery logo in top left corner of the workspace.                                                                                                                                                                                                                      |
+| UI_BAKERY_BRANDING_AUTH_FORGOT_PASSWORD_LINK_HIDDEN | `true` or `false` - show the reset password link.                                                                                                                                                                                                                                                            |
+| UI_BAKERY_BRANDING_AUTH_SIGN_UP_LINK_HIDDEN         | `true` or `false` - show the sign up link.                                                                                                                                                                                                                                                                   |
+| UI_BAKERY_ONBOARDING_URL                            | Link to a "Get a demo" button (builder & user menu). Set to an empty string to hide the button.                                                                                                                                                                                                              |
+| UI_BAKERY_INTRO_VIDEO_URL                           | Link to a "Watch video intro" button (builder & user menu). Set to an empty string to hide the button.                                                                                                                                                                                                       |
 
 ## Mailing
 
@@ -108,3 +119,9 @@
 | UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE       | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{resetPasswordUrl}}`.                                                                |
 | UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT       | Subject for inviting user email. Default value is `You are invited to UI Bakery workspace`.                                                                                                       |
 | UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE      | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`.                                         |
+
+## Automations
+
+| Environment variable name                  | Description                                                                                                                                                                                 |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_RUN_AUTOMATION_IN_SECURE_CONTEXT | In automations, the execution of code actions should occur within a secure sandbox environment that does not have access to server APIs. This behavior is set to the default value of true. |

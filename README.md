@@ -56,6 +56,7 @@ On-premise version grants you:
 - [Embedding](#embedding)
 - [Limitations](#limitations)
 - [Google Sheets connection setup](#google-sheets-connection-setup)
+- [Salesforce connection setup](#salesforce-connection-setup)
 - [Emails configuration](#configuring-email-provider)
   - [Sendgrid](#configure-sendgrid)
   - [Email templates](#change-email-templates)
@@ -63,6 +64,8 @@ On-premise version grants you:
 - [Updating on-premise version](#updating-on-premise-version)
 - [How to update licence key](#how-to-update-licence-key)
 - [UI Bakery in production](#ui-bakery-in-production)
+- [Setting up SSL](#setting-up-ssl)
+- [Health check API](#health-check-api)
 
 ## Installation
 
@@ -505,18 +508,51 @@ Before you proceed, make sure that `UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION=
     });
 
     // listen to messages sent from UI Bakery
-    bakery.onMessage('customEvent', params => {
+    bakery.onMessage('eventName', params => {
       console.log(params);
     });
   });
 </script>
 ```
 
-3. Use the following code to send messages from UI Bakery actions to the parent window
+### Listen to messages from UI Bakery in the host app
+
+To listen to messages from UI Bakery, use the `bakery.onMessage('eventName')` method:
+
+- In your host app, listen to a message from a UI Bakery app:
+```js
+bakery.onReady(() => {
+  //...
+
+  bakery.onMessage('eventName', params => {
+    console.log(params);
+  });
+});
+```
+- In the UI Bakery app, send the message (for example, in an Action code) so that it can be received by the host app.
 
 ```js
+UIBakeryEmbedded.emitMessage('eventName', {{data}})	;
+```
 
-UIBakeryEmbedded.emitMessage('customEvent', {{data}})	;
+### Send a message from the host app to UI Bakery
+
+To send a message from the host app to UI Bakery, use `bakery.triggerAction('actionName', { ... });` method. This method triggers a specific action and passes the second argument as a `{{params}}` variable:
+
+- In your host app, trigger an action with the custom params:
+```js
+bakery.onReady(() => {
+  //...
+  bakery.triggerAction('setUser', { user: 'email@example.com' });
+});
+```
+- In the UI Bakery app, create the 'setUser' action and use `{{params}}` variable to receive the data:
+
+```js
+// ... setUser action
+console.log({{params.user}});
+
+return {{params.user}}
 ```
 
 ## Limitations
@@ -540,6 +576,25 @@ Start with creating OAuth Client ID in [Google Developer Console](https://consol
 1. Go to **OAuth consent screen** and create it with an external type.
 1. Publish your consent screen.
 
+# Salesforce connection setup
+
+## Prerequisites
+- A Salesforce account
+
+## Setting up the connection
+1. In Salesforce, navigate to the "App Manager" section and create a new connected app. Enter the name and contact information for the app.
+2. Enable OAuth settings and enter the callback URL `http(s)://YOUR_UIBAKERY_IP_OR_DOMAIN/salesforce-oauth-callback`.
+3. In the "Selected OAuth Scopes" section, add all the necessary OAuth scopes. Make sure to include `access and manage your data` and `perform requests on your behalf at any time`. Even though `Full access` is an option, it's important to note that it doesn't grant all the necessary permissions.
+4. Save the connected app and make note of the Consumer Key (Client ID) and Consumer Secret (Client Secret). 
+5. Save Client ID and Client Secret to the `UI_BAKERY_SALESFORCE_CLIENT_ID` and `UI_BAKERY_SALESFORCE_CLIENT_SECRET` environment variables and restart docker container.
+6. In UI Bakery, create a new Salesforce datasource and enter the Salesforce URL.
+7. Test the connection to ensure it is successful.
+
+## Troubleshooting
+- If you encounter an error message when testing the connection, double-check that the callback URL and OAuth scopes are correctly configured in Salesforce.
+- Make sure your Salesforce instance URL ends in `.salesforce.com`
+- Make sure that the correct permissions are granted to the connected app
+
 # Configuring email provider
 
 By default, UI Bakery On-Premise comes with a **noop** email provider that will only log emails to the backend logs.
@@ -555,7 +610,9 @@ We suggest using [Sendgrid](https://sendgrid.com/) email provider to send the em
    ```bash
    UI_BAKERY_MAILING_PROVIDER=sendgrid
    SENDGRID_API_KEY=YOUR_API_KEY
-   SENDGRID_EMAIL_FROM=your@company.com # make sure this domain is authorized to send emails in your sendgrid account
+   SENDGRID_EMAIL_FROM=your@company.com # is used for welcome email
+   SENDGRID_SYSTEM_EMAIL_FROM=noreply@company.com # is used for other system emails like invitation, reset password and email change
+   # make sure this domain is authorized to send emails in your sendgrid account
    ```
 
 1. Restart the containers.
@@ -666,7 +723,9 @@ Other more specific branding settings are also available, check [Branding enviro
 
 Once an update to the on-premise version is available, we will notify you via email.
 
-To update your UI Bakery on-premise version, follow the steps below:
+## Update to the latest version
+
+To update your UI Bakery on-premise version to the latest one, follow the steps below:
 
 1. Take a full backup of UI Bakery instance.
 1. Go to your `ui-bakery-on-premise` folder:
@@ -681,6 +740,80 @@ cd ./ui-bakery-on-premise
 ./update.sh
 ```
 
+## Update to the specific version
+
+To update your UI Bakery on-premise version to the specific version, follow the steps below:
+
+1. Take a full backup of UI Bakery instance.
+1. Go to your `ui-bakery-on-premise` folder:
+
+```bash
+cd ./ui-bakery-on-premise
+```
+
+1. Open the docker-compose.yml file and replace the versions for all images with the specific version desired. 
+For example, to update to version `3.0.0`, the following changes should be made:
+```diff
+version: "3.9"
+services:
+  bakery-gateway:
+    container_name: gateway
+    depends_on:
+      - "bakery-front"
+      - "workbench-front"
+      - "bakery-back"
+-    image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
++    image: cruibakeryonprem.azurecr.io/cloud/gateway:3.0.0
+    restart: always
+    env_file: .env
+    ports:
+      - "${UI_BAKERY_PORT:-3030}:3030"
+
+  bakery-front:
+    container_name: bakery-front
+-    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
++    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:3.0.0
+    restart: always
+    env_file: .env
+
+  workbench-front:
+    container_name: workbench-front
+-    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:latest
++    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:3.0.0
+    restart: always
+    env_file: .env
+
+  datasource:
+    container_name: datasource
+-    image: cruibakeryonprem.azurecr.io/cloud/datasource:latest
++    image: cruibakeryonprem.azurecr.io/cloud/datasource:3.0.0
+    restart: always
+    env_file: .env
+
+  bakery-back:
+    container_name: bakery-back
+    depends_on:
+      db:
+        condition: service_healthy
+-    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
++    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:3.0.0
+    restart: always
+    env_file: .env
+
+  automation:
+    container_name: automation
+-    image: cruibakeryonprem.azurecr.io/cloud/automation:latest
++    image: cruibakeryonprem.azurecr.io/cloud/automation:3.0.0
+    restart: always
+    env_file: .env
+```
+
+1. Then restart the system
+```bash
+docker-compose down
+docker-compose up -d
+```
+
 
 # How to update licence key
 
@@ -691,6 +824,7 @@ UI_BAKERY_LICENSE_KEY=key_value
 For docker-compose setup, the environment variables are located in `ui-bakery-on-premise/.env` file.
 To restart your instance, use the following command:
 ```bash
+docker-compose down
 docker-compose up -d
 ```
 
@@ -711,7 +845,6 @@ UI_BAKERY_JWT_SECRET
 UI_BAKERY_JWT_REFRESH_SECRET
 UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET
 UI_BAKERY_CREDENTIALS_SECRET
-UI_BAKERY_TEMPLATE_MAKER_PASSWORD
 ```
 
 If you have used install script, then your .env file already contains unique values for those vars.
@@ -736,5 +869,11 @@ N - number of concurent requests
 MEMORY_NEEDED=S*T*N
 ```
 
+# Setting up SSL
+The guide on how to set up SSL for UI Bakery on Ubuntu could be found [here](https://docs.uibakery.io/on-premise/setting-up-ssl-on-ubuntu).
+
+
+# Health check API
+The health check API that can be accessed at the endpoint `/api/actuator/health`. This API endpoint can be used to verify the overall health of the software application, including its dependencies and resources.
 
 ### [Supported Environment Variables](ENVIRONMENT_VARIABLES.md#supported-environment-variables)
