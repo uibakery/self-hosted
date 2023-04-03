@@ -1,16 +1,18 @@
 # Supported environment variables
 
-| Environment variable name                   | Description                                                                                     |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------|
-| UI_BAKERY_LICENSE_KEY                       | UI Bakery license key. To get your key [contact us](https://uibakery.io/contact-us).            |
-| UI_BAKERY_APP_SERVER_NAME                   | Full domain address where UI Bakery is hosted. For example `https://bakery.mycompany.com`.      |
-| UI_BAKERY_PORT                              | Defines the port UI Bakery is run on.                                                           |
-| UI_BAKERY_SINGLE_ORGANIZATION               | When `true`, only one organization can exist. All other attempts to register new one will fail. |
-| UI_BAKERY_MAINTENANCE_TIME_GMT              | Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                     |
-| UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS    | How many hours prior to maintenance the notice must be shown                                    |
-| UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION | If true, allows calling actions when UI Bakery is embedded in an iframe                         |
-| UI_BAKERY_ENABLED_FEATURE_FLAGS             | Comma-separated list of globally enabled feature flags.                                         |
-| UI_BAKERY_TEMPLATE_MAKER_ACCOUNT_PASSWORD   | An account to manage instance app templates. Empty value disables the access (default).         |
+| Environment variable name                   | Description                                                                                                                   |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_LICENSE_KEY                       | UI Bakery license key. To get your key [contact us](https://uibakery.io/contact-us).                                          |
+| UI_BAKERY_APP_SERVER_NAME                   | Full domain address where UI Bakery is hosted. For example `https://bakery.mycompany.com`.                                    |
+| UI_BAKERY_PORT                              | Defines the port UI Bakery is run on.                                                                                         |
+| UI_BAKERY_SINGLE_ORGANIZATION               | When `true`, only one organization can exist. All other attempts to register new one will fail.                               |
+| UI_BAKERY_MAINTENANCE_TIME_GMT              | Enables maintenance mode notice, format - Wed Sep 28 2022 16:08:13 GMT+0100                                                   |
+| UI_BAKERY_MAINTENANCE_NOTICE_PRIOR_HOURS    | How many hours prior to maintenance the notice must be shown                                                                  |
+| UI_BAKERY_EMBEDDED_ENABLE_ACTIONS_EXECUTION | If true, allows calling actions when UI Bakery is embedded in an iframe                                                       |
+| UI_BAKERY_ENABLED_FEATURE_FLAGS             | Comma-separated list of globally enabled feature flags.                                                                       |
+| UI_BAKERY_TEMPLATE_MAKER_ACCOUNT_PASSWORD   | An account to manage instance app templates. Empty value disables the access (default).                                       |
+| UI_BAKERY_AUTOMATIC_BACKUP_INTERVAL         | The interval defines how often UI Bakery has to create automatic backups of your project in milliseconds. Default 15 minutes. |
+| UI_BAKERY_AUTOMATIC_BACKUP_RETENTION        | Defines how long UI Bakery should persist automatic backup in milliseconds. Default 1 week.                                   |
 
 ## Database
 
