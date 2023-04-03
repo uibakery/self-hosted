@@ -428,8 +428,11 @@ When the OAuth token expires, UI Bakery will try to refresh it under the followi
  - The `refresh_token` claim must be present
  - The `expires_in` claim must also be present
 
-If you don't have `expires_in` in token, you can set the variable `UI_BAKERY_OAUTH_FORCE_TOKEN_REFRESH` to `true`
+If you don't have `expires_in` in token, UI Bakery will not be able to refresh the token and requests will start to fail.
+In this case, you can set the variable `UI_BAKERY_OAUTH_FORCE_TOKEN_REFRESH` to `true`
 to force OAuth token refresh on every UI Bakery token refresh attempt.
+If the token cannot be refreshed and the variable`UI_BAKERY_OAUTH_SIGN_OUT_WHEN_TOKEN_EXPIRED` is set to `true`, the user will be logged out from UI Bakery.
+If you have enabled roles synchronization you can set the variable `UI_BAKERY_OAUTH_SYNC_ROLES_ON_TOKEN_REFRESH` to `true` to enable the synchronization on every token refresh. 
 
 ## SAML authentication setup
 
