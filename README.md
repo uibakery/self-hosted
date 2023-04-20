@@ -639,6 +639,9 @@ UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT=Reset password request
 UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE=Hello userName,<br> Here's a link <a href="changeEmailUrl">to change your email</a>.
 UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT=Change email request
 
+UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=Hello,<br> potentialUserEmail requested to join your workspace.
+UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT=User would like to join your organization
+
 UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE=Hello userName,<br> Here's a <a href="organizationUrl">link to access the organizationName workspace</a>.
 UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT=You are invited to UI Bakery workspace
 ```
@@ -657,6 +660,9 @@ organizationUrl, organizationName
 
 # Change email request
 changeEmailUrl
+
+# Request to join email
+potentialUserEmail
 ```
 
 Alternatively, you can set up email temples using [SendGrid dynamic templates](https://mc.sendgrid.com/dynamic-templates) and put template ids instead of plain HTML emails:

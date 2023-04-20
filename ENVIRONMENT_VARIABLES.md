@@ -104,22 +104,24 @@
 
 ## Mailing
 
-| Environment variable name                       | Description                                                                                                                                                                                       |
-|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| UI_BAKERY_MAILING_PROVIDER                      | Should be set to `sendgrid` to enable email messages. Default value is `noop`                                                                                                                     |
-| SENDGRID_API_KEY                                | SendGrid API key. Required if transactional emails to users are required.                                                                                                                         |
-| SENDGRID_EMAIL_FROM                             | Email sender address for welcome email. Default value is `admin@uibakery.io`.                                                                                                                     |
-| SENDGRID_NAME_FROM                              | Email sender name for welcome email. Default value is `Admin`.                                                                                                                                    |
-| SENDGRID_SYSTEM_EMAIL_FROM                      | Email sender address. Default value is `admin@uibakery.io`.                                                                                                                                       |
-| SENDGRID_SYSTEM_NAME_FROM                       | Email sender name. Default value is `Admin`.                                                                                                                                                      |
-| UI_BAKERY_MAILING_WELCOME_SUBJECT               | Subject for welcome email. Default value is `Welcome to UI Bakery workspace`.                                                                                                                     |
-| UI_BAKERY_MAILING_WELCOME_TEMPLATE              | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}` and `{{userEmail}}`.                                                                                        |
-| UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT  | Subject for email change email. Default value is `Change email request`.                                                                                                                          |
-| UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{changeEmailUrl}}`.                                                                  |
-| UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT        | Subject for password reset email. Default value is `Reset password request`.                                                                                                                      |
-| UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE       | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{resetPasswordUrl}}`.                                                                |
-| UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT       | Subject for inviting user email. Default value is `You are invited to UI Bakery workspace`.                                                                                                       |
-| UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE      | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`.                                         |
+| Environment variable name                       | Description                                                                                                                                               |
+|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UI_BAKERY_MAILING_PROVIDER                      | Should be set to `sendgrid` to enable email messages. Default value is `noop`                                                                             |
+| SENDGRID_API_KEY                                | SendGrid API key. Required if transactional emails to users are required.                                                                                 |
+| SENDGRID_EMAIL_FROM                             | Email sender address for welcome email. Default value is `admin@uibakery.io`.                                                                             |
+| SENDGRID_NAME_FROM                              | Email sender name for welcome email. Default value is `Admin`.                                                                                            |
+| SENDGRID_SYSTEM_EMAIL_FROM                      | Email sender address. Default value is `admin@uibakery.io`.                                                                                               |
+| SENDGRID_SYSTEM_NAME_FROM                       | Email sender name. Default value is `Admin`.                                                                                                              |
+| UI_BAKERY_MAILING_WELCOME_SUBJECT               | Subject for welcome email. Default value is `Welcome to UI Bakery workspace`.                                                                             |
+| UI_BAKERY_MAILING_WELCOME_TEMPLATE              | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}` and `{{userEmail}}`.                                                |
+| UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_SUBJECT  | Subject for email change email. Default value is `Change email request`.                                                                                  |
+| UI_BAKERY_MAILING_CONFIRM_EMAIL_CHANGE_TEMPLATE | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{changeEmailUrl}}`.                          |
+| UI_BAKERY_MAILING_RESET_PASSWORD_SUBJECT        | Subject for password reset email. Default value is `Reset password request`.                                                                              |
+| UI_BAKERY_MAILING_RESET_PASSWORD_TEMPLATE       | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}` and `{{resetPasswordUrl}}`.                        |
+| UI_BAKERY_MAILING_SHARE_WITH_USER_SUBJECT       | Subject for invite a user email. Default value is `You are invited to UI Bakery workspace`.                                                               |
+| UI_BAKERY_MAILING_SHARE_WITH_USER_TEMPLATE      | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{organizationUrl}}` and `{{organizationName}}`. |
+| UI_BAKERY_MAILING_REQUEST_TO_JOIN_SUBJECT       | Subject for request to join email. Default value is `User would like to join your organization`.                                                          |
+| UI_BAKERY_MAILING_REQUEST_TO_JOIN_TEMPLATE      | Can be HTML string or SendGrid email template ID. Supported variables: `{{userName}}`, `{{userEmail}}`, `{{potentialUserEmail}}`.                         |
 
 ## Automations
 
