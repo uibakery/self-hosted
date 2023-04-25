@@ -63,13 +63,13 @@ echo "UI_BAKERY_CREDENTIALS_SECRET='${credentials_secret}'" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
 printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"
-echo "Y - enter your license key, N - start a free trial. (Default - Y)"
+printf "Y - enter your license key, ${GREEN}N - start a free trial.${NC} (Default - Y)\n"
 while read have_license_key_y_n; do
   if [[ "$have_license_key_y_n" == "Y" ]] || [[ "$have_license_key_y_n" == "y" ]] || [[ "$have_license_key_y_n" == "" ]]; then
     CUSTOM_LICENSE_KEY="YES"
     break
   elif [[ "$have_license_key_y_n" == "N" ]] || [[ "$have_license_key_y_n" == "n" ]]; then
-    echo "Enter working email address to generate the free trial license of UI Bakery:"
+    echo "Enter work email address to generate the free trial license of UI Bakery:"
     while read email; do
 
       email_regex="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
@@ -83,15 +83,29 @@ while read have_license_key_y_n; do
 
     printf "EMAIL: ${email}\n\n"
     CUSTOM_LICENSE_KEY="NO"
+
+    printf "Allow UI Bakery to collect anonymous usage statistics? (Default - Y)\n"
+    while read allow_collect_telemetry_y_n; do
+      if [[ "$allow_collect_telemetry_y_n" == "Y" ]] || [[ "$allow_collect_telemetry_y_n" == "y" ]] || [[ "$allow_collect_telemetry_y_n" == "" ]]; then
+        COLLECT_TELEMETRY="YES"
+        break
+      elif [[ "$allow_collect_telemetry_y_n" == "N" ]] || [[ "$allow_collect_telemetry_y_n" == "n" ]]; then
+        COLLECT_TELEMETRY="NO"
+        break
+      else
+        printf "${RED}Please enter Y or N${NC}\n"
+        printf "Allow UI Bakery to collect anonymous usage statistics? (Default - Y)\n"
+      fi
+    done
     break
   else
-   echo "Y - enter your license key, N - start a free trial. (Default - Y)"
+   printf "Y - enter your license key, ${GREEN}N - start a free trial.${NC} (Default - Y)\n"
   fi
 done
 
 if [[ "$CUSTOM_LICENSE_KEY" == "NO" ]]; then
   printf "${CYAN}Issuing a trial license...\n${NC}"
-  license=$(curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_trial", "session": "'"${SESSION_ID}"'", "email": "'"${email}"'"}' $LICENCE_SERVER)
+  license=$(curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_trial", "session": "'"${SESSION_ID}"'", "email": "'"${email}"'", "telemetry": "'"${COLLECT_TELEMETRY}"'"}' $LICENCE_SERVER)
   if [[ "$license" == "" ]]; then
     printf "${RED}Failed to contact a license server. Please contact UI Bakery support at ${GET_KEY_LINK}\n${NC}"
     CUSTOM_LICENSE_KEY="YES"

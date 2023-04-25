@@ -83,8 +83,7 @@ if [ -n "$I" ]; then
           NEXT_INSTALL_OPERATION="EXIT"
        fi
    else
-      echo "Make sure the installed version of docker is ${MIN_VERSION_DOCKER} or higher."
-      echo "Continue? Y/n (Default - Y)"
+      echo "Make sure the installed version of docker is ${MIN_VERSION_DOCKER} or higher. Continue? Y/n (Default - Y)"
       while read docker_version_y_n; do
         if [[ "$docker_version_y_n" == "Y" ]] || [[ "$docker_version_y_n" == "y" ]] || [[ "$docker_version_y_n" == "" ]]; then
          NEED_INSTALL_DOCKER="NO"
@@ -121,8 +120,7 @@ if [ -n "$I" ]; then
          NEXT_INSTALL_OPERATION="EXIT"
        fi
     else
-      echo "Make sure the installed version of docker-compose is ${MIN_VERSION_DOCKER_COMPOSE} or higher."
-      echo "Continue? Y/n (Default - Y)"
+      echo "Make sure the installed version of docker-compose is ${MIN_VERSION_DOCKER_COMPOSE} or higher. Continue? Y/n (Default - Y)"
       while read docker_compose_version_y_n; do
         if [[ "$docker_compose_version_y_n" == "Y" ]] || [[ "$docker_compose_version_y_n" == "y" ]] || [[ "$docker_compose_version_y_n" == "" ]]; then
          NEED_INSTALL_DOCKER_COMPOSE="NO"
@@ -150,7 +148,7 @@ fi
 if [[ "$NEED_INSTALL_DOCKER" == "YES" ]]; then
    echo "----------------------------------------------------"
    echo "Installing Docker  ....."
-   printf "Docker installation requries sudo permissions\n"
+   printf "Docker installation requires sudo permissions\n"
    curl -fsSL https://get.docker.com -o get-docker.sh
    yes | sudo sh get-docker.sh
 fi
@@ -178,6 +176,6 @@ curl -s -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/s
 
 export SESSION_ID
 bash ./setup.sh
-echo "Running the application..."
+echo "Starting the application... May require sudo password"
 
 sudo docker-compose up -d
