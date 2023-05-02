@@ -39,7 +39,8 @@ On-premise version grants you:
 
 - [Installation](#installation)
   - [Requirements](#requirements)
-  - [Installation steps](#installation-steps)
+  - [Basic installation](#basic-installation)
+  - [Other installation options](#other-installation-options)
   
 - [Documentation](#documentation)
 
