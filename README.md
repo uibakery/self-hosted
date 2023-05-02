@@ -67,6 +67,8 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 **NOTE**: If Docker of the version less than the required (minimum 20.10.11) is already installed on the server, and/or Docker Compose (minimum 1.29.2), the script will be stopped. You need to update the versions of components manually and run the script again.
 
+### Other installation options
+For additional installation instructions, such as those for Azure, AWS, GCP, Kubernetes, and more, please visit the [documentation website](https://docs.uibakery.io/on-premise/installing-on-premise-version).
 
 ## Documentation
 
