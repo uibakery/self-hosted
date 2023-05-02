@@ -70,6 +70,6 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 ## Documentation
 
-For instructions on installing, updating, and managing the on-premise instance, please refer to the documentation on the UI Bakery website(https://docs.uibakery.io/on-premise/ui-bakery-on-premise).
+For instructions on installing, updating, and managing the on-premise instance, please refer to the [documentation website](https://docs.uibakery.io/on-premise/ui-bakery-on-premise).
 
 
