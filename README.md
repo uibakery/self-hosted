@@ -54,7 +54,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 - :warning: OS Linux Ubuntu 18.04 and above.
 - Must have full rights to use "sudo".
 
-### Installation steps
+### Basic installation
 
 1. Run this command preferably from `/home` Linux directory to download, install and launch UI Bakery:
 
