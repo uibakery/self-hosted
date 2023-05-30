@@ -80,5 +80,10 @@ export SESSION_ID
 bash ./setup.sh
 echo "Starting the application... May require sudo password"
 
+if [ -z "$DOCKER_COMPOSE_COMMAND" ]; then
+  printf "${RED}Could not find docker-compose to run UI Bakery. Please install docker-compose and run 'docker compose up -d' manually.\n${NC}"
+  exit 1
+else
+  sudo $DOCKER_COMPOSE_COMMAND up -d
+fi
 
-sudo $DOCKER_COMPOSE_COMMAND up -d
