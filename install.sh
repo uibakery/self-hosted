@@ -14,150 +14,52 @@ curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
 
-function check_version {
-
- local Q_INSTALL_DOCKER="NO"
- local IFS=""
-
- if [[ "$1" == "DOCKER" ]]; then
-   IFS='.' read -ra min_version <<< "$MIN_VERSION_DOCKER"
- else
-   IFS='.' read -ra min_version <<< "$MIN_VERSION_DOCKER_COMPOSE"
- fi
-
- IFS=' ' read -ra version_array <<< "$2"
- IFS='.' read -ra subsubversion_array <<< "${version_array[2]}"
-
- local c_version="${subsubversion_array[0]//[[:space:]]/}"
- if (( $c_version < "${min_version[0]}" )); then
-   Q_INSTALL_DOCKER="YES"
- elif (( $c_version > "${min_version[0]}" )); then
-   Q_INSTALL_DOCKER="NO"
- else
-    local c_subversion="${subsubversion_array[1]//[[:space:]]/}"
-    if (( $c_subversion < "${min_version[1]}" )); then
-       Q_INSTALL_DOCKER="YES"
-    elif (( $c_subversion > "${min_version[1]}" ));  then
-       Q_INSTALL_DOCKER="NO"
-    else
-       IFS=',' read -ra c_subsubversion_array <<< "${subsubversion_array[2]}"
-       local c_subsubversion="${c_subsubversion_array[0]//[[:space:]]/}"
-       if (( $c_subsubversion < "${min_version[2]}" ));  then
-          Q_INSTALL_DOCKER="YES"
-       else
-          Q_INSTALL_DOCKER="NO"
-       fi
-    fi
- fi
- local Q_NEED_INSTALL_DOCKER=0
- if [[ "$Q_INSTALL_DOCKER" == "YES" ]]; then
-     echo "The minimum required version should be ${min_version[0]}.${min_version[1]}.${min_version[2]}"
-     echo -e "\033[0m\033[0m\033[31m You need to manually upgrade the component to at least the minimum required version. Installation will be aborted."
-     echo -e "\033[m"
-     Q_NEED_INSTALL_DOCKER=1
- fi
-
-  return $Q_NEED_INSTALL_DOCKER
-}
-
-OS_ID=""
-if [ -r /etc/os-release ]; then
- OS_ID="$(. /etc/os-release && echo "$ID")"
-fi
-OS_AUTO_INSTALL="ubuntu"
-
-NEXT_INSTALL_OPERATION=""
 echo ""
-echo "Checking docker ----------------------------"
+echo "Checking docker, min required version $MIN_VERSION_DOCKER"
 I=`which docker`
 if [ -n "$I" ]; then
-   printf "${GREEN}Docker is already installed\n${NC}"
-   if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       J=`docker -v`
-       echo "$J"
-       check_version "DOCKER" "$J"
-       f_result=$?
-       if (( $f_result == 0 )); then
-          NEED_INSTALL_DOCKER="NO"
-       else
-          NEXT_INSTALL_OPERATION="EXIT"
-       fi
-   else
-      echo "Make sure the installed version of docker is ${MIN_VERSION_DOCKER} or higher. Continue? Y/n (Default - Y)"
-      while read docker_version_y_n; do
-        if [[ "$docker_version_y_n" == "Y" ]] || [[ "$docker_version_y_n" == "y" ]] || [[ "$docker_version_y_n" == "" ]]; then
-         NEED_INSTALL_DOCKER="NO"
-         break
-        elif [[ "$docker_version_y_n" == "N" ]] || [[ "$docker_version_y_n" == "n" ]]; then
-         exit
-        else
-         echo "Y - yes, I have have proper version of docker; N - no, I want to exit from install"
-        fi
-     done
-   fi
+   printf "${GREEN}Docker is already installed:\n${NC}"
+   J=`docker -v`
+  echo "$J"
 else
-    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       NEED_INSTALL_DOCKER="YES"
+  printf "${RED}Could not find docker\n${NC}"
+
+  printf "Install docker? (Default - Y)\n"
+  while read install_docker_y_n; do
+    if [[ "$install_docker_y_n" == "Y" ]] || [[ "$install_docker_y_n" == "y" ]] || [[ "$install_docker_y_n" == "" ]]; then
+       echo "----------------------------------------------------"
+       echo "Installing Docker  ....."
+       printf "Docker installation requires sudo permissions\n"
+       curl -fsSL https://get.docker.com -o get-docker.sh
+       yes | sudo sh get-docker.sh
+      break
     else
-       echo "Please, install docker first."
-       exit
+      printf "${RED}Skipping docker installation. The script will try to proceed.\n${NC}"
+      break
     fi
+  done
+fi
+
+DOCKER_COMPOSE_COMMAND=""
+I=`which docker-compose`
+if [ -n "$I" ]; then
+  DOCKER_COMPOSE_COMMAND="docker-compose"
+else
+  J=`docker compose version --short`
+  if [ -n "$J" ]; then
+    DOCKER_COMPOSE_COMMAND="docker compose"
+  fi
 fi
 
 echo ""
-echo "Checking docker-compose ----------------------------"
-I=`which docker-compose`
-if [ -n "$I" ]; then
-   printf "${GREEN}Docker-compose is already installed\n${NC}"
-   if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       J=`docker-compose -v`
-       echo "$J"
-       check_version "DOCKER_COMPOSE" "$J"
-       f_result=$?
-       if (( $f_result == 0 )); then
-         NEED_INSTALL_DOCKER_COMPOSE="NO"
-       else
-         NEXT_INSTALL_OPERATION="EXIT"
-       fi
-    else
-      echo "Make sure the installed version of docker-compose is ${MIN_VERSION_DOCKER_COMPOSE} or higher. Continue? Y/n (Default - Y)"
-      while read docker_compose_version_y_n; do
-        if [[ "$docker_compose_version_y_n" == "Y" ]] || [[ "$docker_compose_version_y_n" == "y" ]] || [[ "$docker_compose_version_y_n" == "" ]]; then
-         NEED_INSTALL_DOCKER_COMPOSE="NO"
-         break
-        elif [[ "$docker_compose_version_y_n" == "N" ]] || [[ "$docker_compose_version_y_n" == "n" ]]; then
-         exit
-        else
-         echo "Y - yes, I have have proper version of docker-compose; N - no, I want to exit from install"
-        fi
-     done
-    fi
+echo "Checking docker-compose, min required version $MIN_VERSION_DOCKER_COMPOSE"
+
+if [ -n "$DOCKER_COMPOSE_COMMAND" ]; then
+  printf "${GREEN}Docker-compose is already installed:\n${NC}"
+  J=`$DOCKER_COMPOSE_COMMAND version --short`
+  echo "$J"
 else
-    if [[ "$OS_ID" == "$OS_AUTO_INSTALL" ]]; then
-       NEED_INSTALL_DOCKER_COMPOSE="YES"
-    else
-       echo "Please, install docker-compose first."
-       exit
-    fi
-fi
-
-if [[ "$NEXT_INSTALL_OPERATION" == "EXIT" ]]; then
- exit
-fi
-
-if [[ "$NEED_INSTALL_DOCKER" == "YES" ]]; then
-   echo "----------------------------------------------------"
-   echo "Installing Docker  ....."
-   printf "Docker installation requires sudo permissions\n"
-   curl -fsSL https://get.docker.com -o get-docker.sh
-   yes | sudo sh get-docker.sh
-fi
-
-if [[ "$NEED_INSTALL_DOCKER_COMPOSE" == "YES" ]]; then
-   echo "----------------------------------------------------"
-   echo "Installing Docker-compose  ....."
-   sudo curl -s -L "https://github.com/docker/compose/releases/download/${MIN_VERSION_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-   sudo chmod +x /usr/local/bin/docker-compose
+  printf "${RED}Could not find docker-compose. The script will try to proceed.\n${NC}"
 fi
 
 printf "Downloading setup files ----------------------------------\n\n"
@@ -178,4 +80,10 @@ export SESSION_ID
 bash ./setup.sh
 echo "Starting the application... May require sudo password"
 
-sudo docker-compose up -d
+if [ -z "$DOCKER_COMPOSE_COMMAND" ]; then
+  printf "${RED}Could not find docker-compose to run UI Bakery. Please install docker-compose and run 'docker compose up -d' manually.\n${NC}"
+  exit 1
+else
+  sudo $DOCKER_COMPOSE_COMMAND up -d
+fi
+
