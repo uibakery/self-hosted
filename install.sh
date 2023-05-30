@@ -22,7 +22,7 @@ if [ -n "$I" ]; then
    J=`docker version --format '{{.Server.Version}}'`
   echo "$J"
 else
-  echo "Count not find docker. The installation will try to proceed."
+  printf "${RED}Could not find docker. The installation will try to proceed.\n${NC}"
 fi
 
 echo ""
@@ -33,7 +33,7 @@ if [ -n "$I" ]; then
    J=`docker-compose version --short`
   echo "$J"
 else
-  echo "Count not find docker-compose. The installation will try to proceed."
+  printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
 fi
 
 printf "Downloading setup files ----------------------------------\n\n"
