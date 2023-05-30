@@ -14,6 +14,17 @@ curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
 
+DOCKER_COMPOSE_COMMAND=""
+I=`which docker-compose`
+if [ -n "$I" ]; then
+  DOCKER_COMPOSE_COMMAND="docker-compose"
+else
+  J=`docker compose version --short`
+  if [ -n "$J" ]; then
+    DOCKER_COMPOSE_COMMAND="docker compose"
+  fi
+fi
+
 echo ""
 echo "Checking docker, min required version $MIN_VERSION_DOCKER"
 I=`which docker`
@@ -27,19 +38,13 @@ fi
 
 echo ""
 echo "Checking docker-compose, min required version $MIN_VERSION_DOCKER_COMPOSE"
-I=`which docker-compose`
-if [ -n "$I" ]; then
-   printf "${GREEN}Docker-compose is already installed:\n${NC}"
-   J=`docker-compose -v --short`
+
+if [ -n "$DOCKER_COMPOSE_COMMAND" ]; then
+  printf "${GREEN}Docker-compose is already installed:\n${NC}"
+  J=`$DOCKER_COMPOSE_COMMAND version --short`
   echo "$J"
 else
-  J=`docker compose version --short`
-  if [ -n "$J" ]; then
-    printf "${GREEN}Docker-compose is already installed:\n${NC}"
-    echo "$J"
-  else
-    printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
-  fi
+  printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
 fi
 
 printf "Downloading setup files ----------------------------------\n\n"
@@ -60,4 +65,5 @@ export SESSION_ID
 bash ./setup.sh
 echo "Starting the application... May require sudo password"
 
-sudo docker-compose up -d
+
+sudo $DOCKER_COMPOSE_COMMAND up -d
