@@ -14,11 +14,6 @@ curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
 
-OS_ID=""
-if [ -r /etc/os-release ]; then
- OS_ID="$(. /etc/os-release && echo "$ID")"
-fi
-
 echo ""
 echo "Checking docker, min required version $MIN_VERSION_DOCKER"
 I=`which docker`
@@ -27,8 +22,7 @@ if [ -n "$I" ]; then
    J=`docker version --format '{{.Server.Version}}'`
   echo "$J"
 else
-  echo "Please, install docker first."
-  exit
+  echo "Count not find docker. The installation will try to proceed."
 fi
 
 echo ""
@@ -39,10 +33,8 @@ if [ -n "$I" ]; then
    J=`docker-compose version --short`
   echo "$J"
 else
-  echo "Please, install docker-compose first."
-  exit
+  echo "Count not find docker-compose. The installation will try to proceed."
 fi
-
 
 printf "Downloading setup files ----------------------------------\n\n"
 
