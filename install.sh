@@ -14,6 +14,32 @@ curl --connect-timeout 10 --max-time 20 -s -XPOST -H "Content-type: application/
 MIN_VERSION_DOCKER="20.10.11"
 MIN_VERSION_DOCKER_COMPOSE="1.29.2"
 
+echo ""
+echo "Checking docker, min required version $MIN_VERSION_DOCKER"
+I=`which docker`
+if [ -n "$I" ]; then
+   printf "${GREEN}Docker is already installed:\n${NC}"
+   J=`docker -v`
+  echo "$J"
+else
+  printf "${RED}Could not find docker\n${NC}"
+
+  printf "Install docker? (Default - Y)\n"
+  while read install_docker_y_n; do
+    if [[ "$install_docker_y_n" == "Y" ]] || [[ "$install_docker_y_n" == "y" ]] || [[ "$install_docker_y_n" == "" ]]; then
+       echo "----------------------------------------------------"
+       echo "Installing Docker  ....."
+       printf "Docker installation requires sudo permissions\n"
+       curl -fsSL https://get.docker.com -o get-docker.sh
+       yes | sudo sh get-docker.sh
+      break
+    else
+      printf "${RED}Skipping docker installation. The script will try to proceed.\n${NC}"
+      break
+    fi
+  done
+fi
+
 DOCKER_COMPOSE_COMMAND=""
 I=`which docker-compose`
 if [ -n "$I" ]; then
@@ -26,17 +52,6 @@ else
 fi
 
 echo ""
-echo "Checking docker, min required version $MIN_VERSION_DOCKER"
-I=`which docker`
-if [ -n "$I" ]; then
-   printf "${GREEN}Docker is already installed:\n${NC}"
-   J=`docker version --format '{{.Server.Version}}'`
-  echo "$J"
-else
-  printf "${RED}Could not find docker. The installation will try to proceed.\n${NC}"
-fi
-
-echo ""
 echo "Checking docker-compose, min required version $MIN_VERSION_DOCKER_COMPOSE"
 
 if [ -n "$DOCKER_COMPOSE_COMMAND" ]; then
@@ -44,7 +59,7 @@ if [ -n "$DOCKER_COMPOSE_COMMAND" ]; then
   J=`$DOCKER_COMPOSE_COMMAND version --short`
   echo "$J"
 else
-  printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
+  printf "${RED}Could not find docker-compose. The script will try to proceed.\n${NC}"
 fi
 
 printf "Downloading setup files ----------------------------------\n\n"
