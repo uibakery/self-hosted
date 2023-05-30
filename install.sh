@@ -30,10 +30,16 @@ echo "Checking docker-compose, min required version $MIN_VERSION_DOCKER_COMPOSE"
 I=`which docker-compose`
 if [ -n "$I" ]; then
    printf "${GREEN}Docker-compose is already installed:\n${NC}"
-   J=`docker-compose version --short`
+   J=`docker-compose -v --short`
   echo "$J"
 else
-  printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
+  J=`docker compose version --short`
+  if [ -n "$J" ]; then
+    printf "${GREEN}Docker-compose is already installed:\n${NC}"
+    echo "$J"
+  else
+    printf "${RED}Could not find docker-compose. The installation will try to proceed.\n${NC}"
+  fi
 fi
 
 printf "Downloading setup files ----------------------------------\n\n"
