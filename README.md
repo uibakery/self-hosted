@@ -52,7 +52,8 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
 ### Requirements
 
-- :warning: OS Linux Ubuntu 18.04 and above.
+- Linux-based OS (e.g. Ubuntu 18.04).
+- Minimum 1 `vCPUs`, 2 `GiB` memory and 5 `GiB` of storage.
 - Must have full rights to use "sudo".
 
 ### Basic installation
