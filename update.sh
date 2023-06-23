@@ -28,7 +28,7 @@ if [ -e docker-compose.yml ]; then
   curl -s -k -L -o docker-compose.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose.yml
 
   sudo $DOCKER_COMPOSE_COMMAND build --pull
-  sudo $DOCKER_COMPOSE_COMMAND pull && sudo docker-compose up -d
+  sudo $DOCKER_COMPOSE_COMMAND pull && sudo $DOCKER_COMPOSE_COMMAND up -d
   sudo docker image prune -a -f
 fi
 
@@ -37,7 +37,7 @@ if [ -e docker-compose-external-db.yml ]; then
   curl -s -k -L -o docker-compose-external-db.yml https://raw.githubusercontent.com/uibakery/self-hosted/main/docker-compose-external-db.yml
 
   sudo $DOCKER_COMPOSE_COMMAND -f docker-compose-external-db.yml build --pull
-  sudo $DOCKER_COMPOSE_COMMANDupdate.sh -f docker-compose-external-db.yml pull && sudo docker-compose -f docker-compose-external-db.yml up -d
+  sudo $DOCKER_COMPOSE_COMMAND update.sh -f docker-compose-external-db.yml pull && sudo $DOCKER_COMPOSE_COMMAND -f docker-compose-external-db.yml up -d
   sudo docker image prune -a -f
 fi
 
