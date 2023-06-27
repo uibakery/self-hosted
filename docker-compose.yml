@@ -44,6 +44,12 @@ services:
     image: cruibakeryonprem.azurecr.io/cloud/automation:latest
     restart: always
     env_file: .env
+    
+  python-runtime:
+    container_name: python-runtime
+    image: cruibakeryonprem.azurecr.io/cloud/python-runtime:latest
+    restart: always
+    env_file: .env
 
   db:
     platform: linux/amd64
