@@ -1,0 +1,19 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: "ui-bakery"
+  region: "us-east-1"
+  version: "1.27"
+
+
+fargateProfiles:
+- name: ui-bakery-fp
+  selectors:
+  - namespace: ui-bakery
+  - namespace: kube-system
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+      ["api", "audit", "authenticator", "controllerManager", "scheduler"]
