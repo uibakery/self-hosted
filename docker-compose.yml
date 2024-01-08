@@ -44,7 +44,7 @@ services:
     image: cruibakeryonprem.azurecr.io/cloud/automation:latest
     restart: always
     env_file: .env
-    
+
   python-runtime:
     container_name: python-runtime
     image: cruibakeryonprem.azurecr.io/cloud/python-runtime:latest
@@ -72,5 +72,22 @@ services:
       interval: 10s
       retries: 10
 
+  bakery-db:
+    image: "postgres:16.1"
+    container_name: bakery-db
+    restart: always
+    environment:
+      POSTGRES_USER: "bakery"
+      POSTGRES_PASSWORD: "bakery"
+      POSTGRES_DB: "bakery"
+    healthcheck:
+      test: pg_isready -U bakery
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - internal-db:/var/lib/postgresql/data
+
 volumes:
   my-db:
+  internal-db:
