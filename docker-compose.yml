@@ -72,6 +72,7 @@ services:
       interval: 10s
       retries: 10
 
+  # Internal UI Bakery Database, available as a datasource in UI Bakery
   bakery-db:
     image: "postgres:16.1"
     container_name: bakery-db
