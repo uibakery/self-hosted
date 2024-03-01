@@ -60,6 +60,7 @@ echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
 echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
 echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env
+echo "UI_BAKERY_AUTOMATION_SERVER_API_URL=http://bakery-back:8080" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
 printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"
