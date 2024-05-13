@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   bakery-gateway:
     container_name: gateway
@@ -6,7 +5,7 @@ services:
       - "bakery-front"
       - "workbench-front"
       - "bakery-back"
-    image: cruibakeryonprem.azurecr.io/cloud/gateway:latest
+    image: cruibakeryonprem.azurecr.io/cloud/gateway:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
     ports:
@@ -14,19 +13,19 @@ services:
 
   bakery-front:
     container_name: bakery-front
-    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:latest
+    image: cruibakeryonprem.azurecr.io/cloud/bakery-front:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
   workbench-front:
     container_name: workbench-front
-    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:latest
+    image: cruibakeryonprem.azurecr.io/cloud/workbench-front:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
   datasource:
     container_name: datasource
-    image: cruibakeryonprem.azurecr.io/cloud/datasource:latest
+    image: cruibakeryonprem.azurecr.io/cloud/datasource:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
@@ -35,19 +34,19 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:latest
+    image: cruibakeryonprem.azurecr.io/cloud/bakery-back:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
   automation:
     container_name: automation
-    image: cruibakeryonprem.azurecr.io/cloud/automation:latest
+    image: cruibakeryonprem.azurecr.io/cloud/automation:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
   python-runtime:
     container_name: python-runtime
-    image: cruibakeryonprem.azurecr.io/cloud/python-runtime:latest
+    image: cruibakeryonprem.azurecr.io/cloud/python-runtime:${UI_BAKERY_VERSION:-latest}
     restart: always
     env_file: .env
 
