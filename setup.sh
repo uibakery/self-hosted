@@ -55,6 +55,7 @@ if [ -e .env ]; then
 fi
 
 
+echo "UI_BAKERY_VERSION=latest" > .env
 echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" > .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
@@ -62,7 +63,7 @@ echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .en
 echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env
 echo "UI_BAKERY_MFA_SECRET=${mfa_secret}" >> .env
-echo "UI_BAKERY_AUTOMATION_SERVER_API_URL=http://bakery-back:8080" >> .env
+echo "UI_BAKERY_INTERNAL_API_URL=http://bakery-back:8080" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
 printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"

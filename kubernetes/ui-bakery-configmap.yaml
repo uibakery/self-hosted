@@ -3,6 +3,7 @@ data:
   UI_BAKERY_APP_SERVER_NAME: {{ insert your host here, like: "http://123.123.123.123:3030" }}
   UI_BAKERY_LICENSE_KEY: {{ insert your license key here }}
   UI_BAKERY_DB_HOST: mysql
+  UI_BAKERY_INTERNAL_API_URL: http://bakery-back:8080
 kind: ConfigMap
 metadata:
   name: ui-bakery-configmap
