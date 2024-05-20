@@ -56,7 +56,7 @@ fi
 
 
 echo "UI_BAKERY_VERSION=latest" > .env
-echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" > .env
+echo "UI_BAKERY_APP_SERVER_NAME=${url}:${port}" >> .env
 echo "UI_BAKERY_PORT=${port}" >> .env
 echo "UI_BAKERY_JWT_SECRET=${jwt_secret}" >> .env
 echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .env
