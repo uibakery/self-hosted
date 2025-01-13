@@ -21,10 +21,16 @@ spec:
         resources:
           requests:
             memory: "256Mi"
-            cpu: "500m"
+            cpu: "250m"
           limits:
             memory: "512Mi"
-            cpu: "900m"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5050
+          initialDelaySeconds: 1
+          periodSeconds: 30
         ports:
           - containerPort: 5050
 ---
