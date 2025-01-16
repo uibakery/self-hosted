@@ -20,11 +20,17 @@ spec:
               name: ui-bakery-configmap
         resources:
           requests:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "128Mi"
+            cpu: "120m"
           limits:
-            memory: "512Mi"
-            cpu: "900m"
+            memory: "256Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 30
         ports:
           - containerPort: 8080
 ---
