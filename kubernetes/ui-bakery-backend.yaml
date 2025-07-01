@@ -20,7 +20,7 @@ spec:
               name: ui-bakery-configmap
         resources:
           requests:
-            memory: "512Mi"
+            memory: "1024Mi"
             cpu: "500m"
           limits:
             memory: "2048Mi"
