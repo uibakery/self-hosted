@@ -53,7 +53,7 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 ### Requirements
 
 - Linux-based OS (e.g. Ubuntu 18.04).
-- Minimum 2 `vCPUs`, 6 `GiB` memory and 20 `GiB` of storage.
+- Minimum 2 `vCPUs`, 4 `GiB` memory and 20 `GiB` of storage.
 - Must have full rights to use "sudo".
 - These domains are accessible from your network:
   - https://cruibakeryonprem.westeurope.data.azurecr.io
