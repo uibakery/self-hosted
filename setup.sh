@@ -49,6 +49,7 @@ jwt_service_account_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -
 jwt_refresh_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
 credentials_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 32 | xargs -0)
 project_private_key_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 32 | xargs -0)
+auth_device_info_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 32 | xargs -0)
 mfa_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 32 | xargs -0)
 
 if [ -e .env ]; then
@@ -64,6 +65,7 @@ echo "UI_BAKERY_JWT_SERVICE_ACCOUNT_SECRET=${jwt_service_account_secret}" >> .en
 echo "UI_BAKERY_JWT_REFRESH_SECRET=${jwt_refresh_secret}" >> .env
 echo "UI_BAKERY_CREDENTIALS_SECRET=${credentials_secret}" >> .env
 echo "UI_BAKERY_PROJECT_PRIVATE_KEY_SECRET=${project_private_key_secret}" >> .env
+echo "UI_BAKERY_AUTH_DEVICE_INFO_SECRET=${auth_device_info_secret}" >> .env
 echo "UI_BAKERY_MFA_SECRET=${mfa_secret}" >> .env
 echo "UI_BAKERY_INTERNAL_API_URL=http://bakery-back:8080" >> .env
 
