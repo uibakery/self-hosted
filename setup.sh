@@ -69,8 +69,8 @@ echo "UI_BAKERY_AUTH_DEVICE_INFO_SECRET=${auth_device_info_secret}" >> .env
 echo "UI_BAKERY_MFA_SECRET=${mfa_secret}" >> .env
 echo "UI_BAKERY_INTERNAL_API_URL=http://bakery-back:8080" >> .env
 
-printf "${CYAN}Starting license setup...\n${NC}"
-printf "Get your key here:\n"
+printf "${CYAN}License setup\n${NC}"
+printf "Register and generate an on-premise license key:\n"
 printf "${GET_KEY_LINK}\n\n"
 printf "Enter license key:\n"
 while read license; do
