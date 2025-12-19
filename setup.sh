@@ -3,7 +3,7 @@ GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 LICENCE_SERVER="https://cloud.uibakery.io/onpremise/license"
-GET_KEY_LINK="https://cloud.uibakery.io/onpremise/get-license"
+GET_KEY_LINK="https://cloud.uibakery.io/settings/on-premise-license"
 
 
 if [ -z "${SESSION_ID}" ];
@@ -70,66 +70,14 @@ echo "UI_BAKERY_MFA_SECRET=${mfa_secret}" >> .env
 echo "UI_BAKERY_INTERNAL_API_URL=http://bakery-back:8080" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
-printf "${GREEN}Do you already have a UI Bakery license key?\n${NC}"
-printf "Y - enter your license key, ${GREEN}N - start a free trial.${NC} (Default - Y)\n"
-while read have_license_key_y_n; do
-  if [[ "$have_license_key_y_n" == "Y" ]] || [[ "$have_license_key_y_n" == "y" ]] || [[ "$have_license_key_y_n" == "" ]]; then
-    CUSTOM_LICENSE_KEY="YES"
-    break
-  elif [[ "$have_license_key_y_n" == "N" ]] || [[ "$have_license_key_y_n" == "n" ]]; then
-    echo "Enter work email address to generate the free trial license of UI Bakery:"
-    while read email; do
-
-      email_regex="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-      if [[ $email =~ $email_regex ]] ; then
-        break
-      else
-        printf "${RED}Valid email is required to request a license${NC}\n"
-        printf "Enter email:\n"
-      fi
-    done
-
-    printf "EMAIL: ${email}\n\n"
-    CUSTOM_LICENSE_KEY="NO"
-
-    printf "Allow UI Bakery to collect anonymous usage statistics? (Default - Y)\n"
-    while read allow_collect_telemetry_y_n; do
-      if [[ "$allow_collect_telemetry_y_n" == "Y" ]] || [[ "$allow_collect_telemetry_y_n" == "y" ]] || [[ "$allow_collect_telemetry_y_n" == "" ]]; then
-        COLLECT_TELEMETRY="YES"
-        break
-      elif [[ "$allow_collect_telemetry_y_n" == "N" ]] || [[ "$allow_collect_telemetry_y_n" == "n" ]]; then
-        COLLECT_TELEMETRY="NO"
-        break
-      else
-        printf "${RED}Please enter Y or N${NC}\n"
-        printf "Allow UI Bakery to collect anonymous usage statistics? (Default - Y)\n"
-      fi
-    done
-    break
-  else
-   printf "Y - enter your license key, ${GREEN}N - start a free trial.${NC} (Default - Y)\n"
-  fi
+printf "Paste your UI Bakery on-premise license key.\n"
+printf "Get your key at ${GET_KEY_LINK} or use the one provided by the UI Bakery team.\n"
+printf "Enter license key:\n"
+while read license; do
+  test "$license" != "" && break
+  printf "${RED}License key is required!${NC}\n"
+  printf "Enter license key:"
 done
-
-if [[ "$CUSTOM_LICENSE_KEY" == "NO" ]]; then
-  printf "${CYAN}Issuing a trial license...\n${NC}"
-  license=$(curl --connect-timeout 15 --max-time 20 -s -XPOST -H "Content-type: application/json" -d '{"event": "start_trial", "session": "'"${SESSION_ID}"'", "email": "'"${email}"'", "telemetry": "'"${COLLECT_TELEMETRY}"'"}' $LICENCE_SERVER)
-  if [[ "$license" == "" ]]; then
-    printf "${RED}Failed to contact a license server. Please contact UI Bakery support at ${GET_KEY_LINK}\n${NC}"
-    CUSTOM_LICENSE_KEY="YES"
-  else
-    printf "${GREEN}Done! Your 14 days license is activated.\n${NC}"
-  fi
-fi
-
-if [[ "$CUSTOM_LICENSE_KEY" == "YES" ]]; then
-  printf "Enter license key:\n"
-  while read license; do
-    test "$license" != "" && break
-    printf "${RED}License key is required!${NC}\n"
-    printf "Enter license key:"
-  done
-fi
 
 echo "UI_BAKERY_LICENSE_KEY=${license}" >> .env
 
