@@ -70,8 +70,8 @@ echo "UI_BAKERY_MFA_SECRET=${mfa_secret}" >> .env
 echo "UI_BAKERY_INTERNAL_API_URL=http://bakery-back:8080" >> .env
 
 printf "${CYAN}Starting license setup...\n${NC}"
-printf "Paste your UI Bakery on-premise license key.\n"
-printf "Get your key at ${GET_KEY_LINK} or use the one provided by the UI Bakery team.\n"
+printf "Get your key here:\n"
+printf "${GET_KEY_LINK}\n\n"
 printf "Enter license key:\n"
 while read license; do
   test "$license" != "" && break
