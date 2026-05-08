@@ -53,8 +53,8 @@ services:
   db:
     platform: linux/amd64
     container_name: db
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password  --skip-log-bin
+    image: mysql:8.4
+    command: --mysql-native-password=ON --skip-log-bin
     restart: always
     cap_add:
       - SYS_NICE # CAP_SYS_NICE
