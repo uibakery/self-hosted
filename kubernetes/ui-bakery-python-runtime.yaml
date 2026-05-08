@@ -24,7 +24,7 @@ spec:
             cpu: "250m"
         livenessProbe:
           httpGet:
-            path: /
+            path: /status
             port: 5050
           initialDelaySeconds: 1
           periodSeconds: 30
