@@ -68,8 +68,8 @@ This document describes how to deploy ui-bakery on-prem via `install.sh` script.
    curl -k -L -o install.sh https://raw.githubusercontent.com/uibakery/self-hosted/main/install.sh && bash ./install.sh
    ```
 
-1. In the process, upon request, enter the previously received license code, hosting URL and port.
-1. Once the installation is completed, open the browser using URL and port provided earlier. By default it is [http://localhost:3030/](http://localhost:3030/).
+1. In the process, upon request, enter the previously received license code, server URL without port, and port. The server URL and port are required. For example, enter `http://localhost`, `http://1.2.3.4`, or `https://uibakery.company.com` as the server URL.
+1. Once the installation is completed, open the browser using the URL and port provided earlier. For example, `http://localhost` and `3030` should be opened as [http://localhost:3030/](http://localhost:3030/).
 
 **NOTE**: If Docker of the version less than the required (minimum 20.10.11) is already installed on the server, and/or Docker Compose (minimum 1.29.2), the script will be stopped. You need to update the versions of components manually and run the script again.
 
@@ -79,5 +79,4 @@ For additional installation instructions, such as those for Azure, AWS, GCP, Kub
 ## Documentation
 
 For instructions on installing, updating, and managing the on-premise instance, please refer to the [documentation website](https://docs.uibakery.io/on-premise/ui-bakery-on-premise).
-
 

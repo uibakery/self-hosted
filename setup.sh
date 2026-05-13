@@ -15,7 +15,11 @@ fi
 printf "${CYAN}Starting UI Bakery configuration...\n${NC}"
 
 printf "Enter PORT:\n"
-while read port; do
+while true; do
+  if ! read port; then
+    printf "${RED}PORT is required but input could not be read.${NC}\n"
+    exit 1
+  fi
   if [[ $port =~ ^[0-9]+$ ]] && (( port > 1 )) && (( port < 65536 ))
   then
     break
@@ -28,7 +32,11 @@ printf "PORT: ${port}\n\n"
 
 
 printf "Enter server URL without port (for example, http://localhost, http://1.2.3.4 or https://uibakery.company.com):\n"
-while read url; do
+while true; do
+  if ! read url; then
+    printf "${RED}URL is required but input could not be read.${NC}\n"
+    exit 1
+  fi
   regex='^https?://[A-Za-z0-9.-]+$'
   if [[ $url =~ $regex ]]
   then
