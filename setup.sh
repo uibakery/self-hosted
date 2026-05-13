@@ -14,7 +14,7 @@ fi
 
 printf "${CYAN}Starting UI Bakery configuration...\n${NC}"
 
-printf "Enter PORT:\n"
+printf "Enter PORT (for example, 3030):\n"
 while true; do
   if ! read port; then
     printf "${RED}PORT is required but input could not be read.${NC}\n"
@@ -26,12 +26,12 @@ while true; do
   else
     printf "${RED}PORT is required and must be between 2 and 65535.${NC}\n"
   fi
-  printf "Enter PORT:"
+  printf "Enter PORT (for example, 3030):"
 done
 printf "PORT: ${port}\n\n"
 
 
-printf "Enter server URL without port (for example, http://localhost, http://1.2.3.4 or https://uibakery.company.com):\n"
+printf "Enter server URL without port (for example, http://localhost):\n"
 while true; do
   if ! read url; then
     printf "${RED}URL is required but input could not be read.${NC}\n"
@@ -44,7 +44,7 @@ while true; do
   else
     printf "${RED}URL is required and must start with http:// or https://, without port or trailing slash.${NC}\n"
   fi
-  printf "Enter server URL without port (for example, http://localhost, http://1.2.3.4 or https://uibakery.company.com):"
+  printf "Enter server URL without port (for example, http://localhost):"
 done
 printf "URL: ${url}\n\n"
 
