@@ -14,34 +14,30 @@ fi
 
 printf "${CYAN}Starting UI Bakery configuration...\n${NC}"
 
-printf "Enter PORT[3030]:\n"
+printf "Enter PORT:\n"
 while read port; do
-  test "$port" == "" && break
-  if (( $port > 1 )) && (( $port < 65536 ))
+  if [[ $port =~ ^[0-9]+$ ]] && (( port > 1 )) && (( port < 65536 ))
   then
     break
   else
-    printf "${RED}PORT isn't valid!${NC}\n"
+    printf "${RED}PORT is required and must be between 2 and 65535.${NC}\n"
   fi
-  printf "Enter PORT[3030]:"
+  printf "Enter PORT:"
 done
-port=${port:-3030}
 printf "PORT: ${port}\n\n"
 
 
-printf "Enter server URL[http://localhost]:\n"
+printf "Enter server URL without port (for example, http://localhost, http://1.2.3.4 or https://uibakery.company.com):\n"
 while read url; do
-  test "$url" == "" && break
-  regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+  regex='^https?://[A-Za-z0-9.-]+$'
   if [[ $url =~ $regex ]]
   then
     break
   else
-    printf "${RED}URL isn't valid!${NC}\n"
+    printf "${RED}URL is required and must start with http:// or https://, without port or trailing slash.${NC}\n"
   fi
-  printf "Enter server URL[http://localhost]:"
+  printf "Enter server URL without port (for example, http://localhost, http://1.2.3.4 or https://uibakery.company.com):"
 done
-url=${url:-http://localhost}
 printf "URL: ${url}\n\n"
 
 jwt_secret=$(LC_ALL=C tr -cd "A-Za-z0-9" < /dev/urandom | head -c 42 | xargs -0)
