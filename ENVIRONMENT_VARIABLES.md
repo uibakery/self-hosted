@@ -4,14 +4,14 @@
 
 Configure these variables in the installation's `.env` file for Docker Compose, or in the backend environment for other deployment methods. Recreate the backend container or redeploy it after changing its environment.
 
-New self-hosted installations use `BAKERY_STORAGE`. Provision one **private**, existing system bucket/container for the entire installation before configuring storage. UI Bakery does not create or delete this bucket, and it has no datasource or entry in the user-facing Storage UI.
+New self-hosted installations use `BAKERY_STORAGE`. Configure one **private** system bucket/container name for the entire installation. On first storage use, Bakery Storage creates it if missing or reuses an existing accessible bucket. Repeated calls, restarts, and concurrent backend instances preserve existing data. Creation/access failures are returned without fallback. UI Bakery never deletes this bucket, and it has no datasource or entry in the user-facing Storage UI. Configuration discovery and URL construction do not create it.
 
 ### Storage mode and download lifetimes
 
 | Variable | Default | Description |
 | --- | --- | --- |
 | `UI_BAKERY_ASSET_STORAGE_MODE` | `BAKERY_STORAGE` | Selects exactly one mode: `BAKERY_STORAGE` uses the configured Bakery Storage provider; `AZURE` uses legacy Azure asset storage. |
-| `UI_BAKERY_STORAGE_SYSTEM_BUCKET` | Unset | Existing private bucket/container name, required in `BAKERY_STORAGE` mode. Shared by all projects in the installation. |
+| `UI_BAKERY_STORAGE_SYSTEM_BUCKET` | Unset | Private bucket/container name, created automatically if missing; required in `BAKERY_STORAGE` mode. Shared by all projects in the installation. |
 | `UI_BAKERY_STORAGE_PROVIDER` | `AZURE_BLOB` | Existing Bakery Storage provider: `S3_COMPATIBLE` or `AZURE_BLOB`. Used in `BAKERY_STORAGE` mode. |
 | `UI_BAKERY_ASSET_STORAGE_READ_VALIDITY` | `1m` | Signed-read lifetime for ordinary files in `BAKERY_STORAGE` mode. Uses Spring duration syntax. |
 | `UI_BAKERY_ASSET_STORAGE_CHAT_READ_VALIDITY` | `15m` | Signed-read lifetime for AI attachments in `BAKERY_STORAGE` mode. Uses Spring duration syntax. |
@@ -37,22 +37,22 @@ Replace placeholders with your existing connection values. No separate system-st
 
 For MinIO or another S3-compatible service, use its endpoint and region, and set `UI_BAKERY_STORAGE_S3_PATH_STYLE=true` when required. The path-style setting defaults to `true`; the AWS S3 example explicitly selects `false`.
 
-The S3 identity needs `s3:PutObject` and `s3:GetObject` on `arn:aws:s3:::uibakery-system-assets/assets/*` (replace the bucket name). System assets do not require bucket creation, listing, deletion, or public access. Existing user-created Bakery Storage buckets may need their existing additional permissions.
+The S3 identity needs `s3:CreateBucket` and `s3:ListBucket` on `arn:aws:s3:::uibakery-system-assets` (creation and the `HeadBucket` existence/access check), plus `s3:PutObject` and `s3:GetObject` on `arn:aws:s3:::uibakery-system-assets/assets/*`. Replace the bucket name with a globally unique name for AWS S3. System assets do not require bucket deletion or public access. Existing user-created Bakery Storage buckets may need their existing additional permissions.
 
 Project assets use `assets/{storageProjectId}/images|files/{blobId}` object paths. Public uploaded files use `assets/public-uploaded-files/` in the same bucket, retaining their existing token and file-index behavior.
 
 ### Azure Bakery Storage provider
 
-For `BAKERY_STORAGE` mode with an existing private Azure container:
+For `BAKERY_STORAGE` mode with a private Azure container, automatically created if missing:
 
 ```dotenv
 UI_BAKERY_ASSET_STORAGE_MODE=BAKERY_STORAGE
-UI_BAKERY_STORAGE_SYSTEM_BUCKET=<existing private container>
+UI_BAKERY_STORAGE_SYSTEM_BUCKET=<private container name>
 UI_BAKERY_STORAGE_PROVIDER=AZURE_BLOB
 UI_BAKERY_AZURE_BAKERY_STORAGE_CONNECTION_STRING=<connection string>
 ```
 
-`UI_BAKERY_AZURE_BAKERY_STORAGE_CONNECTION_STRING` falls back to the existing `UI_BAKERY_AZURE_BLOB_STORAGE_CONNECTION_STRING` when unset. The configured account key must permit blob reads/writes and read SAS generation. Keep the container private; system assets need read/write access under `assets/` and do not require container creation, listing, or deletion.
+`UI_BAKERY_AZURE_BAKERY_STORAGE_CONNECTION_STRING` falls back to the existing `UI_BAKERY_AZURE_BLOB_STORAGE_CONNECTION_STRING` when unset. The configured account key must permit checking/creating containers, blob reads/writes, and read SAS generation. Keep the container private; system assets need read/write access under `assets/` and do not require container deletion.
 
 The provider-neutral download lifetimes above apply to system assets in this mode. Existing user-facing Bakery Storage presign lifetimes are unchanged.
 
