@@ -48,6 +48,8 @@ On-premise version grants you:
 
 This document describes how to deploy ui-bakery on-prem via `install.sh` script.
 
+For project asset and AI attachment storage setup, see [Environment variables](ENVIRONMENT_VARIABLES.md). Bakery Storage automatically creates the configured private system bucket on first use and reuses existing data. Existing Azure installations must explicitly select `AZURE` before upgrading.
+
 :warning: The script installs docker and docker-compose, which may upgrade some dependencies under the hood. Please be advised that if you run this script on the OS used as a server for other applications, those applications may break due to that potential dependencies upgrade.
 
 ### Requirements
