@@ -3352,6 +3352,12 @@ spec:
         - configMapRef:
             name: bakery-sandbox-api-config
         env:
+        - name: UI_BAKERY_AZURE_CONTAINER_PREFIX
+          valueFrom:
+            configMapKeyRef:
+              name: ui-bakery-configmap
+              key: UI_BAKERY_AZURE_CONTAINER_PREFIX
+              optional: true
         - name: UI_BAKERY_DOCKER_SANDBOX_API_KEY
           valueFrom:
             secretKeyRef:
@@ -3448,15 +3454,18 @@ assume CoreDNS labelled `k8s-app: kube-dns` in `kube-system`; adapt for other DN
 setups. Add non-private Pod/Service CIDRs to workload exclusions if applicable.
 Set the PVC's `storageClassName` only if there is no suitable default.
 
-Agents can reach npm and shadcn by default; builds are offline. Provider,
-pool, resource and security settings are already in the manifest. Give each API
-a unique, stable installation ID if multiple APIs share a provider.
+Agents can reach npm and shadcn by default; builds are offline. The API reads
+`UI_BAKERY_AZURE_CONTAINER_PREFIX` from the existing `ui-bakery-configmap` and
+automatically adds its hostname to agent egress. If your Bakery configuration uses
+a different ConfigMap name, update that reference in the API Deployment. The key
+is optional when attachment storage is unused. No separate host variable or manual
+allowlist edit is needed.
 
-For attachments, add `{"action":"allow","target":"YOUR_ATTACHMENT_STORAGE_HOST"}`
-to the agent policy's `egress` array in ConfigMap `bakery-sandbox-api-config`.
-Use the host from `UI_BAKERY_AZURE_CONTAINER_PREFIX`, without scheme/path; preserve
-the deny rules. Private storage needs narrow exceptions in both native and CNI
-policies. No extra environment variable or configuration file is needed.
+Existing deny rules are preserved; private storage still needs narrow exceptions
+in both native and CNI policies. Roll the API after changing the storage prefix;
+newly created sandboxes use the new policy. Other provider, pool, resource and security
+settings are already in the manifest. Give each API a unique, stable installation
+ID if multiple APIs share a provider.
 
 ## 2. Create Secrets
 

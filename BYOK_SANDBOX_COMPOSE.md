@@ -43,8 +43,8 @@ This is the Docker host's IPv4 address as seen from containers, commonly
 to those ports. It is not the public server IP or the address of the Compose
 service. Detect it rather than hardcoding a value: Docker address ranges vary.
 
-Keep `.env` private and outside Git. Attachment access is optional and configured
-below; it does not require another environment variable.
+Keep `.env` private and outside Git. If attachment storage is configured, its
+existing `UI_BAKERY_AZURE_CONTAINER_PREFIX` value is reused automatically.
 
 ## 2. Add the sandbox services
 
@@ -101,6 +101,7 @@ services:
       UI_BAKERY_DOCKER_SANDBOX_API_KEY: ${UI_BAKERY_DOCKER_SANDBOX_API_KEY:?Set the client key}
       UI_BAKERY_SANDBOX_PROVIDER: opensandbox
       UI_BAKERY_SANDBOX_PROVIDER_ENDPOINT: http://opensandbox:8080
+      UI_BAKERY_AZURE_CONTAINER_PREFIX: ${UI_BAKERY_AZURE_CONTAINER_PREFIX:-}
       UI_BAKERY_SANDBOX_PROVIDER_API_KEY: ${UI_BAKERY_SANDBOX_PROVIDER_API_KEY:?Set the provider key}
       UI_BAKERY_SANDBOX_INSTALLATION: bakery-byok
       UI_BAKERY_SANDBOX_PROVIDER_QUALIFIED: 'true'
@@ -183,21 +184,16 @@ depends_on:
 If Chat's `environment` uses list syntax, add these two entries in the same
 syntax. Keep its other settings and dependencies.
 
-By default, agents can reach npm and shadcn; builds are offline. API and provider
-publish no public ports; workload ports are bound to the Docker bridge address.
+By default, agents can reach npm and shadcn. When attachment storage is configured,
+the API automatically adds the hostname from `UI_BAKERY_AZURE_CONTAINER_PREFIX`
+to agent egress. No new variable or manual allowlist edit is needed. Builds remain
+offline. API and provider publish no public ports; workload ports are bound to
+the Docker bridge address.
 
-### Optional: attachments
-
-If agents need attachments, add an allow entry to the agent policy's `egress`
-array in the Compose block above:
-
-```json
-{"action":"allow","target":"YOUR_ATTACHMENT_STORAGE_HOST"}
-```
-
-Use the host from `UI_BAKERY_AZURE_CONTAINER_PREFIX`, without scheme/path. Keep
-all existing deny rules. Private storage requires a narrow policy exception;
-a hostname rule does not override a denied private-address range.
+The automatic rule preserves existing denies and does not duplicate an exact-host
+allow/deny rule. Private storage still requires a narrow network-policy exception;
+a hostname allow does not override a denied private-address range. Restart the
+API after changing the storage prefix; newly created sandboxes use the new policy.
 
 ## 3. Start and check
 
