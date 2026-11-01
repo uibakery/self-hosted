@@ -81,3 +81,12 @@ For additional installation instructions, such as those for Azure, AWS, GCP, Kub
 For instructions on installing, updating, and managing the on-premise instance, please refer to the [documentation website](https://docs.uibakery.io/on-premise/ui-bakery-on-premise).
 
 
+
+### Self-hosted AI Chat sandboxes (BYOK)
+
+Installation guide drafts for Bakery Sandbox API and OpenSandbox:
+
+- [Docker Compose](BYOK_SANDBOX_COMPOSE.md)
+- [Kubernetes without Helm](BYOK_SANDBOX_KUBERNETES.md)
+
+These drafts include release prerequisites that must be completed before customer publication.
