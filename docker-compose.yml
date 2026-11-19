@@ -73,7 +73,7 @@ services:
 
   # Internal UI Bakery Database, available as a datasource in UI Bakery
   bakery-db:
-    image: "postgres:16.1"
+    image: "postgres:16.16-bookworm@sha256:ce3efec6bc404f6b15ebf5d9bed6b45a9d4655aea238d7dacc3467ccb05a1175"
     container_name: bakery-db
     restart: always
     environment:

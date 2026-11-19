@@ -27,7 +27,7 @@ spec:
         app: postgres
     spec:
       containers:
-        - image: postgres:16.1
+        - image: postgres:16.16-bookworm@sha256:ce3efec6bc404f6b15ebf5d9bed6b45a9d4655aea238d7dacc3467ccb05a1175
           name: postgres
           env:
             - name: POSTGRES_USER
